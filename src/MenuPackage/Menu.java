@@ -1,9 +1,9 @@
-package Menu;
+package MenuPackage;
 
 import java.util.Scanner;
 
 public class Menu {
-    void Menu()
+    public void MenuStart()
     {
         //菜单栏
         System.out.println("欢迎来到“模拟志愿填报系统”");
@@ -16,6 +16,7 @@ public class Menu {
         System.out.println("7. 查看大学下的所有专业");
         System.out.println("8. 查看大学所有录取的学生");
         System.out.println("9. 查看所有学生录取情况");
+        System.out.println("10. 提交所有志愿");
         System.out.print("请选择: ");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
@@ -38,6 +39,8 @@ public class Menu {
             case 8:
                 break;
             case 9:
+                break;
+            case 10:
                 break;
             default:
                 break;
