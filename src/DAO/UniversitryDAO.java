@@ -3,6 +3,7 @@ package DAO;
 import model.University;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UniversitryDAO {
 
@@ -84,11 +85,55 @@ public class UniversitryDAO {
         return test;
     }
 
-    public void SelectAll() {
-
+    public ArrayList<University> SelectAll() {
+        ArrayList<University> test = new ArrayList<University>();
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM universities ";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            ResultSet Srow = SPStat.executeQuery();
+            if (Srow.getRow()<=0) {
+                System.out.println("Fail to Select");
+                throw new Exception("this table is empty");
+            }
+            while(Srow.next()){
+                University a = new University(Srow.getInt("university_id"),Srow.getString("name"),Srow.getString("location"));
+                test.add(a);
+            }
+            SPStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return test;
     }
 
-    public void Delete(model.University u) {
+    public void DeleteById(int id) {
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM universities WHERE university_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, id);
+            ResultSet Srow = SPStat.executeQuery();
+            if (Srow.getRow()!=1) {
+                System.out.println("Fail to Select");
+                throw new Exception("ID is not found or not unique");
+            }
+            SPStat.close();
 
+            String Dsql = "DELETE FROM universities WHERE university_id = ?";
+            PreparedStatement DPStat = conn.prepareStatement(Dsql);
+            DPStat.setInt(1, id);
+            int row = DPStat.executeUpdate(Dsql);
+            if (row!=1) {
+                throw new Exception("Fail to Delete or Delete more than one");
+            }
+            DPStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
