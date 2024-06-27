@@ -10,6 +10,7 @@ abstract public class Database { //数据库初始化
     private static Connection conn;
 
     public static void setConnection()throws Exception{
+        Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection(url,username,password);
     }
 
