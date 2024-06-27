@@ -37,7 +37,7 @@ public class UniversitryDAO {
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, u.getUniversity_id());
             ResultSet Srow = SPStat.executeQuery();
-            if (Srow.getRow()!=1) {
+            if (!Srow.isBeforeFirst()) {
                 System.out.println("Fail to Select");
                 throw new Exception("ID is not found or not unique");
             }
@@ -45,9 +45,9 @@ public class UniversitryDAO {
 
             String update_sql = "UPDATE universities set name=?,location=? where university_id = ?";
             PreparedStatement UPStat = conn.prepareStatement(update_sql);
-            UPStat.setInt(1, u.getUniversity_id());
-            UPStat.setString(2, u.getName());
-            UPStat.setString(3, u.getLocation());
+            UPStat.setInt(3, u.getUniversity_id());
+            UPStat.setString(1, u.getName());
+            UPStat.setString(2, u.getLocation());
             int row = UPStat.executeUpdate();
             if (row > 0) {
                 System.out.println("success update");
@@ -70,10 +70,11 @@ public class UniversitryDAO {
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
             ResultSet Srow = SPStat.executeQuery();
-            if (Srow.getRow()!=1) {
+            if (!Srow.isBeforeFirst()) {
                 System.out.println("Fail to Select");
-                throw new Exception("ID is not found or not unique");
+                throw new Exception("ID is not found");
             }
+            Srow.next();
             test.setLocation(Srow.getString("location"));
             test.setName(Srow.getString("name"));
             test.setUniversity_id(Srow.getInt("university_id"));
@@ -93,7 +94,7 @@ public class UniversitryDAO {
             String select_sql = "SELECT * FROM universities ";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             ResultSet Srow = SPStat.executeQuery();
-            if (Srow.getRow()<=0) {
+            if (!Srow.isBeforeFirst()) {
                 System.out.println("Fail to Select");
                 throw new Exception("this table is empty");
             }
@@ -117,7 +118,7 @@ public class UniversitryDAO {
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
             ResultSet Srow = SPStat.executeQuery();
-            if (Srow.getRow()!=1) {
+            if (!Srow.isBeforeFirst()) {
                 System.out.println("Fail to Select");
                 throw new Exception("ID is not found or not unique");
             }
@@ -126,7 +127,7 @@ public class UniversitryDAO {
             String Dsql = "DELETE FROM universities WHERE university_id = ?";
             PreparedStatement DPStat = conn.prepareStatement(Dsql);
             DPStat.setInt(1, id);
-            int row = DPStat.executeUpdate(Dsql);
+            int row = DPStat.executeUpdate();
             if (row!=1) {
                 throw new Exception("Fail to Delete or Delete more than one");
             }
