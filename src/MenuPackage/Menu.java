@@ -1,6 +1,10 @@
 package MenuPackage;
-
+import DAO.Database;
+import model.*;
+import DAO.UniversitryDAO;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.sql.*;//sql的包
 
 public class Menu {
     public void MenuStart()
@@ -33,6 +37,7 @@ public class Menu {
             case 5:
                 break;
             case 6:
+                FindAllUniversities();
                 break;
             case 7:
                 break;
@@ -45,6 +50,18 @@ public class Menu {
             default:
                 break;
 
+        }
+    }
+    public  void FindAllUniversities()
+    {
+        UniversitryDAO test = new UniversitryDAO();
+        ArrayList<University> temp = new ArrayList<University>();
+        temp = test.SelectAll();//把所有大学的ArrayList保存在Temp里面
+        for(University u : temp)//遍历
+        {
+            System.out.print(u.getUniversity_id()+" ");
+            System.out.print(u.getName()+" ");
+            System.out.println(u.getLocation());
         }
     }
 }
