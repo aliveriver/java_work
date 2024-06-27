@@ -46,6 +46,7 @@ public class Menu {
             case 9:
                 break;
             case 10:
+                HandInAllApplications();
                 break;
             default:
                 break;
@@ -63,5 +64,11 @@ public class Menu {
             System.out.print(u.getName()+" ");
             System.out.println(u.getLocation());
         }
+    }
+    public  void HandInAllApplications()
+    {
+        //提交所有的志愿信息。
+        // %这里用来接收志愿信息
+
     }
 }

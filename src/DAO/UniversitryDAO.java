@@ -91,17 +91,12 @@ public class UniversitryDAO {
             Database.setConnection();
             Connection conn = Database.getConnection();
             String select_sql = "SELECT * FROM universities ";
-            PreparedStatement SPStat = conn.prepareStatement(select_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
             ResultSet Srow = SPStat.executeQuery();
-            if (!Srow.next()) { // 如果结果集没有下一行，即为空
+            if (!Srow.isBeforeFirst()) { //判断光标的位置，如果位于第一行之前，则TRUE,否则表明结果集不包含任何行，则FALSE
                 System.out.println("Table is empty");
                 throw new Exception("Table is empty");
             }
-//            if (Srow.getRow()<=0) {
-//                System.out.println("Fail to Select");
-//                throw new Exception("this table is empty");
-//            }
-            Srow.beforeFirst();
             while(Srow.next()){
                 University a = new University(Srow.getInt("university_id"),Srow.getString("name"),Srow.getString("location"));
                 test.add(a);
