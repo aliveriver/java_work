@@ -24,6 +24,10 @@ abstract public class StudentService {
         return ss.SelectAll();
     }
 
+    public static ArrayList<Integer> SelectAllId() {
+        return ss.SelectAllId();
+    }
+
     public static void DeleteById(int id){
         ss.DeleteById(id);
     }

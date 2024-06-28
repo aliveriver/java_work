@@ -135,7 +135,29 @@ public class StudentDAO {
         System.out.println("Success Select");
         return test;
     }
-
+    public ArrayList<Integer> SelectAllId(){
+        ArrayList<Integer> test = new ArrayList<Integer>();
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT student_id FROM students ";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            ResultSet Srow = SPStat.executeQuery();
+            if (!Srow.isBeforeFirst()) {
+                System.out.println("Fail to Select");
+                throw new Exception("this table is empty");
+            }
+            while(Srow.next()){
+                test.add(Srow.getInt("student_id"));
+            }
+            SPStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Success Select");
+        return test;
+    }
     public void DeleteById(int id){
         try {
             Database.setConnection();

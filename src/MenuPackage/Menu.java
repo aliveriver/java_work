@@ -1,5 +1,6 @@
 package MenuPackage;
 
+import Service.StudentService;
 import Service.UniversityService;
 import model.*;
 
@@ -74,7 +75,7 @@ public class Menu {
         ArrayList<Integer> UDMStuid = new ArrayList<Integer>(); //University departments major students id list 预录取表中选取某个专业的学生
         ArrayList<AdmS> ADSituation = new ArrayList<AdmS>(); //存放大学院系专业的录取情况
 
-        StudentsIdList = StudentDAO.SelectAll();
+        StudentsIdList = StudentService.SelectAllId();//只要所有的id
 
         //student size =0 的异常处理
         try {
