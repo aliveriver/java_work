@@ -5,7 +5,7 @@ import model.University;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UniversitryDAO {
+public class UniversityDAO {
 
     public void Create(model.University u){
         try {
