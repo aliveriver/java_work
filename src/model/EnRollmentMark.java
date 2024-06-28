@@ -6,16 +6,22 @@ public class EnRollmentMark {
     private int department_id;
     private int Enrollment_id;
     private int RequiredScore;
+    private int MRequiredN;
+    private int DRequiredN;
 
     public EnRollmentMark() {
     }
 
-    public EnRollmentMark(int university_id, int major_id, int department_id, int enrollment_id, int requiredScore) {
+
+
+    public EnRollmentMark(int university_id, int major_id, int department_id, int enrollment_id, int requiredScore, int MRequiredN, int DRequiredN) {
         this.university_id = university_id;
         this.major_id = major_id;
         this.department_id = department_id;
         Enrollment_id = enrollment_id;
         RequiredScore = requiredScore;
+        this.MRequiredN = MRequiredN;
+        this.DRequiredN = DRequiredN;
     }
 
     public int getUniversity_id() {
@@ -56,5 +62,20 @@ public class EnRollmentMark {
 
     public void setRequiredScore(int requiredScore) {
         RequiredScore = requiredScore;
+    }
+
+    public int getMRequiredN() {
+        return MRequiredN;
+    }
+
+    public void setMRequiredN(int MRequiredN) {
+        this.MRequiredN = MRequiredN;
+    }
+
+    public int getDRequiredN() {
+        return DRequiredN;
+    }
+    public void setDRequiredN(int DRequiredN) {
+        this.DRequiredN = DRequiredN;
     }
 }

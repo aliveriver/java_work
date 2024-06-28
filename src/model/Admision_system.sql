@@ -31,6 +31,8 @@ CREATE TABLE EnrollmentMark(
 	department_id INT NOT NULL,
 	major_id INT NOT NULL,
 	RequiredScore INT NOT NULL,
+	MRequiredN INT NOT NULL,
+	DRequiredN INT NOT NULL,
 	FOREIGN KEY (department_id) REFERENCES departments(department_id),
 	FOREIGN KEY (major_id) REFERENCES majors(major_id),
 	FOREIGN KEY (university_id) REFERENCES universities( university_id) 
