@@ -3,9 +3,10 @@ package MenuPackage;
 import Service.StudentService;
 import Service.UniversityService;
 import model.*;
-
+import java.util.HashMap; // 引入 HashMap 类
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Menu {
     public void MenuStart() {
@@ -45,7 +46,12 @@ public class Menu {
                 case 8:
                     break;
                 case 9:
-                    HandInAllApplications();
+                    try {
+                        HandInAllApplications();
+                    }catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
                     break;
                 default:
                     break;
@@ -159,7 +165,7 @@ public class Menu {
             Student student = StudentService.SelectById(application.getStudent_id());
 
             // 检查是否还有名额
-            EnrollmentMark enrollmentMark = EnRollmentMarkDAO.SelectByUDM(universityId, departmentId, majorId);
+            EnRollmentMark enrollmentMark = EnRollmentMarkDAO.SelectByUDM(universityId, departmentId, majorId);
             int maxDepartmentCount = enrollmentMark.getDrequiredN();
 
             if (departmentStudentCount.get(universityId).get(departmentId) < maxDepartmentCount) {
