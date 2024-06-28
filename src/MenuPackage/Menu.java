@@ -20,6 +20,7 @@ public class Menu {
             System.out.println("7. 查看大学下的所有专业");//查看 universities~major
             System.out.println("8. 查看大学所有录取的学生");//universities~admissions/
             System.out.println("9. 提交所有志愿");
+            System.out.println("10. 退出系统");
             System.out.print("请选择: ");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
@@ -68,10 +69,13 @@ public class Menu {
         //提交所有的志愿信息。
         //存放所有学生ID
         ArrayList<Integer> StudentsIdList = new ArrayList<Integer>();
-        // %这里用来接收志愿信息 Dependid 的意思是，基于id查找这个学生的所有志愿信息
-        ArrayList<Application> ADI = new ArrayList<Application>(); //admission depends on id
+        ArrayList<Application> ADI = new ArrayList<Application>(); //admission depends on id 基于学生id 的志愿申请表
         ArrayList<Application> PreAdmission = new ArrayList<Application>(); //预录取表
-        ArrayList<Integer> MajorList = new ArrayList<Integer>(); //某院系下的专业id的数组
+        ArrayList<Integer> MajorList = new ArrayList<Integer>(); //某院系下的专业id的数组. 基于大学和院系id下的
+        ArrayList<Integer> UDMStuid = new ArrayList<Integer>(); //University departments major students id list 预录取表中选取某个专业的学生
+
+        StudentsIdList = StudentDAO.SelectAll();
+
         //student size =0 的异常处理
         try{
             if(StudentsIdList.size()==0)
@@ -85,15 +89,11 @@ public class Menu {
         for(int i=0;i<StudentsIdList.size();i++)
         {
             //遍历学生id信息。
-            int id = StudentsIdList.get(i);
-            int StuScores = 0;
-            int u=0;//二重循环的光标
-            // 获取这个学生的高考成绩
-            // StuScores = StudentsIdList.get();
-
+            final int id = StudentsIdList.get(i);
+            final int StuScores = StudentDAO.SelectById(id).getScore();     // 获取这个学生的高考成绩
+            int u=0; //二重循环的光标
+            ADI = ApplicationDAO.SelectById(id);
             // %这里用来接收志愿信息 Dependid 的意思是，基于id查找这个学生的所有志愿信息
-            // ApplicationDependId = function(i);
-            //假设已经获得了id的志愿信息表
 
             //如果有人没有填报信息则报错
             try{
@@ -110,13 +110,16 @@ public class Menu {
                 //遍历application_id 表示某个学生的n个志愿。
                 int RequiredScore=0;
                 //通过university_id,department_id,major_id 利用EnrollmentMark 来查找所需要的分数线
-                // getInfo(ApplicationDependId().get(u)) //基于序号查找university,department,major
-                // RequiredScore = function(university_id,department_id,major_id);
+                int university_id = ADI.get(u).getUniversity_id(); //获取这个志愿的大学id
+                int department_id = ADI.get(u).getDepartment_id();//获取这个志愿的院系id
+                int major_id = ADI.get(u).getMajor_id(); //获取这个志愿的专业id
+                RequiredScore = EnRollmentMarkDAO.SelectByUDM(university_id,department_id,major_id).getRequiredScore();
 
                 if(StuScores>=RequiredScore)
                 {
-                    //这个志愿信息能够实现，预录取。
+                    //这个志愿信息有效，预录取。
                     PreAdmission.add(ADI.get(u));
+                    break;//不再遍历其他志愿
                 }
             }
             //如果u== ADI.size()
@@ -125,7 +128,8 @@ public class Menu {
                 System.out.println("学生id:"+id+"的同学没有被任何大学录取");//声明问题
             }
         }
-        //此时已经获得了预选表
+        //此时已经获得了预选表 1.从高到低排序选取某个专业的人 2.志愿调剂
+
 
 
     }
