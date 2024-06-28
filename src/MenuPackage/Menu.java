@@ -1,10 +1,8 @@
 package MenuPackage;
-import DAO.Database;
 import model.*;
-import DAO.UniversitryDAO;
+import DAO.UniversityDAO;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.sql.*;//sql的包
 
 public class Menu {
     public void MenuStart()
@@ -55,7 +53,7 @@ public class Menu {
     }
     public  void FindAllUniversities()
     {
-        UniversitryDAO test = new UniversitryDAO();
+        UniversityDAO test = new UniversityDAO();
         ArrayList<University> temp = new ArrayList<University>();
         temp = test.SelectAll();//把所有大学的ArrayList保存在Temp里面
         for(University u : temp)//遍历
