@@ -1,4 +1,4 @@
-package service;
+package Service;
 
 import DAO.UniversityDAO;
 import model.University;
