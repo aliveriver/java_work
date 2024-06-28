@@ -131,6 +131,7 @@ public class UniversityDAO {
             if (row!=1) {
                 throw new Exception("Fail to Delete or Delete more than one");
             }
+            System.out.println("success Delete");
             DPStat.close();
             Database.closeConnection();
         }catch (Exception e){
