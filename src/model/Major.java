@@ -3,7 +3,7 @@ package model;
 // 专业表模型，参数同数据库
 public class Major {
     private int major_id;
-    private int department_id;
+    private int department_id;//统一规定，外码为空时为0
     private String name;
 
     public Major(int major_id, int department_id, String name) {
