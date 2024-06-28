@@ -1,7 +1,7 @@
 package model;
 
 // 学生表，参数同数据库
-public class Student {
+public class Student implements Comparable{
 
     private int student_id;
     private String name;
@@ -73,4 +73,14 @@ public class Student {
     }
 
 
+    //重写比较
+    @Override
+    public int compareTo(Object o) {
+        Student s = (Student) o;
+        if (this.score <= s.score) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
 }
