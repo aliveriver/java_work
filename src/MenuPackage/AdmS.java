@@ -8,10 +8,10 @@ public class AdmS {
     private int university_id;
     private int major_id;
     private int department_id;
-    private int Mcount;//major counts
+    private int Dcount;//major counts
     private ArrayList<Student> Slist ;
     public AdmS() {
-        Mcount = 0;
+        Dcount = 0;
         university_id = 0;
         major_id = 0;
         department_id = 0;
@@ -20,7 +20,7 @@ public class AdmS {
         this.university_id = university_id;
         this.major_id = major_id;
         this.department_id = department_id;
-        Mcount = 0;
+        Dcount = 0;
         Slist = new ArrayList<>();
     }
     public int getUniversity_id() {
@@ -44,12 +44,12 @@ public class AdmS {
     public void setDepartment_id(int department_id) {
         this.department_id = department_id;
     }
-    public int getMcount() {
-        return Mcount;
+    public int getDcount() {
+        return Dcount;
     }
 
-    public void setMcount(int mcount) {
-        Mcount = mcount;
+    public void setDcount(int dcount) {
+        Dcount = dcount;
     }
     public ArrayList<Student> getSlist() {
         return Slist;
@@ -57,5 +57,9 @@ public class AdmS {
 
     public void setSlist(ArrayList<Student> slist) {
         Slist = slist;
+    }
+
+    public  void  AddStudent(Student student) {
+        Slist.add(student);
     }
 }

@@ -8,7 +8,7 @@ public class Student {
     private String gender;
     private int age;
     private int score;
-    private int class_id;
+    private int class_id;//统一规定，外码不存在时，为0
 
     public Student() {
     }
