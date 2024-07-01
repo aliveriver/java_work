@@ -1,5 +1,6 @@
 package MenuPackage;
 
+import Service.MajorService;
 import Service.StudentService;
 import Service.UniversityService;
 import model.*;
@@ -82,7 +83,6 @@ public class Menu {
 
         ArrayList<Application> preAdmission = new ArrayList<>();//预录取表格
         ArrayList<AdmS> adSituation = new ArrayList<>();//注册表
-
         for (int id : studentsIdList) {
             Student student = StudentService.SelectById(id); // 获取学生信息
             int studentScore = student.getScore(); // 获取学生的高考成绩
@@ -98,7 +98,7 @@ public class Menu {
                 int universityId = application.getUniversity_id(); // 获取大学id
                 int departmentId = application.getDepartment_id(); // 获取院系id
                 int majorId = application.getMajor_id(); // 获取专业id
-                EnRollmentMark enrollmentMark = new EnRollmentMark();
+                EnRollmentMark enrollmentMark = new EnRollmentMark();//获取分数线、院系最大人数、专业最大人数
                 enrollmentMark = EnRollmentMarkDAO.SelectByUDM(universityId, departmentId, majorId); // 获取分数和最大人数
                 int requiredScore = enrollmentMark.getRequiredScore();
                 int maxDepartmentCount = enrollmentMark.getDRequiredN();//获取院系最大人数
@@ -143,54 +143,65 @@ public class Menu {
         }
 
         // 调剂志愿
-        AdjustApplications(preAdmission, adSituation);
-    }
-
-    // 调剂志愿的方法
-    private void AdjustApplications(ArrayList<Application> preAdmission, ArrayList<AdmS> adSituation) {
-        // TODO: 实现调剂志愿的逻辑
-        Map<Integer, Map<Integer, Integer>> departmentStudentCount = new HashMap<>();
-
-        // 初始化Map
-        for (AdmS adm : adSituation) {
-            departmentStudentCount.putIfAbsent(adm.getUniversity_id(), new HashMap<>());
-            departmentStudentCount.get(adm.getUniversity_id()).put(adm.getDepartment_id(), adm.getDcount());
-        }
-
-        // 遍历预录取表，进行调剂
-        for (Application application : preAdmission) {
-            int universityId = application.getUniversity_id();
-            int departmentId = application.getDepartment_id();
-            int majorId = application.getMajor_id();
-            Student student = StudentService.SelectById(application.getStudent_id());
-
-            // 检查是否还有名额
-            EnRollmentMark enrollmentMark = EnRollmentMarkDAO.SelectByUDM(universityId, departmentId, majorId);
-            int maxDepartmentCount = enrollmentMark.getDrequiredN();
-
-            if (departmentStudentCount.get(universityId).get(departmentId) < maxDepartmentCount) {
-                // 还有名额，录取
-                departmentStudentCount.get(universityId).put(departmentId, departmentStudentCount.get(universityId).get(departmentId) + 1);
-            } else {
-                // 没有名额，尝试调剂到其他专业
-                boolean foundAlternative = false;
-
-                for (AdmS adm : adSituation) {
-                    if (adm.getUniversity_id() == universityId && adm.getDcount() < maxDepartmentCount) {
-                        adm.AddStudent(student);
-                        adm.setDcount(adm.getDcount() + 1);
-                        foundAlternative = true;
+        // Major
+        for(AdmS adm : adSituation)//遍历学生情况
+        {
+            adm.SortStudentDependsOnScore();
+            Map<Integer,Integer> majorCount = new HashMap<>();//计数使用的map 前面的是majorid 后面的是数量 这个是学生的表格4
+            Map<Integer,Integer> MajorRequirements = new HashMap<>();//专业和对应的需求人数
+            EnRollmentMark enrollmentMark = new EnRollmentMark();
+            ArrayList<Integer> majorIdList = new ArrayList<>();
+            majorIdList = MajorService.SelectDepartmentId(adm.getDepartment_id());//获取某个院系的所有专业
+            for(Integer majorId : majorIdList) //添加院系信息
+            {
+                majorCount.put(majorId, 0);
+            }
+            for(Student Stu : adm.getSlist())
+            {
+                int id = Stu.getStudent_id();//获取这个学生id
+                int major_id = -1;//获取学生的专业信息
+                for(Application application : preAdmission)
+                {
+                    if(id==application.getStudent_id())
+                    {
+                        major_id = application.getMajor_id();
                         break;
                     }
                 }
+                enrollmentMark = EnRollmentMarkDAO.SelectByUDM(adm.getUniversity_id(), adm.getDepartment_id(), major_id); // 获取专业最大人数
+                int RequiredMajorNumber = enrollmentMark.getMRequiredN();//获取专业人数
+                MajorRequirements.put(major_id,RequiredMajorNumber);//需求表中填写需求人数
+                if(major_id == -1 ) throw new Exception("there's no match student between AdmS and preAdmission");
+                majorCount.put(major_id, majorCount.getOrDefault(major_id,0)+1);//给这个专业+1
+            }
+            //遍历完所有学生，给所有学生填报志愿的专业都有了数量。
+            //基于学校和院系
 
-                if (!foundAlternative) {
-                    System.out.println("学生id:" + student.getStudent_id() + "的同学没有被任何大学录取");
+            for (Map.Entry<Integer, Integer> entry : majorCount.entrySet())//遍历学生的
+            {
+                int majorId = entry.getKey();
+                int Number = entry.getValue();//专业对应的人数
+                int RequiredMajorNumber = MajorRequirements.get(majorId);//获取最大人数
+                if(Number>RequiredMajorNumber)//需要调剂
+                {
+                    int ToMajor=-1;
+                    int AdaptedNum = Number-RequiredMajorNumber;//需要调剂的学生数量
+                    for(Integer ID :majorIdList)
+                    {
+                        if(ID!=majorId)//要调剂到的专业
+                        {
+                            ToMajor = ID;
+                            break;
+                        }
+                    }
+
                 }
             }
-        }
-    }
 
+        }
+
+
+    }
 
 
 }

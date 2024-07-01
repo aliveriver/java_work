@@ -5,7 +5,7 @@ import model.Application;
 
 import java.util.ArrayList;
 
-public class ApplicationService {
+abstract public class ApplicationService {
     private static ApplicationDAO as = new ApplicationDAO();
 
     public static void Create(model.Application a){

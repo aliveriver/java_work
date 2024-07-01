@@ -2,6 +2,9 @@ package MenuPackage;
 import model.Student;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 //录取情况的类 Admission situation
 //这个类能够显示现在的学生数量（各种信息），
 public class AdmS{
@@ -52,5 +55,9 @@ public class AdmS{
 
     public  void  AddStudent(Student student) {
         Slist.add(student);
+    }
+    public  void SortStudentDependsOnScore()
+    {
+        Collections.sort(Slist);
     }
 }

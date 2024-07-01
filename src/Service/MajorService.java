@@ -28,4 +28,6 @@ abstract public class MajorService {
     public static void DeleteById(int id){
         ms.DeleteById(id);
     }
+
+    public static ArrayList<Integer> SelectDepartmentId(int id) {return ms.SelectDepartmentId(id);}
 }
