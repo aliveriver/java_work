@@ -5,7 +5,7 @@ import model.Class;
 
 import java.util.ArrayList;
 
-public class ClassService {
+abstract public class ClassService {
     private static ClassDAO cs = new ClassDAO();
 
     public static void Create(model.Class c){
