@@ -1,7 +1,6 @@
 package Service;
 
 import DAO.MajorDAO;
-import DAO.StudentDAO;
 import model.Major;
 
 import java.util.ArrayList;
@@ -29,5 +28,5 @@ abstract public class MajorService {
         ms.DeleteById(id);
     }
 
-    public static ArrayList<Integer> SelectDepartmentId(int id) {return ms.SelectDepartmentId(id);}
+    public static ArrayList<Integer> SelectByDepartment_id(int id) {return ms.SelectByDepartment_id(id);}
 }

@@ -1,8 +1,6 @@
 package MenuPackage;
 
-import Service.MajorService;
-import Service.StudentService;
-import Service.UniversityService;
+import Service.*;
 import model.*;
 import java.util.HashMap; // 引入 HashMap 类
 import java.util.Scanner;
@@ -48,7 +46,7 @@ public class Menu {
                     break;
                 case 9:
                     try {
-                        HandInAllApplications();
+                        //HandInAllApplications();
                     }catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
@@ -73,136 +71,207 @@ public class Menu {
     }
 
     public void HandInAllApplications() throws Exception {
-        // 提交所有的志愿信息。
-        ArrayList<Integer> studentsIdList = StudentService.SelectAllId(); // 获取所有学生ID
+        // 获取所有学生的ID列表
+        ArrayList<Integer> studentsIdList = StudentService.SelectAllId();
 
-        // student size = 0 的异常处理
+        // 检查学生ID列表是否为空，如果为空则抛出异常
         if (studentsIdList.isEmpty()) {
-            throw new Exception("There are no Students found on the table");
+            throw new Exception("学生表中没有学生记录");
         }
 
-        ArrayList<Application> preAdmission = new ArrayList<>();//预录取表格
-        ArrayList<AdmS> adSituation = new ArrayList<>();//注册表
+        // 批量获取学生信息和志愿信息
+        Map<Integer, Student> studentsMap = StudentService.SelectByIds(studentsIdList); //前面的Integer都是学生id
+        Map<Integer, ArrayList<Application>> applicationsMap = ApplicationService.SelectByStudentIds(studentsIdList);//前面的Integer都是学生id
+
+        // 预录取表
+        ArrayList<Application> preAdmission = new ArrayList<>();
+        // 注册表
+        ArrayList<AdmS> adSituation = new ArrayList<>();
+
+        // 遍历每个学生ID
         for (int id : studentsIdList) {
-            Student student = StudentService.SelectById(id); // 获取学生信息
+            Student student = studentsMap.get(id); // 获取学生信息
+            if (student == null) continue; // 如果学生信息为空，跳过
+
             int studentScore = student.getScore(); // 获取学生的高考成绩
-            ArrayList<Application> applications = ApplicationDAO.SelectById(id); // 获取学生的所有志愿信息
+            ArrayList<Application> applications = applicationsMap.get(id); // 获取学生的所有志愿信息
 
-            // 如果没有填报志愿信息则报错
-            if (applications.isEmpty()) {
-                throw new Exception("学生id: " + id + "没有填报任何志愿信息");
+            // 如果没有填报志愿信息则记录并跳过
+            if (applications == null || applications.isEmpty()) {
+                System.out.println("学生id: " + id + " 没有填报任何志愿信息");
+                continue;
             }
 
-            boolean admitted = false;
-            for (Application application : applications) { // 遍历志愿信息
-                int universityId = application.getUniversity_id(); // 获取大学id
-                int departmentId = application.getDepartment_id(); // 获取院系id
-                int majorId = application.getMajor_id(); // 获取专业id
-                EnRollmentMark enrollmentMark = new EnRollmentMark();//获取分数线、院系最大人数、专业最大人数
-                enrollmentMark = EnRollmentMarkDAO.SelectByUDM(universityId, departmentId, majorId); // 获取分数和最大人数
-                int requiredScore = enrollmentMark.getRequiredScore();
-                int maxDepartmentCount = enrollmentMark.getDRequiredN();//获取院系最大人数
-
-                if (studentScore >= requiredScore) { //说明能够录取
-                    boolean departmentFound = false;
-                    // 搜索注册表
-                    for (AdmS adm : adSituation) {
-                        if (universityId == adm.getUniversity_id() && departmentId == adm.getDepartment_id()) {
-                            departmentFound = true;//注册表中找到
-                            if (adm.getDcount() < maxDepartmentCount) {
-                                adm.AddStudent(student); // 添加学生
-                                adm.setDcount(adm.getDcount() + 1); // 数量加1
-                                preAdmission.add(application); // 预录取这个志愿
-                                admitted = true;//录取成功，其他志愿不再查看
-                                break;
-                            } else {
-                                break; // 已超出最大人数，不再遍历其他志愿
-                            }
-                        }
-                    }
-
-                    if (!departmentFound) { // 没找到注册信息，肯定能录取
-                        AdmS newAdm = new AdmS(universityId, departmentId);
-                        newAdm.AddStudent(student); // 添加学生信息
-                        newAdm.setDcount(1);
-                        adSituation.add(newAdm); // 添加这一条录取信息
-                        preAdmission.add(application); // 预录取这个志愿
-                        admitted = true;
-                        break; // 不再遍历其他志愿
-                    }
-                }
-
-                if (admitted) {
-                    break;//不再遍历其他志愿，转到下一人。
-                }
-            }
+            boolean admitted = handleStudentApplications(student, applications, adSituation, preAdmission);
 
             if (!admitted) {
-                System.out.println("学生id:" + id + "的同学没有被任何大学录取"); // 声明问题
+                System.out.println("学生id:" + id + " 的同学没有被任何大学录取");
             }
         }
 
-        // 调剂志愿
-        // Major
-        for(AdmS adm : adSituation)//遍历学生情况
-        {
-            adm.SortStudentDependsOnScore();
-            Map<Integer,Integer> majorCount = new HashMap<>();//计数使用的map 前面的是majorid 后面的是数量 这个是学生的表格4
-            Map<Integer,Integer> MajorRequirements = new HashMap<>();//专业和对应的需求人数
-            EnRollmentMark enrollmentMark = new EnRollmentMark();
-            ArrayList<Integer> majorIdList = new ArrayList<>();
-            majorIdList = MajorService.SelectDepartmentId(adm.getDepartment_id());//获取某个院系的所有专业
-            for(Integer majorId : majorIdList) //添加院系信息
-            {
-                majorCount.put(majorId, 0);
-            }
-            for(Student Stu : adm.getSlist())
-            {
-                int id = Stu.getStudent_id();//获取这个学生id
-                int major_id = -1;//获取学生的专业信息
-                for(Application application : preAdmission)
-                {
-                    if(id==application.getStudent_id())
-                    {
-                        major_id = application.getMajor_id();
-                        break;
+        // 处理调剂志愿 调剂
+        handleMajorAdjustment(adSituation, preAdmission);
+
+        // 更新最终的录取表
+        updateFinalAdmissions(preAdmission);
+
+        System.out.println("调剂处理完成");
+    }
+
+    /**
+     * 处理学生的志愿申请
+     *
+     * @param student      学生对象
+     * @param applications 学生的志愿申请列表
+     * @param adSituation  注册表
+     * @param preAdmission 预录取表
+     * @return 是否成功录取该学生
+     * @throws Exception 如果处理过程中发生错误
+     */
+    private boolean handleStudentApplications(Student student, ArrayList<Application> applications, ArrayList<AdmS> adSituation, ArrayList<Application> preAdmission) throws Exception {
+        int studentScore = student.getScore();
+        boolean admitted = false;
+        //便遍历志愿信息
+        for (Application application : applications) {
+            int universityId = application.getUniversity_id();
+            int departmentId = application.getDepartment_id();
+            int majorId = application.getMajor_id();
+
+            // 获取录取要求和院系最大录取人数
+            EnRollmentMark enrollmentMark = EnRollmentMarkService.SelectByUDM(universityId, departmentId, majorId);
+            int requiredScore = enrollmentMark.getRequiredScore();
+            int maxDepartmentCount = enrollmentMark.getDRequiredN();
+
+            if (studentScore >= requiredScore) { // 符合录取要求
+                boolean departmentFound = false;
+
+                // 检查院系是否已在注册表中   同时处理注册表
+                for (AdmS adm : adSituation) {
+                    if (universityId == adm.getUniversity_id() && departmentId == adm.getDepartment_id()) {
+                        departmentFound = true;
+                        if (adm.getDcount() < maxDepartmentCount) {
+                            adm.AddStudent(student); // 添加学生到院系注册表中
+                            adm.setDcount(adm.getDcount() + 1); // 院系人数加1
+                            preAdmission.add(application); // 加入预录取表
+                            admitted = true; // 成功录取
+                            break;
+                        } else {
+                            break; // 院系人数已满，不再继续处理该志愿
+                        }
                     }
                 }
-                enrollmentMark = EnRollmentMarkDAO.SelectByUDM(adm.getUniversity_id(), adm.getDepartment_id(), major_id); // 获取专业最大人数
-                int RequiredMajorNumber = enrollmentMark.getMRequiredN();//获取专业人数
-                MajorRequirements.put(major_id,RequiredMajorNumber);//需求表中填写需求人数
-                if(major_id == -1 ) throw new Exception("there's no match student between AdmS and preAdmission");
-                majorCount.put(major_id, majorCount.getOrDefault(major_id,0)+1);//给这个专业+1
-            }
-            //遍历完所有学生，给所有学生填报志愿的专业都有了数量。
-            //基于学校和院系
 
-            for (Map.Entry<Integer, Integer> entry : majorCount.entrySet())//遍历学生的
-            {
+                // 如果院系未在注册表中，则新建注册信息
+                //同时认识到，这个信息肯定能加到预录取表中。
+                if (!departmentFound) {
+                    AdmS newAdm = new AdmS(universityId, departmentId);
+                    newAdm.AddStudent(student);
+                    newAdm.setDcount(1);
+                    adSituation.add(newAdm); // 添加到注册表中
+                    preAdmission.add(application); // 加入预录取表
+                    admitted = true; // 成功录取
+                    break; // 不再继续处理其他志愿
+                }
+            }
+
+            if (admitted) {
+                break; // 已成功录取，不再处理其他志愿
+            }
+        }
+
+        return admitted;
+    }
+
+    /**
+     * 处理调剂专业
+     *
+     * @param adSituation  注册表
+     * @param preAdmission 预录取表
+     * @throws Exception 如果处理过程中发生错误
+     */
+    private void handleMajorAdjustment(ArrayList<AdmS> adSituation, ArrayList<Application> preAdmission) throws Exception {
+        for (AdmS adm : adSituation) {
+            adm.SortStudentDependsOnScore(); // 根据学生分数对注册表中的学生进行降序排序
+
+            // 获取该院系的所有专业列表
+            ArrayList<Integer> majorIdList = MajorService.SelectByDepartment_id(adm.getDepartment_id());//基于院系信息得到专业表
+
+            // 统计每个专业的人数需求
+            Map<Integer, Integer> majorRequirements = new HashMap<>();
+            for (Integer majorId : majorIdList) {
+                EnRollmentMark enrollmentMark = EnRollmentMarkService.SelectByUDM(adm.getUniversity_id(), adm.getDepartment_id(), majorId);
+                int requiredMajorNumber = enrollmentMark.getMRequiredN(); // 获取专业的最大录取人数
+                majorRequirements.put(majorId, requiredMajorNumber); // 记录专业需求人数
+            }
+
+            // 统计每个专业当前的学生人数
+            Map<Integer, Integer> majorCount = new HashMap<>();
+            for (Application application : preAdmission) {
+                if (adm.getUniversity_id() == application.getUniversity_id() && adm.getDepartment_id() == application.getDepartment_id()) {
+                    int majorId = application.getMajor_id();
+                    majorCount.put(majorId, majorCount.getOrDefault(majorId, 0) + 1); // 统计专业当前人数
+                }
+            }
+
+            // 遍历每个专业的人数统计，进行调剂处理
+            for (Map.Entry<Integer, Integer> entry : majorCount.entrySet()) {
                 int majorId = entry.getKey();
-                int Number = entry.getValue();//专业对应的人数
-                int RequiredMajorNumber = MajorRequirements.get(majorId);//获取最大人数
-                if(Number>RequiredMajorNumber)//需要调剂
-                {
-                    int ToMajor=-1;
-                    int AdaptedNum = Number-RequiredMajorNumber;//需要调剂的学生数量
-                    for(Integer ID :majorIdList)
-                    {
-                        if(ID!=majorId)//要调剂到的专业
-                        {
-                            ToMajor = ID;
+                int number = entry.getValue(); // 当前专业的学生人数
+                int requiredMajorNumber = majorRequirements.get(majorId); // 获取专业的需求人数
+                int excessNumber = number - requiredMajorNumber; // 计算需要调剂的学生人数
+
+                if (excessNumber > 0) { // 需要进行调剂处理
+                    int startIndex = majorIdList.indexOf(majorId); // 获取当前专业在专业列表中的索引位置
+
+                    // 寻找可以调剂到的专业
+                    int toMajor = -1;
+                    for (int i = 0; i < majorIdList.size(); i++) {
+                        int index = (startIndex + i) % majorIdList.size(); // 确保从startIndex开始循环
+                        int id = majorIdList.get(index);
+                        if (id != majorId) {
+                            toMajor = id; // 找到可调剂到的专业
                             break;
                         }
                     }
 
+                    // 修改符合调剂条件的学生的专业信息
+                    int changedCount = 0;
+                    for (Application application : preAdmission) {
+                        if (changedCount >= excessNumber) break; // 已经调剂了足够人数
+                        if (application.getUniversity_id() == adm.getUniversity_id() && application.getDepartment_id() == adm.getDepartment_id() && application.getMajor_id() == majorId) {
+                            application.setMajor_id(toMajor); // 调剂到新的专业
+                            changedCount++;
+                        }
+                    }
                 }
             }
-
         }
-
-
     }
 
+    /**
+     * 更新最终的录取表
+     *
+     * @param preAdmission 预录取表
+     * @throws Exception 如果更新过程中发生错误
+     */
+    private void updateFinalAdmissions(ArrayList<Application> preAdmission) throws Exception {
+        // 获取当前录取表中的记录数，用于生成新的录取ID
+        int currentId = AdmissionService.SelectAll().size();
 
+        // 遍历预录取表中的每条记录，生成最终录取表中的记录，并更新到数据库中
+        for (Application application : preAdmission) {
+            int id = application.getStudent_id();
+            int majorId = application.getMajor_id();
+            int universityId = application.getUniversity_id();
+            int departmentId = application.getDepartment_id();
+
+            // 创建新的录取记录并更新到数据库中
+            Admission admission = new Admission(currentId++, id, universityId, majorId, departmentId);
+            AdmissionService.Update(admission);
+        }
+    }
 }
+
+
+
 
