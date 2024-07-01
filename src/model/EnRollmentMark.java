@@ -10,6 +10,14 @@ public class EnRollmentMark {
     private int DRequiredN;
 
     public EnRollmentMark() {
+        university_id = 0;
+        major_id = 0;
+        department_id = 0;
+        Enrollment_id = 0;
+        RequiredScore = 0;
+        MRequiredN = 0;
+        DRequiredN = 0;
+
     }
 
 

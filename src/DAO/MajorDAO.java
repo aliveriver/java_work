@@ -64,7 +64,6 @@ public class MajorDAO {
             e.printStackTrace();
         }
     }
-
     public model.Major SelectById(int id){
         Major test = new Major();
         try {
@@ -90,7 +89,29 @@ public class MajorDAO {
         System.out.println("Success Select");
         return test;
     }
-
+    public ArrayList<Integer> SelectDepartmentId(int id){
+        ArrayList<Integer> ids = new ArrayList<>();
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT major_id FROM majors WHERE department_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, id);
+            ResultSet Srow = SPStat.executeQuery();
+            if (!Srow.isBeforeFirst()) {
+                System.out.println("Fail to Select");
+                throw new Exception("ID is not found");
+            }
+            Srow.next();
+            ids.add(Srow.getInt("major_id"));
+            SPStat.close();
+            Database.closeConnection();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Success Select");
+        return ids;
+    }
     public ArrayList<Major> SelectAll(){
         ArrayList<Major> test = new ArrayList<Major>();
         try {
