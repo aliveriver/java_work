@@ -138,7 +138,7 @@ public class Menu {
             int majorId = application.getMajor_id();
 
             // 获取录取要求和院系最大录取人数
-            EnRollmentMark enrollmentMark = EnRollmentMarkService.SelectByUDM(universityId, departmentId, majorId);
+            EnRollmentMark enrollmentMark = EnRollmentMarkService.SelectByOther(universityId, departmentId, majorId);
             int requiredScore = enrollmentMark.getRequiredScore();
             int maxDepartmentCount = enrollmentMark.getDRequiredN();
 
@@ -199,7 +199,7 @@ public class Menu {
             // 统计每个专业的人数需求
             Map<Integer, Integer> majorRequirements = new HashMap<>();
             for (Integer majorId : majorIdList) {
-                EnRollmentMark enrollmentMark = EnRollmentMarkService.SelectByUDM(adm.getUniversity_id(), adm.getDepartment_id(), majorId);
+                EnRollmentMark enrollmentMark = EnRollmentMarkService.SelectByOther(adm.getUniversity_id(), adm.getDepartment_id(), majorId);
                 int requiredMajorNumber = enrollmentMark.getMRequiredN(); // 获取专业的最大录取人数
                 majorRequirements.put(majorId, requiredMajorNumber); // 记录专业需求人数
             }
