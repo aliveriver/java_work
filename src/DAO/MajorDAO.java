@@ -5,7 +5,6 @@ import model.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 import java.util.ArrayList;
 
 public class MajorDAO {
@@ -89,7 +88,7 @@ public class MajorDAO {
         System.out.println("Success Select");
         return test;
     }
-    public ArrayList<Integer> SelectDepartmentId(int id){
+    public ArrayList<Integer> SelectByDepartment_id(int id){
         ArrayList<Integer> ids = new ArrayList<>();
         try {
             Database.setConnection();

@@ -102,7 +102,40 @@ public class ApplicationDAO {
         System.out.println("Success Update");
         return test;
     }
-
+    public ArrayList<model.Application> SelectBystudent_id(int id)
+    {
+        ArrayList<Application> temp = new ArrayList<>();
+        try
+        {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM applications WHERE student_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, id);
+            ResultSet Srow = SPStat.executeQuery();
+            if (!Srow.isBeforeFirst()) {
+                System.out.println("Fail to Select");
+                throw new Exception("ID is not found");
+            }
+            while(Srow.next())
+            {
+                Application test = new Application(Srow.getInt("application_id"),
+                        Srow.getInt("student_id"),
+                        Srow.getInt("university_id"),
+                        Srow.getInt("department_id"),
+                        Srow.getInt("major_id"),
+                        Srow.getInt("is_adjustment")
+                );
+                temp.add(test);
+            }
+            SPStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Success Select");
+        return temp;
+    }
     public ArrayList<Application> SelectAll(){
         ArrayList<Application> test = new ArrayList<Application>();
         try {

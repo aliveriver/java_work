@@ -2,6 +2,8 @@ package Service;
 
 import DAO.StudentDAO;
 import model.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.util.ArrayList;
 
@@ -30,5 +32,19 @@ abstract public class StudentService {
 
     public static void DeleteById(int id){
         ss.DeleteById(id);
+    }
+
+    // 批量获取学生信息
+    public static Map<Integer, Student> SelectByIds(ArrayList<Integer> studentsIdList) {
+        Map<Integer, Student> studentsMap = new HashMap<>();
+
+        for (int id : studentsIdList) {
+            Student student = StudentService.SelectById(id); // 使用DAO层方法
+            if (student != null) {
+                studentsMap.put(id, student);
+            }
+        }
+
+        return studentsMap;
     }
 }

@@ -2,6 +2,8 @@ package Service;
 
 import DAO.ApplicationDAO;
 import model.Application;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.util.ArrayList;
 
@@ -26,5 +28,22 @@ abstract public class ApplicationService {
 
     public static void DeleteById(int id){
         as.DeleteById(id);
+    }
+
+    public static ArrayList<Application> SelectBystudent_id(int id){
+        return as.SelectBystudent_id(id);
+    }
+    // 批量获取学生的志愿信息
+    public static Map<Integer, ArrayList<Application>> SelectByStudentIds(ArrayList<Integer> studentsIdList) {
+        Map<Integer, ArrayList<Application>> applicationsMap = new HashMap<>();
+
+        for (int id : studentsIdList) {
+            ArrayList<Application> applications = ApplicationService.SelectBystudent_id(id); // 使用service层的方法
+            if (applications != null) {
+                applicationsMap.put(id, applications);
+            }
+        }
+
+        return applicationsMap;
     }
 }

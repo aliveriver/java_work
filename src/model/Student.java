@@ -71,6 +71,16 @@ public class Student implements Comparable{
     public void setClass_id(int class_id) {
         this.class_id = class_id;
     }
+    public void PresentInfo()
+    {
+        System.out.print("Student_id: "+student_id);
+        System.out.print("Name: "+name);
+        System.out.print("Gender: "+gender);
+        System.out.print("Age: "+age);
+        System.out.print("Score: "+score);
+        System.out.print("Class_id: "+class_id);
+
+    }
 
 
     //重写比较
