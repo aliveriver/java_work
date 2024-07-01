@@ -1,5 +1,6 @@
 package DAO;
 
+import common.Database;
 import model.EnRollmentMark;
 
 import java.sql.Connection;
