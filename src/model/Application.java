@@ -7,12 +7,12 @@ public class Application {
     private int university_id;
     private int department_id;
     private int major_id;
-    private boolean is_adjustment;
+    private int is_adjustment;
 
     public Application() {
     }
 
-    public Application(int application_id, int student_id, int university_id, int department_id, int major_id, boolean is_adjustment) {
+    public Application(int application_id, int student_id, int university_id, int department_id, int major_id, int is_adjustment) {
         this.application_id = application_id;
         this.student_id = student_id;
         this.university_id = university_id;
@@ -61,11 +61,11 @@ public class Application {
         this.major_id = major_id;
     }
 
-    public boolean isIs_adjustment() {
+    public int getIs_adjustment() {
         return is_adjustment;
     }
 
-    public void setIs_adjustment(boolean is_adjustment) {
+    public void setIs_adjustment(int is_adjustment) {
         this.is_adjustment = is_adjustment;
     }
 }
