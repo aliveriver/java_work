@@ -1,23 +1,21 @@
 package DAO;
 
-import model.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 import java.util.ArrayList;
+import model.Department;
 
-public class MajorDAO {
-    public void Create(model.Major m){
+public class DepartmentDAO {
+
+    public void Create(model.Department d){
         try {
-            String sql = "INSERT INTO majors (major_id,department_id,name) VALUES(?,?,?)";
+            String sql = "INSERT INTO departments (department_id,name) VALUES(?,?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
             PreparedStatement PStat = conn.prepareStatement(sql);
-            PStat.setInt(1, m.getMajor_id());
-            PStat.setString(3, m.getName());
-            PStat.setInt(2, m.getDepartment_id());
+            PStat.setInt(1, d.getDepartment_id());
+            PStat.setString(2, d.getName());
 
             int row = PStat.executeUpdate();
             if (row > 0) {
@@ -32,13 +30,13 @@ public class MajorDAO {
         }
     }
 
-    public void Upadte(model.Major m){
+    public void Upadte(model.Department d){
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM majors WHERE major_id = ?";
+            String select_sql = "SELECT * FROM departments WHERE department_id = ?";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
-            SPStat.setInt(1, m.getMajor_id());
+            SPStat.setInt(1, d.getDepartment_id());
             ResultSet Srow = SPStat.executeQuery();
             if (!Srow.isBeforeFirst()) {
                 System.out.println("Fail to Select");
@@ -46,11 +44,11 @@ public class MajorDAO {
             }
             SPStat.close();
 
-            String update_sql = "UPDATE majors set department_id=?,name=? where major_id = ?";
+            String update_sql = "UPDATE departments set name=? where department_id = ?";
             PreparedStatement UPStat = conn.prepareStatement(update_sql);
-            UPStat.setInt(3, m.getMajor_id());
-            UPStat.setString(2, m.getName());
-            UPStat.setInt(1, m.getDepartment_id());
+            UPStat.setInt(2, d.getDepartment_id());
+            UPStat.setString(1, d.getName());
+
 
             int row = UPStat.executeUpdate();
             if (row > 0) {
@@ -65,12 +63,12 @@ public class MajorDAO {
         }
     }
 
-    public model.Major SelectById(int id){
-        Major test = new Major();
+    public model.Department SelectById(int id){
+        Department test = new Department();
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM majors WHERE major_id = ?";
+            String select_sql = "SELECT * FROM departments WHERE department_id = ?";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
             ResultSet Srow = SPStat.executeQuery();
@@ -79,9 +77,8 @@ public class MajorDAO {
                 throw new Exception("ID is not found");
             }
             Srow.next();
-            test.setMajor_id(Srow.getInt("major_id"));
-            test.setName(Srow.getString("name"));
             test.setDepartment_id(Srow.getInt("department_id"));
+            test.setName(Srow.getString("name"));
             SPStat.close();
             Database.closeConnection();
         }catch (Exception e){
@@ -91,12 +88,12 @@ public class MajorDAO {
         return test;
     }
 
-    public ArrayList<Major> SelectAll(){
-        ArrayList<Major> test = new ArrayList<Major>();
+    public ArrayList<Department> SelectAll(){
+        ArrayList<Department> test = new ArrayList<Department>();
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM majors ";
+            String select_sql = "SELECT * FROM departments ";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             ResultSet Srow = SPStat.executeQuery();
             if (!Srow.isBeforeFirst()) {
@@ -104,8 +101,8 @@ public class MajorDAO {
                 throw new Exception("this table is empty");
             }
             while(Srow.next()){
-                Major a = new Major(Srow.getInt("major_id"),
-                        Srow.getInt("department_id"),Srow.getString("name"));
+                Department a = new Department(Srow.getInt("department_id"),
+                        Srow.getString("name"));
                 test.add(a);
             }
             SPStat.close();
@@ -121,7 +118,7 @@ public class MajorDAO {
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM majors WHERE major_id = ?";
+            String select_sql = "SELECT * FROM departments WHERE department_id = ?";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
             ResultSet Srow = SPStat.executeQuery();
@@ -131,7 +128,7 @@ public class MajorDAO {
             }
             SPStat.close();
 
-            String Dsql = "DELETE FROM majors WHERE major_id = ?";
+            String Dsql = "DELETE FROM departments WHERE department_id = ?";
             PreparedStatement DPStat = conn.prepareStatement(Dsql);
             DPStat.setInt(1, id);
             int row = DPStat.executeUpdate();
@@ -145,4 +142,5 @@ public class MajorDAO {
             e.printStackTrace();
         }
     }
+
 }
