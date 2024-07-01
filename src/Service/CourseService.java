@@ -12,8 +12,8 @@ public class CourseService {
         cs.Create(c);
     }
 
-    public static void Upadte(model.Course c){
-        cs.Upadte(c);
+    public static void Update(model.Course c){
+        cs.Update(c);
     }
 
     public static model.Course SelectById(int id){

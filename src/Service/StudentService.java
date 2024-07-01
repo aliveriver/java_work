@@ -12,8 +12,8 @@ abstract public class StudentService {
         ss.Create(s);
     }
 
-    public static void Upadte(model.Student s){
-        ss.Upadte(s);
+    public static void Update(model.Student s){
+        ss.Update(s);
     }
 
     public static model.Student SelectById(int id){

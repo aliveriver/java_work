@@ -40,7 +40,7 @@ public class StudentDAO {
         }
     }
 
-    public void Upadte(model.Student s){
+    public void Update(model.Student s){
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();

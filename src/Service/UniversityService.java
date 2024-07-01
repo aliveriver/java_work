@@ -12,8 +12,8 @@ abstract public class UniversityService {
         ud.Create(u);
     }
 
-    public static void Upadte(model.University u){
-        ud.Upadte(u);
+    public static void Update(model.University u){
+        ud.Update(u);
     }
 
     public static model.University SelectById(int id){

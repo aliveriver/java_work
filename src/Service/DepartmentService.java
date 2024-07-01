@@ -12,8 +12,8 @@ abstract public class DepartmentService {
         ds.Create(d);
     }
 
-    public static void Upadte(model.Department d){
-        ds.Upadte(d);
+    public static void Update(model.Department d){
+        ds.Update(d);
     }
 
     public static model.Department SelectById(int id){

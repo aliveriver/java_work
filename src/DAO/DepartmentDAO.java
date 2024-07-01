@@ -30,7 +30,7 @@ public class DepartmentDAO {
         }
     }
 
-    public void Upadte(model.Department d){
+    public void Update(model.Department d){
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();

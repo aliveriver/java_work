@@ -33,7 +33,7 @@ public class CourseDAO {
         }
     }
 
-    public void Upadte(model.Course c){
+    public void Update(model.Course c){
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();

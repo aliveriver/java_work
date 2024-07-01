@@ -13,8 +13,8 @@ abstract public class MajorService {
         ms.Create(m);
     }
 
-    public static void Upadte(model.Major m){
-        ms.Upadte(m);
+    public static void Update(model.Major m){
+        ms.Update(m);
     }
 
     public static model.Major SelectById(int id){

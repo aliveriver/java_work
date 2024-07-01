@@ -29,7 +29,7 @@ public class UniversityDAO {
         }
     }
 
-    public void Upadte(model.University u){
+    public void Update(model.University u){
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
