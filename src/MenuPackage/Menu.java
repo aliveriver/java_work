@@ -65,7 +65,7 @@ public class Menu {
                     break;
                 case 9:
                     try {
-                        //HandInAllApplications();
+                        HandInAllApplications();
                     }catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
