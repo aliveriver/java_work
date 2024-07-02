@@ -1,5 +1,6 @@
 package DAO;
 
+import common.Database;
 import model.Course;
 
 import java.sql.Connection;

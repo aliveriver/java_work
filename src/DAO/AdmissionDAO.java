@@ -1,5 +1,6 @@
 package DAO;
 
+import common.Database;
 import model.Admission;
 
 import java.sql.Connection;

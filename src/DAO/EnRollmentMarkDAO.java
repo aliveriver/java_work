@@ -1,5 +1,6 @@
 package DAO;
 
+import common.Database;
 import model.EnRollmentMark;
 
 import java.sql.Connection;
@@ -164,6 +165,39 @@ public class EnRollmentMarkDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public model.EnRollmentMark SelectByOther(int university_id,int department_id,int major_id){
+        EnRollmentMark test = new EnRollmentMark();
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM enrollmentmark WHERE university_id=?,department_id=?,major_id=?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, university_id);
+            SPStat.setInt(2, department_id);
+            SPStat.setInt(3, major_id);
+            ResultSet Srow = SPStat.executeQuery();
+            if (!Srow.isBeforeFirst()) {
+                System.out.println("Fail to Select");
+                throw new Exception("ID is not found");
+            }
+            Srow.next();
+            test.setEnrollment_id(Srow.getInt("Enrollment_id"));
+            test.setUniversity_id(Srow.getInt("university_id"));
+            test.setDepartment_id(Srow.getInt("department_id"));
+            test.setMajor_id(Srow.getInt("major_id"));
+            test.setRequiredScore(Srow.getInt("RequiredScore"));
+            test.setMRequiredN(Srow.getInt("MRequiredN"));
+            test.setDRequiredN(Srow.getInt("DRequiredN"));
+
+            SPStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Success Select");
+        return test;
     }
 
 }

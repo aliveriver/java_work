@@ -1,7 +1,7 @@
 package DAO;
 
+import common.Database;
 import model.Student;
-import model.University;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -27,4 +27,8 @@ abstract public class EnRollmentMarkService {
     public static void DeleteById(int id){
         es.DeleteById(id);
     }
+
+    public static model.EnRollmentMark SelectByOther(int university_id,int department_id,int major_id){
+        return es.SelectByOther(university_id,department_id,major_id);
+    }
 }
