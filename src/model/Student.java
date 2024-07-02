@@ -78,7 +78,7 @@ public class Student implements Comparable{
         System.out.print("Gender: "+gender);
         System.out.print("Age: "+age);
         System.out.print("Score: "+score);
-        System.out.print("Class_id: "+class_id);
+        System.out.println("Class_id: "+class_id);
 
     }
 

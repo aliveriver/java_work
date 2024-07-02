@@ -2,6 +2,7 @@ package Service;
 
 import DAO.EnRollmentMarkDAO;
 import model.EnRollmentMark;
+import model.Major;
 
 import java.util.ArrayList;
 
@@ -30,5 +31,9 @@ abstract public class EnRollmentMarkService {
 
     public static model.EnRollmentMark SelectByOther(int university_id,int department_id,int major_id){
         return es.SelectByOther(university_id,department_id,major_id);
+    }
+
+    public static ArrayList<Major> SelectMajorByUniversity(int university_id){
+        return es.SelectMajorByUniversity(university_id);
     }
 }

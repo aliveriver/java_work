@@ -7,6 +7,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static java.lang.Thread.sleep;
+
 public class Menu {
     public void MenuStart() {
         boolean left = true;
@@ -21,7 +23,7 @@ public class Menu {
             System.out.println("6. 查看所有大学");//查看universities
             System.out.println("7. 查看大学下的所有专业");//查看 universities~major
             System.out.println("8. 查看大学所有录取的学生");//universities~admissions/
-            System.out.println("9. 提交所有志愿");
+            System.out.println("9. 分配志愿");
             System.out.println("10. 退出系统");
             System.out.print("请选择: ");
             Scanner sc = new Scanner(System.in);
@@ -42,16 +44,36 @@ public class Menu {
                     FindAllUniversities();
                     break;
                 case 7:
+                    System.out.println("请输入要查找大学的id: ");
+                    int i = sc.nextInt();
+                    ArrayList<Major> re= EnRollmentMarkService.SelectMajorByUniversity(i);
+                    for(int j=0;j<re.size();j++)
+                    {
+                        System.out.println(re.get(j).getMajor_id()+" "+re.get(j).getDepartment_id()+" "+re.get(j).getName());
+                    }
+                    try{sleep(3);}catch (Exception e){e.printStackTrace();}
                     break;
                 case 8:
+                    System.out.println("请输入要查找大学的id: ");
+                    int t = sc.nextInt();
+                    ArrayList<Student> r= AdmissionService.SelectStudentByUniversity(t);
+                    for(int j=0;j<r.size();j++)
+                    {
+                        System.out.println(r.get(j).getStudent_id()+" "+r.get(j).getName()+" "+r.get(j).getGender()+" "+
+                        r.get(j).getAge()+" "+r.get(j).getScore()+" "+r.get(j).getClass_id());
+                    }
+                    try{sleep(3);}catch (Exception e){e.printStackTrace();}
                     break;
                 case 9:
                     try {
-                        //HandInAllApplications();
+                        HandInAllApplications();
                     }catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
 
+                    break;
+                case 10:
+                    left = false;
                     break;
                 default:
                     break;

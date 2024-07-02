@@ -2,6 +2,7 @@ package DAO;
 
 import common.Database;
 import model.EnRollmentMark;
+import model.Major;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -198,6 +199,35 @@ public class EnRollmentMarkDAO {
         }
         System.out.println("Success Select");
         return test;
+    }
+
+    public ArrayList<Major> SelectMajorByUniversity(int university_id){
+        ArrayList<Major> result = new ArrayList<Major>();
+        try{
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM enrollmentmark join majors on majors.major_id = enrollmentmark.major_id WHERE enrollmentmark.university_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, university_id);
+            ResultSet Srow = SPStat.executeQuery();
+            if (!Srow.isBeforeFirst()) {
+                System.out.println("Fail to Select");
+                throw new Exception("ID is not found");
+            }
+            while(Srow.next()){
+                Major a = new Major(Srow.getInt("major_id"),
+                        Srow.getInt("department_id"),
+                        Srow.getString("name")
+                );
+                result.add(a);
+            }
+            SPStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Success Select");
+        return result;
     }
 
 }
