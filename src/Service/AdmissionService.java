@@ -2,6 +2,7 @@ package Service;
 
 import DAO.AdmissionDAO;
 import model.Admission;
+import model.Student;
 
 import java.util.ArrayList;
 
@@ -26,5 +27,9 @@ abstract public class AdmissionService {
 
     public static void DeleteById(int id){
         as.DeleteById(id);
+    }
+
+    public static ArrayList<Student> SelectStudentByUniversity(int university_id){
+        return as.SelectStudentByUniversity(university_id);
     }
 }

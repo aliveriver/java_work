@@ -53,6 +53,15 @@ public class Menu {
                     try{sleep(3);}catch (Exception e){e.printStackTrace();}
                     break;
                 case 8:
+                    System.out.println("请输入要查找大学的id: ");
+                    int t = sc.nextInt();
+                    ArrayList<Student> r= AdmissionService.SelectStudentByUniversity(t);
+                    for(int j=0;j<r.size();j++)
+                    {
+                        System.out.println(r.get(j).getStudent_id()+" "+r.get(j).getName()+" "+r.get(j).getGender()+" "+
+                        r.get(j).getAge()+" "+r.get(j).getScore()+" "+r.get(j).getClass_id());
+                    }
+                    try{sleep(3);}catch (Exception e){e.printStackTrace();}
                     break;
                 case 9:
                     try {

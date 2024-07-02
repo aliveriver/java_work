@@ -2,6 +2,7 @@ package DAO;
 
 import common.Database;
 import model.Admission;
+import model.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -157,5 +158,37 @@ public class AdmissionDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Student> SelectStudentByUniversity(int university_id){
+        ArrayList<Student> result = new ArrayList<Student>();
+        try{
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM admissions join students on students.student_id = admissions.student_id WHERE admissions.university_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, university_id);
+            ResultSet Srow = SPStat.executeQuery();
+            if (!Srow.isBeforeFirst()) {
+                System.out.println("Fail to Select");
+                throw new Exception("ID is not found");
+            }
+            while(Srow.next()){
+                Student a = new Student(Srow.getInt("student_id"),
+                        Srow.getString("name"),
+                        Srow.getString("gender"),
+                        Srow.getInt("age"),
+                        Srow.getInt("score"),
+                        Srow.getInt("class_id")
+                );
+                result.add(a);
+            }
+            SPStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Success Select");
+        return result;
     }
 }
