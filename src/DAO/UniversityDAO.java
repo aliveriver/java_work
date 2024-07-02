@@ -2,6 +2,7 @@ package DAO;
 
 import common.Database;
 import model.University;
+import model.Major;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -139,4 +140,5 @@ public class UniversityDAO {
             e.printStackTrace();
         }
     }
+
 }
