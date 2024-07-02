@@ -72,7 +72,7 @@ CREATE TABLE applications (
 );
 CREATE TABLE admissions (
     --录取表
-    admission_id INT PRIMARY KEY,
+    admission_id serial  PRIMARY KEY,
     student_id INT NOT NULL,
     university_id INT NOT NULL,
     department_id INT NOT NULL,
@@ -104,4 +104,4 @@ SELECT * FROM students;
 SELECT * FROM  applications;
 SELECT * FROM  admissions;
 SELECT * FROM  Courses;
-SELECT * FROM EnrollmentMark;
+SELECT * FROM EnrollmentMark where department_id =1 and major_id = 1;

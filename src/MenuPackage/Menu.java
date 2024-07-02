@@ -160,7 +160,8 @@ public class Menu {
             int majorId = application.getMajor_id();
 
             // 获取录取要求和院系最大录取人数
-            EnRollmentMark enrollmentMark = EnRollmentMarkService.SelectByOther(universityId, departmentId, majorId);
+            EnRollmentMark enrollmentMark = new EnRollmentMark();
+             enrollmentMark = EnRollmentMarkService.SelectByOther(universityId, departmentId, majorId);
             int requiredScore = enrollmentMark.getRequiredScore();
             int maxDepartmentCount = enrollmentMark.getDRequiredN();
 
@@ -216,7 +217,9 @@ public class Menu {
             adm.SortStudentDependsOnScore(); // 根据学生分数对注册表中的学生进行降序排序
 
             // 获取该院系的所有专业列表
-            ArrayList<Integer> majorIdList = MajorService.SelectByDepartment_id(adm.getDepartment_id());//基于院系信息得到专业表
+            int temp = adm.getDepartment_id();//获取院系id
+            ArrayList<Integer> majorIdList = MajorService.SelectByDepartment_id(temp);//基于院系信息得到专业表
+            ArrayList<Student> Students = adm.getSlist();
 
             // 统计每个专业的人数需求
             Map<Integer, Integer> majorRequirements = new HashMap<>();
@@ -234,10 +237,16 @@ public class Menu {
                     majorCount.put(majorId, majorCount.getOrDefault(majorId, 0) + 1); // 统计专业当前人数
                 }
             }
+            //初始化marjor_count 遍历
+            for (Integer majorId : majorIdList) {
+                if(majorCount.containsKey(majorId)) continue;
+                else majorCount.put(majorId,0);
+            }
+
 
             // 遍历每个专业的人数统计，进行调剂处理
             for (Map.Entry<Integer, Integer> entry : majorCount.entrySet()) {
-                int majorId = entry.getKey();
+                int majorId = entry.getKey();// 1
                 int number = entry.getValue(); // 当前专业的学生人数
                 int requiredMajorNumber = majorRequirements.get(majorId); // 获取专业的需求人数
                 int excessNumber = number - requiredMajorNumber; // 计算需要调剂的学生人数
@@ -247,9 +256,9 @@ public class Menu {
 
                     // 寻找可以调剂到的专业
                     int toMajor = -1;
-                    for (int i = 0; i < majorIdList.size(); i++) {
-                        int index = (startIndex + i) % majorIdList.size(); // 确保从startIndex开始循环
-                        int id = majorIdList.get(index);
+                    for (int i = startIndex+1; i < majorIdList.size(); i++) {
+//                        int index = startIndex + i; // 确保从startIndex开始循环
+                        int id = majorIdList.get(i);
                         if (id != majorId) {
                             toMajor = id; // 找到可调剂到的专业
                             break;
@@ -258,18 +267,27 @@ public class Menu {
 
                     // 修改符合调剂条件的学生的专业信息
                     int changedCount = 0;
-                    for (Application application : preAdmission) {
-                        if (changedCount >= excessNumber) break; // 已经调剂了足够人数
-                        if (application.getUniversity_id() == adm.getUniversity_id() && application.getDepartment_id() == adm.getDepartment_id() && application.getMajor_id() == majorId) {
-                            application.setMajor_id(toMajor); // 调剂到新的专业
-                            changedCount++;
+                    while(changedCount != excessNumber)
+                    {
+                        for (Application application : preAdmission) {
+                            if (application.getStudent_id() == Students.get(Students.size()-excessNumber).getStudent_id()){
+                                application.setMajor_id(toMajor); // 调剂到新的专业 找到后记得及时退出
+                                excessNumber--;//超的人数
+                                //修改
+                                majorCount.put(majorId,majorCount.get(majorId)-1);
+                                majorCount.put(toMajor,majorCount.get(toMajor)+1);
+                                break;
+                            }
                         }
                     }
+
                 }
             }
         }
     }
-
+//application.getUniversity_id() == adm.getUniversity_id() &&
+//        application.getDepartment_id() == adm.getDepartment_id() &&
+//        application.getMajor_id() == majorId &&
     /**
      * 更新最终的录取表
      *
@@ -278,7 +296,6 @@ public class Menu {
      */
     private void updateFinalAdmissions(ArrayList<Application> preAdmission) throws Exception {
         // 获取当前录取表中的记录数，用于生成新的录取ID
-        int currentId = AdmissionService.SelectAll().size();
 
         // 遍历预录取表中的每条记录，生成最终录取表中的记录，并更新到数据库中
         for (Application application : preAdmission) {
@@ -288,8 +305,8 @@ public class Menu {
             int departmentId = application.getDepartment_id();
 
             // 创建新的录取记录并更新到数据库中
-            Admission admission = new Admission(currentId++, id, universityId, majorId, departmentId);
-            AdmissionService.Update(admission);
+            Admission admission = new Admission(0, id, universityId, majorId, departmentId);
+            AdmissionService.Create(admission);
         }
     }
 }

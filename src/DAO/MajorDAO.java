@@ -102,8 +102,10 @@ public class MajorDAO {
                 System.out.println("Fail to Select");
                 throw new Exception("ID is not found");
             }
-            Srow.next();
-            ids.add(Srow.getInt("major_id"));
+            while(Srow.next())
+            {
+                ids.add(Srow.getInt("major_id"));
+            }
             SPStat.close();
             Database.closeConnection();
         }catch(Exception e) {

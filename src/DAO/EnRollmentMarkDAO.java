@@ -173,7 +173,7 @@ public class EnRollmentMarkDAO {
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM enrollmentmark WHERE university_id=?,department_id=?,major_id=?";
+            String select_sql = "SELECT * FROM enrollmentmark WHERE university_id=? and department_id=? and major_id=?";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, university_id);
             SPStat.setInt(2, department_id);

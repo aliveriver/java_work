@@ -12,15 +12,14 @@ import java.util.ArrayList;
 public class AdmissionDAO {
     public void Create(model.Admission a){
         try {
-            String sql = "INSERT INTO admissions (admission_id,student_id,university_id,department_id,major_id) VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO admissions (student_id,university_id,department_id,major_id) VALUES(?,?,?,?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
             PreparedStatement PStat = conn.prepareStatement(sql);
-            PStat.setInt(1, a.getAdmission_id());
-            PStat.setInt(2, a.getStudent_id());
-            PStat.setInt(3, a.getUniversity_id());
-            PStat.setInt(4, a.getDepartment_id());
-            PStat.setInt(5, a.getMajor_id());
+            PStat.setInt(1, a.getStudent_id());
+            PStat.setInt(2, a.getUniversity_id());
+            PStat.setInt(3, a.getDepartment_id());
+            PStat.setInt(4, a.getMajor_id());
 
 
             int row = PStat.executeUpdate();
