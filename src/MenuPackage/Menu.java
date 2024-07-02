@@ -52,6 +52,8 @@ public class Menu {
                     }
 
                     break;
+                case 10:
+                    left = false;
                 default:
                     break;
             }
