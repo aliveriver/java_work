@@ -2,10 +2,8 @@ package MenuPackage;
 
 import Service.*;
 import model.*;
-import java.util.HashMap; // 引入 HashMap 类
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Map;
+
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -109,12 +107,25 @@ public class Menu {
 
     public void HandInAllApplications() throws Exception {
         // 获取所有学生的ID列表
-        ArrayList<Integer> studentsIdList = StudentService.SelectAllId();
+        //ArrayList<Integer> studentsIdList = StudentService.SelectAllId();
+        ArrayList<Integer> studentsIdList = new ArrayList<>();
 
+        //把学生从大到小排序
+        ArrayList<Student> studentstemp = StudentService.SelectAll();//获取所有学生
         // 检查学生ID列表是否为空，如果为空则抛出异常
-        if (studentsIdList.isEmpty()) {
+        if (studentstemp.isEmpty()) {
             throw new Exception("学生表中没有学生记录");
         }
+
+        Collections.sort(studentstemp);//从大到小排学生
+
+        for(Student student : studentstemp)
+        {
+            studentsIdList.add(student.getStudent_id());
+        }
+
+        // 检查学生ID列表是否为空，如果为空则抛出异常
+
 
         // 批量获取学生信息和志愿信息
         Map<Integer, Student> studentsMap = StudentService.SelectByIds(studentsIdList); //前面的Integer都是学生id
@@ -187,6 +198,7 @@ public class Menu {
                 for (AdmS adm : adSituation) {
                     if (universityId == adm.getUniversity_id() && departmentId == adm.getDepartment_id()) {
                         departmentFound = true;
+
                         if (adm.getDcount() < maxDepartmentCount) {
                             adm.AddStudent(student); // 添加学生到院系注册表中
                             adm.setDcount(adm.getDcount() + 1); // 院系人数加1
