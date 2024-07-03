@@ -16,7 +16,7 @@ public class Menu {
         while (left) {
             System.out.println("欢迎来到“模拟志愿填报系统”");
             System.out.println("1. 学生填报志愿");//增加application
-            System.out.println("2. 查看学生志愿录取情况");//查看admision
+            System.out.println("2. 查看学生志愿录取情况");//查看admission
             System.out.println("3. 查看学生分班情况");//查看classroom
             System.out.println("4. 查看学生专业情况");//查看major
             System.out.println("5. 查看学生专业课程");//查看courses
@@ -32,6 +32,7 @@ public class Menu {
                 case 1:
                     break;
                 case 2:
+                    ViewStudentAdmissions();
                     break;
                 case 3:
                     break;
@@ -80,6 +81,20 @@ public class Menu {
         System.out.println("欢迎下次使用志愿填报系统")  ;
 
     }
+
+    public void ViewStudentAdmissions() {
+        ArrayList<Admission> admissions = AdmissionService.SelectAll();
+
+        for (Admission admission : admissions) {
+            System.out.print("录取ID: " + admission.getAdmission_id() + " ");
+            System.out.print("学生ID: " + admission.getStudent_id() + " ");
+            System.out.print("大学ID: " + admission.getUniversity_id() + " ");
+            System.out.print("院系ID: " + admission.getDepartment_id() + " ");
+            System.out.println("专业ID: " + admission.getMajor_id());
+        }
+    }
+
+
 
     public void FindAllUniversities() {
         ArrayList<University> temp = new ArrayList<University>();
