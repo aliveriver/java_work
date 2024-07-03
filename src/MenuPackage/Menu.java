@@ -69,15 +69,15 @@ public class Menu {
                     }catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
-
                     break;
                 case 10:
-                    left = false;
+                    left = false;//离开志愿填报系统
                     break;
                 default:
                     break;
             }
         }
+        System.out.println("欢迎下次使用志愿填报系统")  ;
 
     }
 
