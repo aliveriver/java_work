@@ -16,8 +16,8 @@ import java.util.*;
 //            System.out.println("10. 退出系统");
 import static java.lang.Thread.sleep;
 
-public class Menu {
-    public void MenuStart() {
+abstract public class Menu {
+    public static void  MenuStart() {
         boolean left = true;
         //菜单栏
         while (left) {
@@ -59,7 +59,7 @@ public class Menu {
 
     }
 
-    public void ViewStudentAdmissions() {
+    public static void ViewStudentAdmissions() {
         ArrayList<Admission> admissions = AdmissionService.SelectAll();
 
         for (Admission admission : admissions) {

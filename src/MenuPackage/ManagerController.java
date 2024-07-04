@@ -276,9 +276,6 @@ abstract public class ManagerController {
             }
         }
     }
-//application.getUniversity_id() == adm.getUniversity_id() &&
-//        application.getDepartment_id() == adm.getDepartment_id() &&
-//        application.getMajor_id() == majorId &&
     /**
      * 更新最终的录取表
      *
