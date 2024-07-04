@@ -1,16 +1,31 @@
 package common;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
+
 //抽象类
-abstract public class Database { //数据库初始化
-    private static final String url = "jdbc:mysql://localhost:3306/java_work?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai";
-    private static final String username = "root";
-    private static final String password = "123456";
+abstract public class Database { // 数据库初始化
+    private static String url = "";
+    private static String username = "";
+    private static String password = "";
+    private static String driver = "";
     private static Connection conn;
 
     public static void setConnection()throws Exception{
-        Class.forName("com.mysql.jdbc.Driver");
+        FileInputStream fis = new FileInputStream("src/common/MySQL_config.properties");
+        Properties pro = new Properties();
+        pro.load(fis);
+        fis.close();
+        driver = pro.getProperty("driver");
+        username = pro.getProperty("user");
+        password = pro.getProperty("password");
+        url = pro.getProperty("url")+"/"+pro.getProperty("name");
+        if(driver.contains("mysql")){
+            url = url + "?" + pro.getProperty("serverTimezone");
+        }
+        Class.forName(driver);
         conn = DriverManager.getConnection(url,username,password);
     }
 
