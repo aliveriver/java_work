@@ -13,8 +13,8 @@ abstract public class Database { // 数据库初始化
     private static String driver = "";
     private static Connection conn;
 
-    public static void setConnection()throws Exception{
-        FileInputStream fis = new FileInputStream("src/common/MySQL_config.properties");//根据数据库不同
+    public static void databaseconfig()throws Exception{
+        FileInputStream fis = new FileInputStream("src/common/MySQL_config.properties");//根据数据库不同更改这个
         Properties pro = new Properties();
         pro.load(fis);
         fis.close();
@@ -25,6 +25,9 @@ abstract public class Database { // 数据库初始化
         if(driver.contains("mysql")){
             url = url + "?" + pro.getProperty("serverTimezone");
         }
+    }
+
+    public static void setConnection()throws Exception{
         Class.forName(driver);
         conn = DriverManager.getConnection(url,username,password);
     }
