@@ -14,7 +14,7 @@ abstract public class Database { // 数据库初始化
     private static Connection conn;
 
     public static void setConnection()throws Exception{
-        FileInputStream fis = new FileInputStream("src/common/MySQL_config.properties");
+        FileInputStream fis = new FileInputStream("src/common/MySQL_config.properties");//根据数据库不同
         Properties pro = new Properties();
         pro.load(fis);
         fis.close();
