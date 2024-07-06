@@ -33,7 +33,7 @@ abstract public class ApplicationService {
     public static ArrayList<Application> SelectBystudent_id(int id){
         return as.SelectBystudent_id(id);
     }
-    // 批量获取学生的志愿信息
+    // 批量获取学生的志愿信息ApplicationService.java
     public static Map<Integer, ArrayList<Application>> SelectByStudentIds(ArrayList<Integer> studentsIdList) {
         Map<Integer, ArrayList<Application>> applicationsMap = new HashMap<>();
 
