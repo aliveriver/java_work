@@ -1,4 +1,7 @@
 package MenuPackage;
 
-public class ViewAdmissions {
+abstract public class ViewAdmissions {
+    public static void ViewAdmissionsMenu(){
+
+    }
 }

@@ -39,7 +39,7 @@ abstract public class Menu {
                     ApplicationControler.ApplicationControler();//进入志愿填报管理系统
                     break;
                 case 3:
-                    ViewStudentAdmissions();// 需要重改
+                    ViewAdmissions.ViewAdmissionsMenu();// 需要重改
                     break;
                 case 4:
                     UniversityController.UniversityControllerMenu();//进入大学管理的Menu
