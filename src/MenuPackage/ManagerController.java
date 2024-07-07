@@ -20,11 +20,11 @@ abstract public class ManagerController {
         boolean left = true;
         while(left)
         {
-            System.out.println("1. 分配志愿信息");
-            System.out.println("2. 分配班级信息");
-            System.out.println("3. 添加大学信息");
-            System.out.println("4. 添加专业信息");//admission 表格
-            System.out.println("5. 查看所有的录取信息");
+            System.out.println("1. 分配志愿信息");//先录取
+            System.out.println("2. 分配班级");//后分班
+            System.out.println("3. 添加大学信息");//id name location
+            System.out.println("4. 添加专业信息");//admission 表格（这个注释什么意思？没明白），默认不同大学里的相同专业内容相同（后面这句话我自己写的）
+            System.out.println("5. 查看所有的录取信息");//所有学生的录取信息
             System.out.println("6. 返回主菜单");
             System.out.print("请选择");
             int Choice = 0;
@@ -38,11 +38,13 @@ abstract public class ManagerController {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 2:
+                case 2://这个还没写，怎么分班？？？？？？？？？？？？？
                     break;
                 case 3:
+                    CreateUniversity();
                     break;
                 case 4:
+                    CreateMajor();
                     break;
                 case 5:
                     ViewAllStudentAdmissions();
@@ -297,5 +299,40 @@ abstract public class ManagerController {
             Admission admission = new Admission(0, id, universityId, majorId, departmentId);
             AdmissionService.Create(admission);
         }
+    }
+    /**
+     * 创建大学信息
+     */
+    private static void CreateUniversity() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("请输入大学ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline left-over
+        System.out.print("请输入大学名称: ");
+        String name = scanner.nextLine();
+        System.out.print("请输入大学地域位置: ");
+        String location = scanner.nextLine();
+
+        University university = new University(id, name, location);
+        UniversityService.Create(university);
+
+        System.out.println("大学信息添加成功!");
+    }
+
+    private static void CreateMajor() {//新增专业信息
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("请输入专业ID: ");
+        int major_id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline left-over
+        System.out.print("请输入院系ID（外码，若为空则为0）: ");
+        int department_id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline left-over
+        System.out.print("请输入专业名称: ");
+        String name = scanner.nextLine();
+
+        Major major = new Major(major_id, department_id, name);
+        MajorService.Create(major);
+
+        System.out.println("专业信息添加成功!");
     }
 }
