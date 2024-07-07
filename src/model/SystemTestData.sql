@@ -12,141 +12,141 @@
 
 
 
-INSERT INTO universities (university_id, name, location) VALUES
-(1, 'Peking University', 'Beijing'),
-(2, 'Tsinghua University', 'Beijing'),
-(3, 'Fudan University', 'Shanghai'),
-(4, 'Zhejiang University', 'Hangzhou'),
-(5, 'Shanghai Jiao Tong University', 'Shanghai'),
-(6, 'University of Science and Technology of China', 'Hefei'),
-(7, 'Nanjing University', 'Nanjing'),
-(8, 'Wuhan University', 'Wuhan'),
-(9, 'Sun Yat-sen University', 'Guangzhou'),
-(10, 'Harbin Institute of Technology', 'Harbin');
+INSERT INTO universities ( name, location) VALUES
+('Peking University', 'Beijing'),
+( 'Tsinghua University', 'Beijing'),
+( 'Fudan University', 'Shanghai'),
+( 'Zhejiang University', 'Hangzhou'),
+( 'Shanghai Jiao Tong University', 'Shanghai'),
+( 'University of Science and Technology of China', 'Hefei'),
+( 'Nanjing University', 'Nanjing'),
+( 'Wuhan University', 'Wuhan'),
+( 'Sun Yat-sen University', 'Guangzhou'),
+( 'Harbin Institute of Technology', 'Harbin');
 
 
 -- 插入数据到 departments 表
-INSERT INTO departments (department_id, name) VALUES
-(1, 'Institute of Economics and Management'),
-(2, 'Institute of Architecture and Art'),
-(3, 'Institute of Marxism'),
-(4,  'Institute of foreign languages'),
-(5,  'Institute of Physics'),
-(6,  'Institute of Chemistry'),
-(7, 'Institute of Mathmematics'),
-(8, 'Institute of Physical Education and Health'),
-(9, 'Institute of Environmental Science'),
-(10,'Institute of Business Administration');
+INSERT INTO departments ( name) VALUES
+('Institute of Economics and Management'),
+( 'Institute of Architecture and Art'),
+( 'Institute of Marxism'),
+(  'Institute of foreign languages'),
+(  'Institute of Physics'),
+(  'Institute of Chemistry'),
+( 'Institute of Mathmematics'),
+( 'Institute of Physical Education and Health'),
+( 'Institute of Environmental Science'),
+('Institute of Business Administration');
 
 -- 插入数据到 majors 表
 -- Institute of Economics and Management  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(1, 1, 'Finance'),  
-(2, 1, 'Economics'),  
-(3, 1, 'International Business');
+INSERT INTO majors ( department_id, name) VALUES  
+( 1, 'Finance'),  
+(1, 'Economics'),  
+( 1, 'International Business');
   
 -- Institute of Architecture and Art  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(4, 2, 'Architecture'),  
-(5, 2, 'Interior Design'),  
-(6, 2, 'Visual Arts'); 
+INSERT INTO majors ( department_id, name) VALUES  
+( 2, 'Architecture'),  
+( 2, 'Interior Design'),  
+( 2, 'Visual Arts'); 
   
 -- Institute of Marxism  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(7, 3, 'Marxist Theory'),  
-(8, 3, 'Political Economy'),  
-(9, 3, 'Philosophy of Social Sciences'); 
+INSERT INTO majors ( department_id, name) VALUES  
+( 3, 'Marxist Theory'),  
+( 3, 'Political Economy'),  
+( 3, 'Philosophy of Social Sciences'); 
   
 -- Institute of foreign languages  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(10, 4, 'English Language and Literature'),  
-(11, 4, 'Spanish Language and Culture'),  
-(12, 4, 'Chinese Language and Literature');  
+INSERT INTO majors ( department_id, name) VALUES  
+( 4, 'English Language and Literature'),  
+( 4, 'Spanish Language and Culture'),  
+( 4, 'Chinese Language and Literature');  
   
 -- Institute of Physics  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(13, 5, 'Physics'),  
-(14, 5, 'Astrophysics'),  
-(15, 5, 'Quantum Physics');
+INSERT INTO majors ( department_id, name) VALUES  
+( 5, 'Physics'),  
+( 5, 'Astrophysics'),  
+( 5, 'Quantum Physics');
   
 -- Institute of Chemistry  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(16, 6, 'Chemistry'),  
-(17, 6, 'Organic Chemistry'),  
-(18, 6, 'Analytical Chemistry');
+INSERT INTO majors ( department_id, name) VALUES  
+( 6, 'Chemistry'),  
+( 6, 'Organic Chemistry'),  
+( 6, 'Analytical Chemistry');
   
 -- Institute of Mathematics  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(19, 7, 'Mathematics'),  
-(20, 7, 'Applied Mathematics'),  
-(21, 7, 'Statistics');
+INSERT INTO majors ( department_id, name) VALUES  
+( 7, 'Mathematics'),  
+( 7, 'Applied Mathematics'),  
+( 7, 'Statistics');
   
 -- Institute of Physical Education and Health  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(22, 8, 'Physical Education'),  
-(23, 8, 'Sports Science'),  
-(24, 8, 'Health Education'); 
+INSERT INTO majors ( department_id, name) VALUES  
+( 8, 'Physical Education'),  
+( 8, 'Sports Science'),  
+( 8, 'Health Education'); 
   
 -- Institute of Environmental Science  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(25, 9, 'Environmental Science'),  
-(26, 9, 'Sustainability Studies'),  
-(27, 9, 'Environmental Engineering');
+INSERT INTO majors (department_id, name) VALUES  
+( 9, 'Environmental Science'),  
+( 9, 'Sustainability Studies'),  
+( 9, 'Environmental Engineering');
   
 
 -- Institute of Business Administration  
-INSERT INTO majors (major_id, department_id, name) VALUES  
-(28, 10, 'Business Administration'),  
-(29, 10, 'Marketing'),  
-(30, 10, 'Human Resource Management');
+INSERT INTO majors ( department_id, name) VALUES  
+( 10, 'Business Administration'),  
+( 10, 'Marketing'),  
+( 10, 'Human Resource Management');
 
 
 
 --插入课程
-INSERT INTO Courses (Courses_id, major_id, department_id, Course_name) VALUES
-(1, 1, 1, 'Advanced Corporate Finance'), -- Finance
-(2, 2, 1, 'Macroeconomic Theory'), -- Economics
-(3, 3, 1, 'Global Business Strategy'), -- International Business
-(4, 4, 2, 'Architectural Design Studio'), -- Architecture
-(5, 5, 2, 'Interior Design Principles'), -- Interior Design
-(6, 6, 2, 'Visual Arts Workshop'), -- Visual Arts
-(7, 7, 3, 'Marxist Political Thought'), -- Marxist Theory
-(8, 8, 3, 'Economic Determinism'), -- Political Economy
-(9, 9, 3, 'Philosophy of Social Change'), -- Philosophy of Social Sciences
-(10, 10, 4, 'Literary Analysis and Criticism'), -- English Language and Literature
-(11, 11, 4, 'Spanish Conversation and Composition'), -- Spanish Language and Culture
-(12, 12, 4, 'Classical Chinese Literature'), -- Chinese Language and Literature
-(13, 13, 5, 'Classical Mechanics'), -- Physics
-(14, 14, 5, 'Stellar Astrophysics'), -- Astrophysics
-(15, 15, 5, 'Introduction to Quantum Mechanics'), -- Quantum Physics
-(16, 16, 6, 'Inorganic Chemistry'), -- Chemistry
-(17, 17, 6, 'Introduction to Organic Synthesis'), -- Organic Chemistry
-(18, 18, 6, 'Analytical Techniques in Chemistry'), -- Analytical Chemistry
-(19, 19, 7, 'Linear Algebra'), -- Mathematics
-(20, 20, 7, 'Numerical Methods in Applied Mathematics'), -- Applied Mathematics
-(21, 21, 7, 'Statistical Modeling'), -- Statistics
-(22, 22, 8, 'Physical Fitness and Conditioning'), -- Physical Education
-(23, 23, 8, 'Sports Nutrition and Dietetics'), -- Sports Science
-(24, 24, 8, 'Health Promotion and Wellness'), -- Health Education
-(25, 25, 9, 'Environmental Policy and Management'), -- Environmental Science
-(26, 26, 9, 'Sustainable Development Practices'), -- Sustainability Studies
-(27, 27, 9, 'Environmental Impact Assessment'), -- Environmental Engineering
-(28, 28, 10, 'Strategic Management'), -- Business Administration
-(29, 29, 10, 'Consumer Behavior and Marketing Strategy'), -- Marketing
-(30, 30, 10, 'Human Resource Planning and Development'); -- Human Resource Management
+INSERT INTO Courses (major_id, department_id, Course_name) VALUES
+(1, 1, 'Advanced Corporate Finance'), -- Finance
+( 2, 1, 'Macroeconomic Theory'), -- Economics
+( 3, 1, 'Global Business Strategy'), -- International Business
+( 4, 2, 'Architectural Design Studio'), -- Architecture
+(5, 2, 'Interior Design Principles'), -- Interior Design
+( 6, 2, 'Visual Arts Workshop'), -- Visual Arts
+( 7, 3, 'Marxist Political Thought'), -- Marxist Theory
+( 8, 3, 'Economic Determinism'), -- Political Economy
+( 9, 3, 'Philosophy of Social Change'), -- Philosophy of Social Sciences
+( 10, 4, 'Literary Analysis and Criticism'), -- English Language and Literature
+( 11, 4, 'Spanish Conversation and Composition'), -- Spanish Language and Culture
+( 12, 4, 'Classical Chinese Literature'), -- Chinese Language and Literature
+( 13, 5, 'Classical Mechanics'), -- Physics
+( 14, 5, 'Stellar Astrophysics'), -- Astrophysics
+( 15, 5, 'Introduction to Quantum Mechanics'), -- Quantum Physics
+( 16, 6, 'Inorganic Chemistry'), -- Chemistry
+( 17, 6, 'Introduction to Organic Synthesis'), -- Organic Chemistry
+( 18, 6, 'Analytical Techniques in Chemistry'), -- Analytical Chemistry
+( 19, 7, 'Linear Algebra'), -- Mathematics
+( 20, 7, 'Numerical Methods in Applied Mathematics'), -- Applied Mathematics
+( 21, 7, 'Statistical Modeling'), -- Statistics
+( 22, 8, 'Physical Fitness and Conditioning'), -- Physical Education
+( 23, 8, 'Sports Nutrition and Dietetics'), -- Sports Science
+( 24, 8, 'Health Promotion and Wellness'), -- Health Education
+( 25, 9, 'Environmental Policy and Management'), -- Environmental Science
+( 26, 9, 'Sustainable Development Practices'), -- Sustainability Studies
+( 27, 9, 'Environmental Impact Assessment'), -- Environmental Engineering
+( 28, 10, 'Strategic Management'), -- Business Administration
+(29, 10, 'Consumer Behavior and Marketing Strategy'), -- Marketing
+( 30, 10, 'Human Resource Planning and Development'); -- Human Resource Management
 
 
-INSERT INTO students (student_id, name, gender, age, score, class_id) VALUES
-(1, '伊雷娜', 'Female', 18, 720, null),
-(2, '李龙', 'Male', 18, 721, null),
-(3, '周树', 'Male', 19, 723, null),
-(4, '小黑', 'Male', 18, 724, null),
-(5, '林徽', 'Female', 18, 723, null),
-(6, '弗兰克', 'Male', 18, 731, null),
-(7, '空门苍', 'Female', 18, 731, null),
-(8, '缪尔赛思', 'Female', 18, 721, null),
-(9, '林凯', 'Male', 18, 721, null),
-(10, '朱迪', 'Female', 17, 723, null);
+INSERT INTO students (name, gender, age, score, class_id) VALUES
+('伊雷娜', 'Female', 18, 720, null),
+( '李龙', 'Male', 18, 721, null),
+('周树', 'Male', 19, 723, null),
+( '小黑', 'Male', 18, 724, null),
+( '林徽', 'Female', 18, 723, null),
+( '弗兰克', 'Male', 18, 731, null),
+( '空门苍', 'Female', 18, 731, null),
+( '缪尔赛思', 'Female', 18, 721, null),
+( '林凯', 'Male', 18, 721, null),
+( '朱迪', 'Female', 17, 723, null);
 
 INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
 (1, 1, 1, 1, 1, 1), -- 伊雷娜第一志愿

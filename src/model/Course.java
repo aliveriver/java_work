@@ -13,7 +13,11 @@ public class Course {//课程表
         this.department_id = department_id;
         this.course_name = course_name;
     }
-
+    public Course( int major_id, int department_id, String course_name) {
+        this.major_id = major_id;
+        this.department_id = department_id;
+        this.course_name = course_name;
+    }
     public Course() {
     }
 

@@ -11,7 +11,10 @@ public class Major {
         this.department_id = department_id;
         this.name = name;
     }
-
+    public Major(int department_id, String name) {
+        this.department_id = department_id;
+        this.name = name;
+    }
     public Major() {
     }
 

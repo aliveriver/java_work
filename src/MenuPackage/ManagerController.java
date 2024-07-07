@@ -305,15 +305,12 @@ abstract public class ManagerController {
      */
     private static void CreateUniversity() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("请输入大学ID: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Consume newline left-over
         System.out.print("请输入大学名称: ");
         String name = scanner.nextLine();
         System.out.print("请输入大学地域位置: ");
         String location = scanner.nextLine();
 
-        University university = new University(id, name, location);
+        University university = new University(name, location);
         UniversityService.Create(university);
 
         System.out.println("大学信息添加成功!");

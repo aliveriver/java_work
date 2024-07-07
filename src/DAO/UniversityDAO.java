@@ -11,18 +11,17 @@ public class UniversityDAO {
 
     public void Create(model.University u){
         try {
-            String sql = "INSERT INTO universities (university_id,name,location) VALUES(?,?,?)";
+            String sql = "INSERT INTO universities (name,location) VALUES(?,?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
             PreparedStatement PStat = conn.prepareStatement(sql);
-            PStat.setInt(1, u.getUniversity_id());
-            PStat.setString(2, u.getName());
-            PStat.setString(3, u.getLocation());
+            PStat.setString(1, u.getName());
+            PStat.setString(2, u.getLocation());
             int row = PStat.executeUpdate();
             if (row > 0) {
                 //System.out.println("success insert");
             } else {
-                System.out.println("fail to insert");
+                //System.out.println("fail to insert");
             }
             PStat.close();
             Database.closeConnection();

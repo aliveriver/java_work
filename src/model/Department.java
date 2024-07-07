@@ -9,7 +9,9 @@ public class Department {
         this.department_id = department_id;
         this.name = name;
     }
-
+    public Department(String name) {
+        this.name = name;
+    }
     public Department() {
     }
 

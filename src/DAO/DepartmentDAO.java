@@ -12,12 +12,11 @@ public class DepartmentDAO {
 
     public void Create(model.Department d){
         try {
-            String sql = "INSERT INTO departments (department_id,name) VALUES(?,?)";
+            String sql = "INSERT INTO departments (name) VALUES(?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
             PreparedStatement PStat = conn.prepareStatement(sql);
-            PStat.setInt(1, d.getDepartment_id());
-            PStat.setString(2, d.getName());
+            PStat.setString(1, d.getName());
 
             int row = PStat.executeUpdate();
             if (row > 0) {

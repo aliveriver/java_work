@@ -11,19 +11,17 @@ import java.util.ArrayList;
 public class MajorDAO {
     public void Create(model.Major m){
         try {
-            String sql = "INSERT INTO majors (major_id,department_id,name) VALUES(?,?,?)";
+            String sql = "INSERT INTO majors (department_id,name) VALUES(?,?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
             PreparedStatement PStat = conn.prepareStatement(sql);
-            PStat.setInt(1, m.getMajor_id());
-            PStat.setString(3, m.getName());
-            PStat.setInt(2, m.getDepartment_id());
-
+            PStat.setInt(1, m.getDepartment_id());
+            PStat.setString(2, m.getName());
             int row = PStat.executeUpdate();
             if (row > 0) {
                 //System.out.println("success insert");
             } else {
-                System.out.println("fail to insert");
+                //System.out.println("fail to insert");
             }
             PStat.close();
             Database.closeConnection();

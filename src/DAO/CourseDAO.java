@@ -12,14 +12,13 @@ public class CourseDAO {
 
     public void Create(model.Course c){
         try {
-            String sql = "INSERT INTO courses (Courses_id,major_id,department_id,Course_name) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO courses (major_id,department_id,Course_name) VALUES(?,?,?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
             PreparedStatement PStat = conn.prepareStatement(sql);
-            PStat.setInt(1, c.getCourse_id());
-            PStat.setInt(2, c.getMajor_id());
-            PStat.setInt(3, c.getDepartment_id());
-            PStat.setString(4, c.getCourse_name());
+            PStat.setInt(1, c.getMajor_id());
+            PStat.setInt(2, c.getDepartment_id());
+            PStat.setString(3, c.getCourse_name());
 
             int row = PStat.executeUpdate();
             if (row > 0) {

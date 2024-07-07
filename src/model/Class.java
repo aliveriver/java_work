@@ -16,7 +16,11 @@ public class Class {
         this.class_name = class_name;
         this.university_id = university_id;
     }
-
+    public Class(int major_id, String class_name, int university_id) {
+        this.major_id = major_id;
+        this.class_name = class_name;
+        this.university_id = university_id;
+    }
     public int getClass_id() {
         return class_id;
     }

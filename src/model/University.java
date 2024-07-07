@@ -13,7 +13,10 @@ public class University {
         this.name=name;
         this.location=location;
     }
-
+    public University(String name,String location){
+        this.name=name;
+        this.location=location;
+    }
     //getter
     public String getName() {
         return name;
