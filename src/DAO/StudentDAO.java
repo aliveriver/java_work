@@ -29,7 +29,7 @@ public class StudentDAO {
 
             int row = PStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success insert");
+                //System.out.println("success insert");
             } else {
                 System.out.println("fail to insert");
             }
@@ -68,7 +68,7 @@ public class StudentDAO {
 
             int row = UPStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success update");
+                //System.out.println("success update");
             } else {
                 System.out.println("fail to update");
             }
@@ -104,7 +104,7 @@ public class StudentDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
 
@@ -132,7 +132,7 @@ public class StudentDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
     public ArrayList<Integer> SelectAllId(){
@@ -155,7 +155,7 @@ public class StudentDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
     public void DeleteById(int id){
@@ -179,7 +179,7 @@ public class StudentDAO {
             if (row!=1) {
                 throw new Exception("Fail to Delete or Delete more than one");
             }
-            System.out.println("success Delete");
+            //System.out.println("success Delete");
             DPStat.close();
             Database.closeConnection();
         }catch (Exception e){

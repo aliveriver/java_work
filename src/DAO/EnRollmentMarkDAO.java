@@ -27,7 +27,7 @@ public class EnRollmentMarkDAO {
 
             int row = PStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success insert");
+                //System.out.println("success insert");
             } else {
                 System.out.println("fail to insert");
             }
@@ -65,7 +65,7 @@ public class EnRollmentMarkDAO {
 
             int row = UPStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success update");
+                //System.out.println("success update");
             } else {
                 System.out.println("fail to update");
             }
@@ -103,7 +103,7 @@ public class EnRollmentMarkDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
 
@@ -135,7 +135,7 @@ public class EnRollmentMarkDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
 
@@ -160,7 +160,7 @@ public class EnRollmentMarkDAO {
             if (row!=1) {
                 throw new Exception("Fail to Delete or Delete more than one");
             }
-            System.out.println("success Delete");
+            //System.out.println("success Delete");
             DPStat.close();
             Database.closeConnection();
         }catch (Exception e){
@@ -197,7 +197,7 @@ public class EnRollmentMarkDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
 
@@ -226,7 +226,7 @@ public class EnRollmentMarkDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return result;
     }
 

@@ -25,9 +25,9 @@ public class ApplicationDAO {
 
             int row = PStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success insert");
+                //System.out.println("success insert");
             } else {
-                System.out.println("fail to insert");
+                //System.out.println("fail to insert");
             }
 
             PStat.close();
@@ -59,9 +59,9 @@ public class ApplicationDAO {
 
                 int row = PStat.executeUpdate();
                 if (row > 0) {
-                    System.out.println("success update");
+                    //System.out.println("success update");
                 } else {
-                    System.out.println("fail to update");
+                    //System.out.println("fail to update");
                 }
                 PStat.close();
                 Database.closeConnection();
@@ -137,9 +137,9 @@ public class ApplicationDAO {
 
             int row = PStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success delete");
+                //System.out.println("success delete");
             } else {
-                System.out.println("fail to delete");
+                //System.out.println("fail to delete");
             }
 
             PStat.close();
