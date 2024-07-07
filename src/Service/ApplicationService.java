@@ -4,7 +4,6 @@ import DAO.ApplicationDAO;
 import model.Application;
 import java.util.HashMap;
 import java.util.Map;
-
 import java.util.ArrayList;
 
 abstract public class ApplicationService {
@@ -33,6 +32,11 @@ abstract public class ApplicationService {
     public static ArrayList<Application> SelectBystudent_id(int id){
         return as.SelectBystudent_id(id);
     }
+
+    public static int GetMaxApplicationId() {
+        return as.GetMaxApplicationId();
+    }
+
     // 批量获取学生的志愿信息ApplicationService.java
     public static Map<Integer, ArrayList<Application>> SelectByStudentIds(ArrayList<Integer> studentsIdList) {
         Map<Integer, ArrayList<Application>> applicationsMap = new HashMap<>();

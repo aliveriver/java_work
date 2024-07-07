@@ -12,7 +12,7 @@ public class ApplicationDAO {
 
     public void Create(model.Application a){
         try {
-            String sql = "INSERT INTO applications (application_id,student_id,university_id,department_id,major_id,is_adjustment) VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO applications (application_id,student_id,university_id,department_id,major_id,is_adjustment) VALUES (?,?,?,?,?,?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
             PreparedStatement PStat = conn.prepareStatement(sql);
@@ -23,13 +23,125 @@ public class ApplicationDAO {
             PStat.setInt(5, a.getMajor_id());
             PStat.setInt(6, a.getIs_adjustment());
 
-
             int row = PStat.executeUpdate();
             if (row > 0) {
                 System.out.println("success insert");
             } else {
                 System.out.println("fail to insert");
             }
+
+            PStat.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void Update(model.Application a){
+        try{
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String sql = "SELECT * FROM applications WHERE application_id = ?";
+            PreparedStatement PStat0 = conn.prepareStatement(sql);
+            PStat0.setInt(1,a.getApplication_id());
+            ResultSet rs = PStat0.executeQuery();
+            if(!rs.next()){
+                System.out.println("update no result.");
+            }else{
+                String sqlUpdate = "UPDATE applications SET student_id=?,university_id=?,department_id=?,major_id=?,is_adjustment=? WHERE application_id=?";
+                PreparedStatement PStat = conn.prepareStatement(sqlUpdate);
+                PStat.setInt(1, a.getStudent_id());
+                PStat.setInt(2, a.getUniversity_id());
+                PStat.setInt(3, a.getDepartment_id());
+                PStat.setInt(4, a.getMajor_id());
+                PStat.setInt(5, a.getIs_adjustment());
+                PStat.setInt(6, a.getApplication_id());
+
+                int row = PStat.executeUpdate();
+                if (row > 0) {
+                    System.out.println("success update");
+                } else {
+                    System.out.println("fail to update");
+                }
+                PStat.close();
+                Database.closeConnection();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public model.Application SelectById(int id){
+        model.Application result = null;
+        try{
+            String sql = "SELECT * FROM applications WHERE application_id = ?";
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            PreparedStatement PStat = conn.prepareStatement(sql);
+            PStat.setInt(1, id);
+            ResultSet rs = PStat.executeQuery();
+
+            while(rs.next()){
+                result = new Application();
+                result.setApplication_id(rs.getInt("application_id"));
+                result.setStudent_id(rs.getInt("student_id"));
+                result.setUniversity_id(rs.getInt("university_id"));
+                result.setDepartment_id(rs.getInt("department_id"));
+                result.setMajor_id(rs.getInt("major_id"));
+                result.setIs_adjustment(rs.getInt("is_adjustment"));
+            }
+
+            PStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public ArrayList<Application> SelectAll() {
+        ArrayList<Application> applications = new ArrayList<>();
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String sql = "SELECT * FROM applications";
+            PreparedStatement PStat = conn.prepareStatement(sql);
+            ResultSet rs = PStat.executeQuery();
+
+            while (rs.next()) {
+                Application application = new Application();
+                application.setApplication_id(rs.getInt("application_id"));
+                application.setStudent_id(rs.getInt("student_id"));
+                application.setUniversity_id(rs.getInt("university_id"));
+                application.setDepartment_id(rs.getInt("department_id"));
+                application.setMajor_id(rs.getInt("major_id"));
+                application.setIs_adjustment(rs.getInt("is_adjustment"));
+                applications.add(application);
+            }
+
+            PStat.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return applications;
+    }
+
+    public void DeleteById(int id){
+        try{
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String sql = "DELETE FROM applications WHERE application_id = ?";
+            PreparedStatement PStat = conn.prepareStatement(sql);
+            PStat.setInt(1, id);
+
+            int row = PStat.executeUpdate();
+            if (row > 0) {
+                System.out.println("success delete");
+            } else {
+                System.out.println("fail to delete");
+            }
+
             PStat.close();
             Database.closeConnection();
         }catch (Exception e){
@@ -37,163 +149,53 @@ public class ApplicationDAO {
         }
     }
 
-    public void Update(model.Application a){
+    public ArrayList<Application> SelectBystudent_id(int student_id) {
+        ArrayList<Application> applications = new ArrayList<>();
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM applications WHERE application_id = ?";
-            PreparedStatement SPStat = conn.prepareStatement(select_sql);
-            SPStat.setInt(1, a.getApplication_id());
-            ResultSet Srow = SPStat.executeQuery();
-            if (!Srow.isBeforeFirst()) {
-                System.out.println("Fail to Select");
-                throw new Exception("ID is not found or not unique");
+            String sql = "SELECT * FROM applications WHERE student_id = ?";
+            PreparedStatement PStat = conn.prepareStatement(sql);
+            PStat.setInt(1, student_id);
+            ResultSet rs = PStat.executeQuery();
+
+            while (rs.next()) {
+                Application application = new Application();
+                application.setApplication_id(rs.getInt("application_id"));
+                application.setStudent_id(rs.getInt("student_id"));
+                application.setUniversity_id(rs.getInt("university_id"));
+                application.setDepartment_id(rs.getInt("department_id"));
+                application.setMajor_id(rs.getInt("major_id"));
+                application.setIs_adjustment(rs.getInt("is_adjustment"));
+                applications.add(application);
             }
-            SPStat.close();
 
-            String update_sql = "UPDATE applications set student_id=?,university_id=?,department_id=?,major_id=?,is_adjustment=? where application_id = ?";
-            PreparedStatement UPStat = conn.prepareStatement(update_sql);
-            UPStat.setInt(6, a.getApplication_id());
-            UPStat.setInt(5, a.getIs_adjustment());
-            UPStat.setInt(4, a.getMajor_id());
-            UPStat.setInt(3, a.getDepartment_id());
-            UPStat.setInt(2, a.getUniversity_id());
-            UPStat.setInt(1, a.getStudent_id());
-
-
-            int row = UPStat.executeUpdate();
-            if (row > 0) {
-                System.out.println("success update");
-            } else {
-                System.out.println("fail to update");
-            }
-            UPStat.close();
+            PStat.close();
             Database.closeConnection();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return applications;
     }
 
-    public model.Application SelectById(int id){
-        Application test = new Application();
+    public int GetMaxApplicationId() {
+        int maxId = 0;
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM applications WHERE application_id = ?";
-            PreparedStatement SPStat = conn.prepareStatement(select_sql);
-            SPStat.setInt(1, id);
-            ResultSet Srow = SPStat.executeQuery();
-            if (!Srow.isBeforeFirst()) {
-                System.out.println("Fail to Select");
-                throw new Exception("ID is not found");
-            }
-            Srow.next();
-            test.setApplication_id(Srow.getInt("application_id"));
-            test.setStudent_id(Srow.getInt("student_id"));
-            test.setUniversity_id(Srow.getInt("university_id"));
-            test.setDepartment_id(Srow.getInt("department_id"));
-            test.setMajor_id(Srow.getInt("major_id"));
-            test.setIs_adjustment(Srow.getInt("is_adjustment"));
+            String sql = "SELECT MAX(application_id) AS max_id FROM applications";
+            PreparedStatement PStat = conn.prepareStatement(sql);
+            ResultSet rs = PStat.executeQuery();
 
-            SPStat.close();
-            Database.closeConnection();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        System.out.println("Success Update");
-        return test;
-    }
-    public ArrayList<model.Application> SelectBystudent_id(int id)
-    {
-        ArrayList<Application> temp = new ArrayList<>();
-        try
-        {
-            Database.setConnection();
-            Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM applications WHERE student_id = ?";
-            PreparedStatement SPStat = conn.prepareStatement(select_sql);
-            SPStat.setInt(1, id);
-            ResultSet Srow = SPStat.executeQuery();
-            if (!Srow.isBeforeFirst()) {
-                System.out.println("Fail to Select");
-                throw new Exception("ID is not found");
+            if (rs.next()) {
+                maxId = rs.getInt("max_id");
             }
-            while(Srow.next())
-            {
-                Application test = new Application(Srow.getInt("application_id"),
-                        Srow.getInt("student_id"),
-                        Srow.getInt("university_id"),
-                        Srow.getInt("department_id"),
-                        Srow.getInt("major_id"),
-                        Srow.getInt("is_adjustment")
-                );
-                temp.add(test);
-            }
-            SPStat.close();
-            Database.closeConnection();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        System.out.println("Success Select");
-        return temp;
-    }
-    public ArrayList<Application> SelectAll(){
-        ArrayList<Application> test = new ArrayList<Application>();
-        try {
-            Database.setConnection();
-            Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM applications ";
-            PreparedStatement SPStat = conn.prepareStatement(select_sql);
-            ResultSet Srow = SPStat.executeQuery();
-            if (!Srow.isBeforeFirst()) {
-                System.out.println("Fail to Select");
-                throw new Exception("this table is empty");
-            }
-            while(Srow.next()){
-                Application a = new Application(Srow.getInt("application_id"),
-                        Srow.getInt("student_id"),
-                        Srow.getInt("university_id"),
-                        Srow.getInt("department_id"),
-                        Srow.getInt("major_id"),
-                        Srow.getInt("is_adjustment")
-                );
-                test.add(a);
-            }
-            SPStat.close();
-            Database.closeConnection();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        System.out.println("Success Select");
-        return test;
-    }
 
-    public void DeleteById(int id){
-        try {
-            Database.setConnection();
-            Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM applications WHERE application_id = ?";
-            PreparedStatement SPStat = conn.prepareStatement(select_sql);
-            SPStat.setInt(1, id);
-            ResultSet Srow = SPStat.executeQuery();
-            if (!Srow.isBeforeFirst()) {
-                System.out.println("Fail to Select");
-                throw new Exception("ID is not found or not unique");
-            }
-            SPStat.close();
-
-            String Dsql = "DELETE FROM applications WHERE application_id = ?";
-            PreparedStatement DPStat = conn.prepareStatement(Dsql);
-            DPStat.setInt(1, id);
-            int row = DPStat.executeUpdate();
-            if (row!=1) {
-                throw new Exception("Fail to Delete or Delete more than one");
-            }
-            System.out.println("success Delete");
-            DPStat.close();
+            PStat.close();
             Database.closeConnection();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return maxId;
     }
 }
