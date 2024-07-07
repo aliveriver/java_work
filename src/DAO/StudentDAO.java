@@ -29,9 +29,9 @@ public class StudentDAO {
 
             int row = PStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success insert");
+                //System.out.println("success insert");
             } else {
-                System.out.println("fail to insert");
+                //System.out.println("fail to insert");
             }
             PStat.close();
             Database.closeConnection();
