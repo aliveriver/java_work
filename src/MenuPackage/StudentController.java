@@ -10,7 +10,7 @@ abstract public class StudentController {
         boolean left = true;//1.添加学生信息 2.修改学生信息 3.查看学生分班情况 4.查看学生专业情况 5.查看学生专业课程
         while(left)
         {
-            System.out.println("1. 添加学生信息");
+            System.out.println("1. 添加学生信息");//不需要classid和主码
             System.out.println("2. 修改学生信息");
             System.out.println("3. 查看学生分班情况");
             System.out.println("4. 查看学生专业情况");//admission 表格

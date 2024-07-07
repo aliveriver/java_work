@@ -1,7 +1,7 @@
 package model;
 
 // 课程表模型，参数同数据库
-public class Course {
+public class Course {//课程表
         private int course_id;
         private int major_id;
         private int department_id;

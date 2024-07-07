@@ -1,11 +1,7 @@
 package MenuPackage;
 
 import Service.*;
-import model.Admission;
-import model.Application;
-import model.EnRollmentMark;
-import model.Student;
-
+import model.*;
 import java.util.*;
 
 abstract public class ManagerController {

@@ -68,7 +68,7 @@ abstract public class ApplicationControler {
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入志愿信息:");
 
-        System.out.print("志愿ID: ");
+        System.out.print("志愿ID: ");   //???????????????
         int application_id = scanner.nextInt();
 
         System.out.print("学生ID: ");
@@ -83,7 +83,7 @@ abstract public class ApplicationControler {
         System.out.print("专业ID: ");
         int major_id = scanner.nextInt();
 
-        System.out.print("是否调剂 (0-否, 1-是): ");
+        System.out.print("是否调剂 (0-否, 1-是): ");//????????? 处理志愿信息忘了判断是否调剂
         int is_adjustment = scanner.nextInt();
 
         Application application = new Application(application_id, student_id, university_id, department_id, major_id, is_adjustment);

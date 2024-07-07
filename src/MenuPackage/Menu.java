@@ -25,7 +25,7 @@ abstract public class Menu {
             System.out.println("1. 学生信息管理");//1.添加学生信息 2.修改学生信息 3.查看学生分班情况 4.查看学生专业情况 5.查看学生专业课程
             System.out.println("2. 学生志愿管理");//学生志愿信息增删改查系统
             System.out.println("3. 学生录取情况查询");//大学学生的admission
-            System.out.println("4. 大学和专业管理");// 查看所有大学  查看大学下的所有专业 3.查看大学的录取情况
+            System.out.println("4. 大学和专业查看");// 查看所有大学  查看大学下的所有专业 3.查看大学的录取名单
             System.out.println("5. 管理员系统功能");// 1.分配志愿信息  2.分配班级信息 3.添加大学信息 4.添加专业信息（外码参考）
             System.out.println("6. 退出系统");
             System.out.print("请选择: ");
@@ -59,17 +59,6 @@ abstract public class Menu {
 
     }
 
-    public static void ViewStudentAdmissions() {
-        ArrayList<Admission> admissions = AdmissionService.SelectAll();
-
-        for (Admission admission : admissions) {
-            System.out.print("录取ID: " + admission.getAdmission_id() + " ");
-            System.out.print("学生ID: " + admission.getStudent_id() + " ");
-            System.out.print("大学ID: " + admission.getUniversity_id() + " ");
-            System.out.print("院系ID: " + admission.getDepartment_id() + " ");
-            System.out.println("专业ID: " + admission.getMajor_id());
-        }
-    }
 }
 
 
