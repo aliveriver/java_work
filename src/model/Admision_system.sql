@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS departments CASCADE;
 DROP TABLE IF EXISTS majors CASCADE;
 DROP TABLE IF EXISTS applications CASCADE;
 DROP TABLE IF EXISTS admissions CASCADE;
-DROP TABLE IF EXISTS Cousrses CASCADE;
+DROP TABLE IF EXISTS Courses CASCADE;
 DROP TABLE IF EXISTS EnrollmentMark CASCADE;
 --创建表格
 CREATE TABLE universities (
@@ -104,4 +104,5 @@ SELECT * FROM students;
 SELECT * FROM  applications;
 SELECT * FROM  admissions;
 SELECT * FROM  Courses;
+SELECT * FROM EnrollmentMark;
 SELECT * FROM EnrollmentMark where department_id =1 and major_id = 1;

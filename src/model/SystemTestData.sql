@@ -1,5 +1,17 @@
---插入数据
--- 插入数据到 universities 表
+--少class表格
+--少admission表格
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO universities (university_id, name, location) VALUES
 (1, 'Peking University', 'Beijing'),
 (2, 'Tsinghua University', 'Beijing'),
@@ -11,6 +23,7 @@ INSERT INTO universities (university_id, name, location) VALUES
 (8, 'Wuhan University', 'Wuhan'),
 (9, 'Sun Yat-sen University', 'Guangzhou'),
 (10, 'Harbin Institute of Technology', 'Harbin');
+
 
 -- 插入数据到 departments 表
 INSERT INTO departments (department_id, name) VALUES
@@ -87,172 +100,9 @@ INSERT INTO majors (major_id, department_id, name) VALUES
 (29, 10, 'Marketing'),  
 (30, 10, 'Human Resource Management');
 
--- 插入数据到 classes 表
-INSERT INTO classes (class_id, class_name, major_id,University_id) VALUES
-(1, 'F2024.01', 1,1),
-(2, 'F2024.02', 1,1),
-(3, 'E2024.01', 2,2),
-(4, 'IB2024.01', 3,3),
-(5, 'A2024.01', 4,4),
-(6, 'ID2024.01', 5,5),
-(7, 'VA2024.01', 6,6),
-(8, 'MT2024.01', 7,7),
-(9, 'PE2024.01', 8,8),
-(10, 'POF2024.01', 9,9),
-(11, 'ELL2024.01', 10,10);
 
--- 插入数据到 students 表
-INSERT INTO students (student_id, name, gender, age, score, class_id) VALUES
-(1, '伊雷娜', 'Female', 18, 720, 1),
-(2, '李龙', 'Male', 18, 721, 2),
-(3, '周树', 'Male', 19, 723, 3),
-(4, '小黑', 'Male', 18, 724, 4),
-(5, '林徽', 'Female', 18, 723, 5),
-(6, '弗兰克', 'Male', 18, 731, 6),
-(7, '空门苍', 'Female', 18, 731, 7),
-(8, '缪尔赛思', 'Female', 18, 721, 8),
-(9, '林凯', 'Male', 18, 721, 9),
-(10, '朱迪', 'Female', 17, 723, 10);
 
--- 插入数据到 applications 表
--- 插入数据到 applications 表
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(1, 1, 1, 1, 1, 0), -- 伊雷娜第一志愿，已录取
-(2, 1, 2, 1, 1, 0), -- 伊雷娜第二志愿
-(3, 1, 3, 1, 1, 0), -- 伊雷娜第三志愿
-(4, 1, 4, 1, 1, 0), -- 伊雷娜第四志愿
-(5, 1, 5, 1, 1, 0), -- 伊雷娜第五志愿
-(6, 1, 6, 1, 1, 0), -- 伊雷娜第六志愿
-(7, 1, 7, 1, 1, 0), -- 伊雷娜第七志愿
-(8, 1, 8, 1, 1, 0), -- 伊雷娜第八志愿
-(9, 1, 9, 1, 1, 0), -- 伊雷娜第九志愿
-(10, 1, 10, 1, 1, 0); -- 伊雷娜第十志愿
-
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(11, 2, 1, 1, 1, 0), -- 李龙第一志愿，已录取
-(12, 2, 2, 1, 1, 0), -- 李龙第二志愿
-(13, 2, 3, 1, 1, 0), -- 李龙第三志愿
-(14, 2, 4, 1, 1, 0), -- 李龙第四志愿
-(15, 2, 5, 1, 1, 0), -- 李龙第五志愿
-(16, 2, 6, 1, 1, 0), -- 李龙第六志愿
-(17, 2, 7, 1, 1, 0), -- 李龙第七志愿
-(18, 2, 8, 1, 1, 0), -- 李龙第八志愿
-(19, 2, 9, 1, 1, 0), -- 李龙第九志愿
-(20, 2, 10, 1, 1, 0); -- 李龙第十志愿
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(21, 3, 1, 1, 1, 0), -- 周树第一志愿，已录取
-(22, 3, 2, 1, 1, 0), -- 周树第二志愿
-(23, 3, 3, 1, 1, 0), -- 周树第三志愿
-(24, 3, 4, 1, 1, 0), -- 周树第四志愿
-(25, 3, 5, 1, 1, 0), -- 周树第五志愿
-(26, 3, 6, 1, 1, 0), -- 周树第六志愿
-(27, 3, 7, 1, 1, 0), -- 周树第七志愿
-(28, 3, 8, 1, 1, 0), -- 周树第八志愿
-(29, 3, 9, 1, 1, 0), -- 周树第九志愿
-(30, 3, 10, 1, 1, 0); -- 周树第十志愿
-
--- 生成小黑的志愿信息
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(31, 4, 1, 1, 1, 0), -- 小黑第一志愿，已录取
-(32, 4, 2, 1, 1, 0), -- 小黑第二志愿
-(33, 4, 3, 1, 1, 0), -- 小黑第三志愿
-(34, 4, 4, 1, 1, 0), -- 小黑第四志愿
-(35, 4, 5, 1, 1, 0), -- 小黑第五志愿
-(36, 4, 6, 1, 1, 0), -- 小黑第六志愿
-(37, 4, 7, 1, 1, 0), -- 小黑第七志愿
-(38, 4, 8, 1, 1, 0), -- 小黑第八志愿
-(39, 4, 9, 1, 1, 0), -- 小黑第九志愿
-(40, 4, 10, 1, 1, 0); -- 小黑第十志愿
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(41, 5, 1, 1, 1, 0), -- 林徽第一志愿，已录取
-(42, 5, 2, 1, 1, 0), -- 林徽第二志愿
-(43, 5, 3, 1, 1, 0), -- 林徽第三志愿
-(44, 5, 4, 1, 1, 0), -- 林徽第四志愿
-(45, 5, 5, 1, 1, 0), -- 林徽第五志愿
-(46, 5, 6, 1, 1, 0), -- 林徽第六志愿
-(47, 5, 7, 1, 1, 0), -- 林徽第七志愿
-(48, 5, 8, 1, 1, 0), -- 林徽第八志愿
-(49, 5, 9, 1, 1, 0), -- 林徽第九志愿
-(50, 5, 10, 1, 1, 0); -- 林徽第十志愿
-
--- 生成弗兰克的志愿信息
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(51, 6, 1, 1, 1, 0), -- 弗兰克第一志愿，已录取
-(52, 6, 2, 1, 1, 0), -- 弗兰克第二志愿
-(53, 6, 3, 1, 1, 0), -- 弗兰克第三志愿
-(54, 6, 4, 1, 1, 0), -- 弗兰克第四志愿
-(55, 6, 5, 1, 1, 0), -- 弗兰克第五志愿
-(56, 6, 6, 1, 1, 0), -- 弗兰克第六志愿
-(57, 6, 7, 1, 1, 0), -- 弗兰克第七志愿
-(58, 6, 8, 1, 1, 0), -- 弗兰克第八志愿
-(59, 6, 9, 1, 1, 0), -- 弗兰克第九志愿
-(60, 6, 10, 1, 1, 0); -- 弗兰克第十志愿
-
--- 生成空门苍的志愿信息
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(61, 7, 1, 1, 1, 0), -- 空门苍第一志愿，已录取
-(62, 7, 2, 1, 1, 0), -- 空门苍第二志愿
-(63, 7, 3, 1, 1, 0), -- 空门苍第三志愿
-(64, 7, 4, 1, 1, 0), -- 空门苍第四志愿
-(65, 7, 5, 1, 1, 0), -- 空门苍第五志愿
-(66, 7, 6, 1, 1, 0), -- 空门苍第六志愿
-(67, 7, 7, 1, 1, 0), -- 空门苍第七志愿
-(68, 7, 8, 1, 1, 0), -- 空门苍第八志愿
-(69, 7, 9, 1, 1, 0), -- 空门苍第九志愿
-(70, 7, 10, 1, 1, 0); -- 空门苍第十志愿
-
--- 生成缪尔赛思的志愿信息
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(71, 8, 1, 1, 1, 0), -- 缪尔赛思第一志愿，已录取
-(72, 8, 2, 1, 1, 0), -- 缪尔赛思第二志愿
-(73, 8, 3, 1, 1, 0), -- 缪尔赛思第三志愿
-(74, 8, 4, 1, 1, 0), -- 缪尔赛思第四志愿
-(75, 8, 5, 1, 1, 0), -- 缪尔赛思第五志愿
-(76, 8, 6, 1, 1, 0), -- 缪尔赛思第六志愿
-(77, 8, 7, 1, 1, 0), -- 缪尔赛思第七志愿
-(78, 8, 8, 1, 1, 0), -- 缪尔赛思第八志愿
-(79, 8, 9, 1, 1, 0), -- 缪尔赛思第九志愿
-(80, 8, 10, 1, 1, 0); -- 缪尔赛思第十志愿
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(81, 9, 1, 1, 1, 0), -- 林凯第一志愿，已录取
-(82, 9, 2, 1, 1, 0), -- 林凯第二志愿
-(83, 9, 3, 1, 1, 0), -- 林凯第三志愿
-(84, 9, 4, 1, 1, 0), -- 林凯第四志愿
-(85, 9, 5, 1, 1, 0), -- 林凯第五志愿
-(86, 9, 6, 1, 1, 0), -- 林凯第六志愿
-(87, 9, 7, 1, 1, 0), -- 林凯第七志愿
-(88, 9, 8, 1, 1, 0), -- 林凯第八志愿
-(89, 9, 9, 1, 1, 0), -- 林凯第九志愿
-(90, 9, 10, 1, 1, 0); -- 林凯第十志愿
-
--- 生成朱迪的志愿信息
-INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
-(91, 10, 1, 1, 1, 0), -- 朱迪第一志愿，已录取
-(92, 10, 2, 1, 1, 0), -- 朱迪第二志愿
-(93, 10, 3, 1, 1, 0), -- 朱迪第三志愿
-(94, 10, 4, 1, 1, 0), -- 朱迪第四志愿
-(95, 10, 5, 1, 1, 0), -- 朱迪第五志愿
-(96, 10, 6, 1, 1, 0), -- 朱迪第六志愿
-(97, 10, 7, 1, 1, 0), -- 朱迪第七志愿
-(98, 10, 8, 1, 1, 0), -- 朱迪第八志愿
-(99, 10, 9, 1, 1, 0), -- 朱迪第九志愿
-(100, 10, 10, 1, 1, 0); -- 朱迪第十志愿
-
--- 插入数据到 admissions 表
-INSERT INTO admissions (admission_id, student_id, university_id, department_id, major_id) VALUES
-(1, 1, 1, 1, 1),
-(2, 2, 1, 1, 1),
-(3, 3, 2, 1, 2),
-(4, 4, 3, 1, 3),
-(5, 5, 4, 2, 4),
-(6, 6, 5, 2, 5),
-(7, 7, 6, 2, 6),
-(8, 8, 7, 3, 7),
-(9, 9, 8, 3, 8),
-(10, 10, 9, 3, 9);
-
--- 插入数据到 Courses 表
-
+--插入课程
 INSERT INTO Courses (Courses_id, major_id, department_id, Course_name) VALUES
 (1, 1, 1, 'Advanced Corporate Finance'), -- Finance
 (2, 2, 1, 'Macroeconomic Theory'), -- Economics
@@ -284,6 +134,90 @@ INSERT INTO Courses (Courses_id, major_id, department_id, Course_name) VALUES
 (28, 28, 10, 'Strategic Management'), -- Business Administration
 (29, 29, 10, 'Consumer Behavior and Marketing Strategy'), -- Marketing
 (30, 30, 10, 'Human Resource Planning and Development'); -- Human Resource Management
+
+
+INSERT INTO students (student_id, name, gender, age, score, class_id) VALUES
+(1, '伊雷娜', 'Female', 18, 720, null),
+(2, '李龙', 'Male', 18, 721, null),
+(3, '周树', 'Male', 19, 723, null),
+(4, '小黑', 'Male', 18, 724, null),
+(5, '林徽', 'Female', 18, 723, null),
+(6, '弗兰克', 'Male', 18, 731, null),
+(7, '空门苍', 'Female', 18, 731, null),
+(8, '缪尔赛思', 'Female', 18, 721, null),
+(9, '林凯', 'Male', 18, 721, null),
+(10, '朱迪', 'Female', 17, 723, null);
+
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(1, 1, 1, 1, 1, 1), -- 伊雷娜第一志愿
+(2, 1, 2, 1, 1, 1), -- 伊雷娜第二志愿
+(3, 1, 3, 1, 1, 1), -- 伊雷娜第三志愿
+(4, 1, 4, 1, 1, 1), -- 伊雷娜第四志愿
+(5, 1, 5, 1, 1, 1); -- 伊雷娜第五志愿
+
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(6, 2, 1, 1, 1, 1), -- 李龙第一志愿
+(7, 2, 2, 1, 1, 1), -- 李龙第二志愿
+(8, 2, 3, 1, 1, 1), -- 李龙第三志愿
+(9, 2, 4, 1, 1, 1), -- 李龙第四志愿
+(10, 2, 5, 1, 1, 1); -- 李龙第五志愿
+
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(11, 3, 1, 1, 1, 1), -- 周树第一志愿，已录取
+(12, 3, 2, 1, 1, 1), -- 周树第二志愿
+(13, 3, 3, 1, 1, 1), -- 周树第三志愿
+(14, 3, 4, 1, 1, 1), -- 周树第四志愿
+(15, 3, 5, 1, 1, 1); -- 周树第五志愿
+
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(16, 4, 1, 1, 1, 1), -- 小黑第一志愿，已录取
+(17, 4, 2, 1, 1, 1), -- 小黑第二志愿
+(18, 4, 3, 1, 1, 1), -- 小黑第三志愿
+(19, 4, 4, 1, 1, 1), -- 小黑第四志愿
+(20, 4, 5, 1, 1, 1);-- 小黑第五志愿
+
+
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(21, 5, 1, 1, 1, 1), -- 林徽第一志愿，已录取
+(22, 5, 2, 1, 1, 1), -- 林徽第二志愿
+(23, 5, 3, 1, 1, 1), -- 林徽第三志愿
+(24, 5, 4, 1, 1, 1), -- 林徽第四志愿
+(25, 5, 5, 1, 1, 1); -- 林徽第五志愿
+
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(26, 6, 1, 1, 1, 1), -- 弗兰克第一志愿，已录取
+(27, 6, 2, 1, 1, 1), -- 弗兰克第二志愿
+(28, 6, 3, 1, 1, 1), -- 弗兰克第三志愿
+(29, 6, 4, 1, 1, 1), -- 弗兰克第四志愿
+(30, 6, 5, 1, 1, 1); -- 弗兰克第五志愿
+
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(31, 7, 1, 1, 1, 1), -- 空门苍第一志愿，已录取
+(32, 7, 2, 1, 1, 1), -- 空门苍第二志愿
+(33, 7, 3, 1, 1, 1), -- 空门苍第三志愿
+(34, 7, 4, 1, 1, 1), -- 空门苍第四志愿
+(35, 7, 5, 1, 1, 1); -- 空门苍第五志愿
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(36, 8, 1, 1, 1, 1), -- 缪尔赛思第一志愿，已录取
+(37, 8, 2, 1, 1, 1), -- 缪尔赛思第二志愿
+(38, 8, 3, 1, 1, 1), -- 缪尔赛思第三志愿
+(39, 8, 4, 1, 1, 1), -- 缪尔赛思第四志愿
+(40, 8, 5, 1, 1, 1);-- 缪尔赛思第五志愿
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(41, 9, 1, 1, 1, 1), -- 林凯第一志愿，已录取
+(42, 9, 2, 1, 1, 1), -- 林凯第二志愿
+(43, 9, 3, 1, 1, 1), -- 林凯第三志愿
+(44, 9, 4, 1, 1, 1), -- 林凯第四志愿
+(45, 9, 5, 1, 1, 1); -- 林凯第五志愿
+
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(46, 10, 1, 1, 1, 1), -- 朱迪第一志愿，已录取
+(47, 10, 2, 1, 1, 1), -- 朱迪第二志愿
+(48, 10, 3, 1, 1, 1), -- 朱迪第三志愿
+(49, 10, 4, 1, 1, 1), -- 朱迪第四志愿
+(50, 10, 5, 1, 1, 1); -- 朱迪第五志愿
+
+
 
 
 INSERT INTO EnrollmentMark (Enrollment_id, university_id, department_id, major_id, RequiredScore,MRequiredN,DRequiredN) VALUES
@@ -891,3 +825,5 @@ INSERT INTO EnrollmentMark (Enrollment_id, university_id, department_id, major_i
 (298, 10, 10, 28, 695,1,3), -- Business Administration
 (299, 10, 10, 29, 685,1,3), -- Marketing
 (300, 10, 10, 30, 670,1,3); -- Human Resource Management
+
+

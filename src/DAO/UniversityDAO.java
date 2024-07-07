@@ -20,7 +20,7 @@ public class UniversityDAO {
             PStat.setString(3, u.getLocation());
             int row = PStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success insert");
+                //System.out.println("success insert");
             } else {
                 System.out.println("fail to insert");
             }
@@ -52,7 +52,7 @@ public class UniversityDAO {
             UPStat.setString(2, u.getLocation());
             int row = UPStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success update");
+                //System.out.println("success update");
             } else {
                 System.out.println("fail to update");
             }
@@ -133,7 +133,7 @@ public class UniversityDAO {
             if (row!=1) {
                 throw new Exception("Fail to Delete or Delete more than one");
             }
-            System.out.println("success Delete");
+            //System.out.println("success Delete");
             DPStat.close();
             Database.closeConnection();
         }catch (Exception e){

@@ -258,6 +258,11 @@ abstract public class ManagerController {
                     {
                         for (Application application : preAdmission) {
                             if (application.getStudent_id() == Students.get(Students.size()-excessNumber).getStudent_id()){
+                                if(application.getIs_adjustment()==0)  //不服从调剂
+                                {
+                                    System.out.println("学生的id"+application.getStudent_id()+"因不服从调剂，因此滑档");
+                                    continue;
+                                }
                                 application.setMajor_id(toMajor); // 调剂到新的专业 找到后记得及时退出
                                 excessNumber--;//超的人数
                                 //修改

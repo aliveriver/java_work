@@ -7,32 +7,29 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class StudentDAO {
     public void Create(model.Student s){
         try {
-            String sql = "INSERT INTO students (name, gender, age, score, class_id) VALUES(?,?,?,?,?)";
+
+            String sql = "INSERT INTO students (student_id,name,gender,age,score,class_id) VALUES(?,?,?,?,?,?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
-            PreparedStatement PStat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            PStat.setString(1, s.getName());
-            PStat.setString(2, s.getGender());
-            PStat.setInt(3, s.getAge());
-            PStat.setInt(4, s.getScore());
-            if(s.getClass_id() == 0)
-                PStat.setNull(5, Types.INTEGER);
+            PreparedStatement PStat = conn.prepareStatement(sql);
+            PStat.setInt(1, s.getStudent_id());
+            PStat.setString(2, s.getName());
+            PStat.setString(3, s.getGender());
+            PStat.setInt(4, s.getAge());
+            PStat.setInt(5, s.getScore());
+            if(s.getClass_id()==0)
+                PStat.setNull(6, Types.INTEGER);
             else
-                PStat.setInt(5, s.getClass_id());
+                PStat.setInt(6, s.getClass_id());
 
             int row = PStat.executeUpdate();
             if (row > 0) {
-                ResultSet generatedKeys = PStat.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    s.setStudent_id(generatedKeys.getInt(1));
-                    System.out.println("success insert with ID: " + s.getStudent_id());
-                }
+                System.out.println("success insert");
             } else {
                 System.out.println("fail to insert");
             }
@@ -71,7 +68,7 @@ public class StudentDAO {
 
             int row = UPStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success update");
+                //System.out.println("success update");
             } else {
                 System.out.println("fail to update");
             }
@@ -107,7 +104,7 @@ public class StudentDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
 
@@ -135,7 +132,7 @@ public class StudentDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
     public ArrayList<Integer> SelectAllId(){
@@ -158,7 +155,7 @@ public class StudentDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
     public void DeleteById(int id){
@@ -182,7 +179,7 @@ public class StudentDAO {
             if (row!=1) {
                 throw new Exception("Fail to Delete or Delete more than one");
             }
-            System.out.println("success Delete");
+            //System.out.println("success Delete");
             DPStat.close();
             Database.closeConnection();
         }catch (Exception e){

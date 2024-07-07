@@ -21,7 +21,7 @@ public class MajorDAO {
 
             int row = PStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success insert");
+                //System.out.println("success insert");
             } else {
                 System.out.println("fail to insert");
             }
@@ -54,7 +54,7 @@ public class MajorDAO {
 
             int row = UPStat.executeUpdate();
             if (row > 0) {
-                System.out.println("success update");
+                //System.out.println("success update");
             } else {
                 System.out.println("fail to update");
             }
@@ -86,7 +86,7 @@ public class MajorDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
     public ArrayList<Integer> SelectByDepartment_id(int id){
@@ -111,7 +111,7 @@ public class MajorDAO {
         }catch(Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return ids;
     }
     public ArrayList<Major> SelectAll(){
@@ -136,7 +136,7 @@ public class MajorDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Success Select");
+        //System.out.println("Success Select");
         return test;
     }
 
@@ -161,7 +161,7 @@ public class MajorDAO {
             if (row!=1) {
                 throw new Exception("Fail to Delete or Delete more than one");
             }
-            System.out.println("success Delete");
+            //System.out.println("success Delete");
             DPStat.close();
             Database.closeConnection();
         }catch (Exception e){
