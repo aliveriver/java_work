@@ -27,4 +27,7 @@ abstract public class CourseService {
     public static void DeleteById(int id){
         cs.DeleteById(id);
     }
+    public static ArrayList<Course> SelectByMajorId(int major_id) {
+        return cs.SelectByMajorId(major_id);
+    }
 }

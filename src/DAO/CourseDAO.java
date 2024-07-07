@@ -152,4 +152,26 @@ public class CourseDAO {
             e.printStackTrace();
         }
     }
+    public ArrayList<Course> SelectByMajorId(int major_id) {
+        ArrayList<Course> courses = new ArrayList<>();
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM courses WHERE major_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, major_id);
+            ResultSet Srow = SPStat.executeQuery();
+            while (Srow.next()) {
+                Course course = new Course();
+                course.setCourse_id(Srow.getInt("course_id"));
+                course.setCourse_name(Srow.getString("course_name"));
+                courses.add(course);
+            }
+            SPStat.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courses;
+    }
 }
