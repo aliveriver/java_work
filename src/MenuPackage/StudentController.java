@@ -49,7 +49,6 @@ abstract public class StudentController {
                 case 6:
                     return;//退出系统
                 default:
-                    System.out.println("无效选择，请重新输入");
                     break;
             }
         }
