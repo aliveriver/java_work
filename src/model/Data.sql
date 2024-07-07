@@ -14,15 +14,15 @@ INSERT INTO universities (university_id, name, location) VALUES
 
 -- 插入数据到 departments 表
 INSERT INTO departments (department_id, name) VALUES
-(1,  'Institute of Economics and Management'),
-(2,  'Institute of Architecture and Art'),
-(3,  'Institute of Marxism'),
+(1, 'Institute of Economics and Management'),
+(2, 'Institute of Architecture and Art'),
+(3, 'Institute of Marxism'),
 (4,  'Institute of foreign languages'),
 (5,  'Institute of Physics'),
 (6,  'Institute of Chemistry'),
-(7,  'Institute of Mathmematics'),
-(8,  'Institute of Physical Education and Health'),
-(9,  'Institute of Environmental Science'),
+(7, 'Institute of Mathmematics'),
+(8, 'Institute of Physical Education and Health'),
+(9, 'Institute of Environmental Science'),
 (10,'Institute of Business Administration');
 
 -- 插入数据到 majors 表
