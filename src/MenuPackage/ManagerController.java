@@ -319,16 +319,13 @@ abstract public class ManagerController {
 
     private static void CreateMajor() {//新增专业信息
         Scanner scanner = new Scanner(System.in);
-        System.out.print("请输入专业ID: ");
-        int major_id = scanner.nextInt();
-        scanner.nextLine(); // Consume newline left-over
         System.out.print("请输入院系ID（外码，若为空则为0）: ");
         int department_id = scanner.nextInt();
         scanner.nextLine(); // Consume newline left-over
         System.out.print("请输入专业名称: ");
         String name = scanner.nextLine();
 
-        Major major = new Major(major_id, department_id, name);
+        Major major = new Major(department_id, name);
         MajorService.Create(major);
 
         System.out.println("专业信息添加成功!");
