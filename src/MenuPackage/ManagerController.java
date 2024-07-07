@@ -20,6 +20,7 @@ abstract public class ManagerController {
         boolean left = true;
         while(left)
         {
+            System.out.println("请注意，临时添加的大学、专业不会即时反映在录取简章和学生可选项中");
             System.out.println("1. 分配志愿信息");//先录取
             System.out.println("2. 分配班级");//后分班
             System.out.println("3. 添加大学信息");//id name location
