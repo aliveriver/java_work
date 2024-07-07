@@ -68,7 +68,7 @@ abstract public class ApplicationControler {
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入志愿信息:");
 
-        System.out.print("志愿ID: ");   //???????????????
+        System.out.print("志愿ID: ");   //???????????????不需要输入志愿ID
         int application_id = scanner.nextInt();
 
         System.out.print("学生ID: ");
