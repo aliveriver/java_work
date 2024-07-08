@@ -1,8 +1,5 @@
 package MenuPackage;
 
-import Service.*;
-import model.*;
-
 import java.util.*;
 //            System.out.println("1. 学生志愿信息增删改查系统");//增加application
 //            System.out.println("2. 查看学生志愿录取情况");//查看admission
@@ -16,7 +13,7 @@ import java.util.*;
 //            System.out.println("10. 退出系统");
 import static java.lang.Thread.sleep;
 
-abstract public class Menu {
+abstract public class MainMenu {
     public static void  MenuStart() {
         boolean left = true;
         //菜单栏
