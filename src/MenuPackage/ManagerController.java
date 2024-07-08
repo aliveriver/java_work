@@ -24,7 +24,7 @@ abstract public class ManagerController {
             System.out.println("1. 分配志愿信息");//先录取
             System.out.println("2. 分配班级");//后分班
             System.out.println("3. 添加大学信息");//id name location
-            System.out.println("4. 添加专业信息");//admission 表格（这个注释什么意思？没明白），默认不同大学里的相同专业内容相同（后面这句话我自己写的）
+            System.out.println("4. 添加专业信息");//注意department，默认不同大学里的相同专业内容相同   course
             System.out.println("5. 查看所有的录取信息");//所有学生的录取信息
             System.out.println("6. 返回主菜单");
             System.out.print("请选择");
@@ -306,28 +306,101 @@ abstract public class ManagerController {
      */
     private static void CreateUniversity() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("请输入大学名称: ");
-        String name = scanner.nextLine();
-        System.out.print("请输入大学地域位置: ");
-        String location = scanner.nextLine();
 
-        University university = new University(name, location);
-        UniversityService.Create(university);
+        while (true) {
+            System.out.print("请输入大学名称: ");
+            String name = scanner.nextLine();
+            System.out.print("请输入大学所在省级行政区: ");
+            String location = scanner.nextLine();
 
-        System.out.println("大学信息添加成功!");
+            ArrayList<University> universities = UniversityService.SelectAll(); //检查是否已存在同名的大学
+            boolean exists = false;
+            for (University university : universities) {
+                if (university.getName().equalsIgnoreCase(name)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (exists) {
+                System.out.println("该大学信息已经存在，请重新输入！");
+            } else {
+                University university = new University(0, name, location);
+                UniversityService.Create(university);
+                System.out.println("大学信息添加成功!");
+                break;
+            }
+        }
     }
-
-    private static void CreateMajor() {//新增专业信息
+    private static void CreateMajor() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("请输入院系ID（外码，若为空则为0）: ");
-        int department_id = scanner.nextInt();
-        scanner.nextLine(); // Consume newline left-over
-        System.out.print("请输入专业名称: ");
-        String name = scanner.nextLine();
+        int department_id = 0;
 
-        Major major = new Major(department_id, name);
-        MajorService.Create(major);
+        while (true) {
+            System.out.print("请输入院系名称: ");
+            String department_name = scanner.nextLine();
 
-        System.out.println("专业信息添加成功!");
+            ArrayList<University> departments = UniversityService.SelectAll();
+            boolean found = false;
+            for (University department : departments) {
+                if (department.getName().equalsIgnoreCase(department_name)) {
+                    department_id = department.getUniversity_id();
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                break;
+            } else {
+                System.out.println("未找到该院系，请重新输入！");
+            }
+        }
+
+        while (true) {
+            System.out.print("请输入要添加的专业名称: ");
+            String name = scanner.nextLine();
+
+            ArrayList<Major> majors = MajorService.SelectAll();   //查重
+            boolean exists = false;
+            for (Major major : majors) {
+                if (major.getName().equalsIgnoreCase(name) && major.getDepartment_id() == department_id) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (exists) {
+                System.out.println("该专业已经存在，请重新输入！");
+            } else {
+                Major major = new Major(0, department_id, name);
+                MajorService.Create(major);
+
+                majors = MajorService.SelectAll();
+                Major latestMajor = majors.get(majors.size() - 1);
+                int major_id = latestMajor.getMajor_id(); // 获取最新的major
+
+                System.out.println("请输入课程信息（输入 'end' 结束）:");
+                ArrayList<Course> courses = new ArrayList<>();
+                while (true) {
+                    System.out.print("课程名称: ");
+                    String course_name = scanner.nextLine();
+                    if (course_name.equalsIgnoreCase("end")) {
+                        break;
+                    }
+                    Course course = new Course(major_id, department_id, course_name);
+                    courses.add(course);
+                }
+
+                for (Course course : courses) {
+                    CourseService.Create(course);
+                }
+
+                System.out.println("专业及其课程信息新增成功!");
+                break;
+            }
+        }
     }
+
+
 }

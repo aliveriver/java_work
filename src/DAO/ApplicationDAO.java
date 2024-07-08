@@ -198,4 +198,28 @@ public class ApplicationDAO {
         }
         return maxId;
     }
+    public boolean IsDuplicate(Application application) {//查重
+        boolean isDuplicate = false;
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String sql = "SELECT COUNT(*) AS count FROM applications WHERE student_id = ? AND university_id = ? AND department_id = ? AND major_id = ? AND is_adjustment = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, application.getStudent_id());
+            ps.setInt(2, application.getUniversity_id());
+            ps.setInt(3, application.getDepartment_id());
+            ps.setInt(4, application.getMajor_id());
+            ps.setInt(5, application.getIs_adjustment());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt("count") > 0) {
+                isDuplicate = true;
+            }
+            rs.close();
+            ps.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isDuplicate;
+    }
 }

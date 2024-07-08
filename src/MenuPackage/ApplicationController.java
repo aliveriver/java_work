@@ -1,12 +1,12 @@
 package MenuPackage;
+
 import Service.StudentService;
 import Service.ApplicationService;
-import model.Student;
 import model.Application;
 import java.util.*;
 
-abstract public class ApplicationControler {
-    public static void ApplicationControler() {
+abstract public class ApplicationController {
+    public static void ApplicationController() {
         boolean left = true;
         int Student_id = 0;
         while (left) {
@@ -83,9 +83,12 @@ abstract public class ApplicationControler {
 
         Application application = new Application(newApplicationId, student_id, university_id, department_id, major_id, is_adjustment);
 
-        ApplicationService.Create(application);
-
-        System.out.println("志愿信息已成功添加！");
+        if (ApplicationService.IsDuplicate(application)) {
+            System.out.println("该志愿信息已存在，添加失败！");
+        } else {
+            ApplicationService.Create(application);
+            System.out.println("志愿信息已成功添加！");
+        }
     }
 
     private static void UpdateApplication(int student_id) {
@@ -114,7 +117,7 @@ abstract public class ApplicationControler {
             return;
         }
 
-        System.out.println("请输入新的志愿信息 (如果不需要修改，请输入原信息):");
+        System.out.println("请输入新的志愿信息 (不需要修改的部分请输入原信息):");
 
         System.out.print("大学ID (" + existingApplication.getUniversity_id() + "): ");
         int university_id = scanner.nextInt();
@@ -130,9 +133,12 @@ abstract public class ApplicationControler {
 
         Application updatedApplication = new Application(application_id, student_id, university_id, department_id, major_id, is_adjustment);
 
-        ApplicationService.Update(updatedApplication);
-
-        System.out.println("志愿信息已成功修改！");
+        if (ApplicationService.IsDuplicate(updatedApplication)) {
+            System.out.println("与原志愿相同，修改失败！");
+        } else {
+            ApplicationService.Update(updatedApplication);
+            System.out.println("志愿信息已成功修改！");
+        }
     }
 
     private static void DeleteApplication(int student_id) {

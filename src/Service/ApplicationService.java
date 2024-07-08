@@ -50,4 +50,7 @@ abstract public class ApplicationService {
 
         return applicationsMap;
     }
+    public static boolean IsDuplicate(Application application) {//查重
+        return as.IsDuplicate(application);
+    }
 }

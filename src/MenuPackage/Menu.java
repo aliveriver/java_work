@@ -37,7 +37,7 @@ abstract public class Menu {
                     StudentController.StuController();//进入学生信息管理系统
                     break;
                 case 2:
-                    ApplicationControler.ApplicationControler();//进入志愿填报管理系统
+                    ApplicationController.ApplicationController();//进入志愿填报管理系统
                     break;
                 case 3:
                     ViewAdmission.ViewAdmissionFunction();//
