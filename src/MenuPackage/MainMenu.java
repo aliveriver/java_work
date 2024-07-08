@@ -47,7 +47,7 @@ abstract public class MainMenu {
                     AdministratorController.AdministratorControllerMenu();//进入管理员Menu
                     break;
                 case 6:
-                    AboutUs.TeamInfo();
+                    AboutUs.TeamInfo();//爆ぜろリアル！弾けろシナプス！パニッシュメント ディス、ワールド！
                     break;
                 case 7:
                     left = false;
