@@ -72,7 +72,7 @@ abstract public class UniversityController {
         for(int j=0;j<r.size();j++)
         {
             System.out.println(r.get(j).getStudent_id()+" "+r.get(j).getName()+" "+r.get(j).getGender()+" "+
-                    r.get(j).getAge()+" "+r.get(j).getScore()+" "+r.get(j).getClass_id());
+                    r.get(j).getAge()+" "+r.get(j).getScore());//暂时不需要classid
         }
         try{sleep(3);}catch (Exception e){e.printStackTrace();}
     }
