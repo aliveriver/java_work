@@ -22,7 +22,7 @@ abstract public class Menu {
         //菜单栏
         while (left) {
             System.out.println("欢迎来到“模拟志愿填报系统”！");
-            System.out.println("请注意，请确保所有同学提交完志愿后再分配志愿！");
+            System.out.println("请注意，请确保所有同学提交完志愿后再分配志愿！");//用户自适应
             System.out.println("1. 学生信息管理");//1.添加学生信息 2.修改学生信息 3.查看学生分班情况 4.查看学生专业情况 5.查看学生专业课程
             System.out.println("2. 学生志愿管理");//学生志愿信息增删改查系统
             System.out.println("3. 查询学生录取情况");//大学学生的admission
@@ -47,7 +47,7 @@ abstract public class Menu {
                     UniversityController.UniversityControllerMenu();//进入大学管理的Menu
                     break;
                 case 5:
-                    ManagerController.ManagerControllerMenu();//进入管理员Menu
+                    AdministratorController.AdministratorControllerMenu();//进入管理员Menu
                     break;
                 case 6:
                     AboutUs.TeamInfo();

@@ -4,8 +4,8 @@ import Service.*;
 import model.*;
 import java.util.*;
 
-abstract public class ManagerController {
-    public static void ManagerControllerMenu() {
+abstract public class AdministratorController {
+    public static void AdministratorControllerMenu() {
         // 1.分配志愿信息  2.分配班级信息 3.添加大学信息 4.添加专业信息（外码参考）
         System.out.println("请输入密钥:");
         Scanner scanner33 = new Scanner(System.in);
