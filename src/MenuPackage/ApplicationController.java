@@ -51,7 +51,7 @@ abstract public class ApplicationController {
                     DeleteApplication(Student_id);
                     break;
                 case 4:
-                    FindApplication(Student_id);
+                    SearchApplication(Student_id);
                     break;
                 case 5:
                     return;
@@ -195,7 +195,7 @@ abstract public class ApplicationController {
         System.out.println("志愿信息已成功删除！");
     }
 
-    private static void FindApplication(int student_id) {
+    private static void SearchApplication(int student_id) {
         List<Application> applications = ApplicationService.SelectBystudent_id(student_id);
         if (applications.isEmpty()) {
             System.out.println("您没有已填报的志愿！");
