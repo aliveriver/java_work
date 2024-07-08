@@ -264,15 +264,24 @@ abstract public class AdministratorController {
                             if (application.getStudent_id() == Students.get(Students.size()-excessNumber).getStudent_id()){
                                 if(application.getIs_adjustment()==0)  //不服从调剂
                                 {
-                                    System.out.println("学生的id"+application.getStudent_id()+"因不服从调剂，因此滑档");
-                                    continue;
+                                    System.out.println("学生的id"+application.getStudent_id()+"的志愿:");
+                                    System.out.println("志愿id"+application.getApplication_id());
+                                    System.out.println("大学id"+application.getUniversity_id());
+                                    System.out.println("院系id"+application.getDepartment_id());
+                                    System.out.println("专业id"+application.getMajor_id());
+                                    System.out.println("因不服从调剂而滑档");
+                                    excessNumber--;//超的人数处理好了一个
+                                    break;
                                 }
-                                application.setMajor_id(toMajor); // 调剂到新的专业 找到后记得及时退出
-                                excessNumber--;//超的人数
-                                //修改
-                                majorCount.put(majorId,majorCount.get(majorId)-1);
-                                majorCount.put(toMajor,majorCount.get(toMajor)+1);
-                                break;
+                                else {
+                                    application.setMajor_id(toMajor); // 调剂到新的专业 找到后记得及时退出
+                                    excessNumber--;//超的人数
+                                    //修改
+                                    majorCount.put(majorId,majorCount.get(majorId)-1);
+                                    majorCount.put(toMajor,majorCount.get(toMajor)+1);
+                                    break;
+                                }
+
                             }
                         }
                     }
