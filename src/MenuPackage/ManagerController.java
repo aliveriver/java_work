@@ -39,7 +39,8 @@ abstract public class ManagerController {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 2://这个还没写，怎么分班？？？？？？？？？？？？？
+                case 2://怎么分班？？？？？？？？？？？？？
+                    AssignStudentToClass();
                     break;
                 case 3:
                     CreateUniversity();
@@ -301,6 +302,11 @@ abstract public class ManagerController {
             AdmissionService.Create(admission);
         }
     }
+
+    public static void AssignStudentToClass(){
+
+    }
+
     /**
      * 创建大学信息
      */
@@ -332,6 +338,7 @@ abstract public class ManagerController {
             }
         }
     }
+
     private static void CreateMajor() {
         Scanner scanner = new Scanner(System.in);
         int department_id = 0;
