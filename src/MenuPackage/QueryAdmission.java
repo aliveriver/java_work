@@ -6,8 +6,8 @@ import model.Admission;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-abstract public class ViewAdmission {
-    public static void ViewAdmissionFunction() {
+abstract public class QueryAdmission {
+    public static void QueryAdmissionFunction() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("请输入学生ID：");
@@ -15,6 +15,7 @@ abstract public class ViewAdmission {
 
         Admission admission = findAdmissionByStudentId(studentId);
         if (admission != null) {
+            System.out.println("以下为该学生的录取信息：");
             displayAdmission(admission);
         } else {
             System.out.println("未找到该学生的录取信息！");

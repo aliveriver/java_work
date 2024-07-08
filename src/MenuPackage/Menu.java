@@ -41,7 +41,7 @@ abstract public class Menu {
                     ApplicationController.ApplicationController();//进入志愿填报管理系统
                     break;
                 case 3:
-                    ViewAdmission.ViewAdmissionFunction();//小亮给他整个活
+                    QueryAdmission.QueryAdmissionFunction();//小亮给他整个活
                     break;
                 case 4:
                     UniversityController.UniversityControllerMenu();//进入大学管理的Menu
