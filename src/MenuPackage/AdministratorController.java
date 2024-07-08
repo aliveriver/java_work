@@ -90,7 +90,6 @@ abstract public class AdministratorController {
 
         // 检查学生ID列表是否为空，如果为空则抛出异常
 
-
         // 批量获取学生信息和志愿信息
         Map<Integer, Student> studentsMap = StudentService.SelectByIds(studentsIdList); //前面的Integer都是学生id
         Map<Integer, ArrayList<Application>> applicationsMap = ApplicationService.SelectByStudentIds(studentsIdList);//前面的Integer都是学生id
@@ -248,7 +247,7 @@ abstract public class AdministratorController {
                     // 寻找可以调剂到的专业
                     int toMajor = -1;
                     for (int i = startIndex+1; i < majorIdList.size(); i++) {
-//                        int index = startIndex + i; // 确保从startIndex开始循环
+// int index = startIndex + i; // 确保从startIndex开始循环
                         int id = majorIdList.get(i);
                         if (id != majorId) {
                             toMajor = id; // 找到可调剂到的专业
@@ -303,7 +302,7 @@ abstract public class AdministratorController {
         }
     }
 
-    public static void AssignStudentToClass(){
+    public static void AssignStudentToClass(){//沟槽的分班
 
     }
 
@@ -316,7 +315,7 @@ abstract public class AdministratorController {
         while (true) {
             System.out.print("请输入大学名称: ");
             String name = scanner.nextLine();
-            System.out.print("请输入大学所在省级行政区: ");
+            System.out.print("请输入该大学所在省级行政区: ");
             String location = scanner.nextLine();
 
             ArrayList<University> universities = UniversityService.SelectAll(); //检查是否已存在同名的大学
