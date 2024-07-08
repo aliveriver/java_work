@@ -27,4 +27,8 @@ abstract public class UniversityService {
     public static void DeleteById(int id){
         ud.DeleteById(id);
     }
+
+    public static int getUniversityIdByName(String name) {
+        return ud.getUniversityIdByName(name);
+    }
 }

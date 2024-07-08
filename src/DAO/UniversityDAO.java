@@ -140,4 +140,26 @@ public class UniversityDAO {
         }
     }
 
+    public int getUniversityIdByName(String name) {
+        int university_id = -1;
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT university_id FROM universities WHERE name = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setString(1, name);
+            ResultSet Srow = SPStat.executeQuery();
+            if (Srow.next()) {
+                university_id = Srow.getInt("university_id");
+            } else {
+                System.out.println("University not found");
+            }
+            SPStat.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return university_id;
+    }
+
 }

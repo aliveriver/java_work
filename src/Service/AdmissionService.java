@@ -32,4 +32,7 @@ abstract public class AdmissionService {
     public static ArrayList<Student> SelectStudentByUniversity(int university_id){
         return as.SelectStudentByUniversity(university_id);
     }
+    public static ArrayList<Student> SelectStudentByUniversityAndMajor(int universityId, int majorId) {
+        return as.SelectStudentByUniversityAndMajor(universityId, majorId);
+    }
 }

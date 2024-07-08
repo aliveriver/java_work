@@ -166,4 +166,26 @@ public class MajorDAO {
             e.printStackTrace();
         }
     }
+
+    public int getMajorIdByName(String name) {
+        int major_id = -1;
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT major_id FROM majors WHERE name = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setString(1, name);
+            ResultSet Srow = SPStat.executeQuery();
+            if (Srow.next()) {
+                major_id = Srow.getInt("major_id");
+            } else {
+                System.out.println("Major not found");
+            }
+            SPStat.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return major_id;
+    }
 }

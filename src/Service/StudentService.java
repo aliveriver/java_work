@@ -44,7 +44,14 @@ abstract public class StudentService {
                 studentsMap.put(id, student);
             }
         }
-
         return studentsMap;
+    }
+
+    public static void UpdateStudentClass(int studentId, int classId) {
+        Student student = SelectById(studentId);
+        if (student != null) {
+            student.setClass_id(classId);
+            Update(student);
+        }
     }
 }

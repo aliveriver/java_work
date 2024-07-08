@@ -190,4 +190,39 @@ public class AdmissionDAO {
         //System.out.println("Success Select");
         return result;
     }
+
+    public ArrayList<Student> SelectStudentByUniversityAndMajor(int universityId, int majorId) {//分班
+        ArrayList<Student> result = new ArrayList<>();
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM admissions " +
+                    "JOIN students ON students.student_id = admissions.student_id " +
+                    "WHERE admissions.university_id = ? AND admissions.major_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, universityId);
+            SPStat.setInt(2, majorId);
+            ResultSet Srow = SPStat.executeQuery();
+            if (!Srow.isBeforeFirst()) {
+                System.out.println("Fail to Select");
+                throw new Exception("No students found for the given university and major");
+            }
+            while (Srow.next()) {
+                Student student = new Student(Srow.getInt("student_id"),
+                        Srow.getString("name"),
+                        Srow.getString("gender"),
+                        Srow.getInt("age"),
+                        Srow.getInt("score"),
+                        Srow.getInt("class_id"));
+                result.add(student);
+            }
+            SPStat.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
 }

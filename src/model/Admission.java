@@ -4,8 +4,8 @@ package model;
 public class Admission {
     private int admission_id;
     private int student_id;
-    private int university_id;
-    private int major_id;
+    private int university_id;//录取到的大学
+    private int major_id;//录取到的专业
     private int department_id;
 
     public Admission(int admission_id, int student_id, int university_id, int major_id, int department_id) {

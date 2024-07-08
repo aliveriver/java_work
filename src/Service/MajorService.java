@@ -29,4 +29,8 @@ abstract public class MajorService {
     }
 
     public static ArrayList<Integer> SelectByDepartment_id(int id) {return ms.SelectByDepartment_id(id);}
+
+    public static int getMajorIdByName(String name) {
+        return ms.getMajorIdByName(name);
+    }
 }

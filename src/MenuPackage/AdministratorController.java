@@ -2,6 +2,7 @@ package MenuPackage;
 
 import Service.*;
 import model.*;
+import model.Class;
 import java.util.*;
 
 abstract public class AdministratorController {
@@ -304,6 +305,55 @@ abstract public class AdministratorController {
 
     public static void AssignStudentToClass(){//沟槽的分班
 
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("请输入大学名称：");
+        String universityName = scanner.nextLine();
+
+        System.out.print("请输入专业名称：");
+        String majorName = scanner.nextLine();
+
+        System.out.print("请输入要分配的每个班级的人数：");
+        int classSize = scanner.nextInt();
+
+        //获取大学和专业的ID
+        int universityId = getUniversityIdByName(universityName);
+        int majorId = getMajorIdByName(majorName);
+
+        // Step 1: 获取所有被录取的学生
+        ArrayList<Student> students = AdmissionService.SelectStudentByUniversityAndMajor(universityId, majorId);
+
+        // Step 2: 随机打乱学生列表
+        Collections.shuffle(students);
+
+        // Step 3: 开始分班
+        int totalStudents = students.size();
+        int classCount = (totalStudents + classSize - 1) / classSize; // 计算需要的班级数
+
+        for (int i = 0; i < classCount; i++) {
+            String className = String.format("%s专业%02d班", majorName, i + 1);
+            Class newClass = new Class(majorId, className, universityId);
+            ClassService.Create(newClass); // 创建新班级
+
+            // 分配学生到新班级
+            int start = i * classSize;
+            int end = Math.min(start + classSize, totalStudents);
+            for (int j = start; j < end; j++) {
+                Student student = students.get(j);
+                StudentService.UpdateStudentClass(student.getStudent_id(), newClass.getClass_id());
+            }
+        }
+
+        System.out.println("分班完成！");
+    }
+
+    private static int getUniversityIdByName(String name) {
+        // 模拟根据名称获取大学ID
+        return UniversityService.getUniversityIdByName(name);
+    }
+
+    private static int getMajorIdByName(String name) {
+        return MajorService.getMajorIdByName(name);
     }
 
     /**
