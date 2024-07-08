@@ -173,4 +173,25 @@ public class CourseDAO {
         }
         return courses;
     }
+
+    public String getCourseNameById(int id) {
+        String courseName = null;
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT course_name FROM courses WHERE Courses_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, id);
+            ResultSet Srow = SPStat.executeQuery();
+            if (Srow.next()) {
+                courseName = Srow.getString("course_name");
+            }
+            SPStat.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courseName;
+    }
+
 }

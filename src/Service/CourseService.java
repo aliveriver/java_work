@@ -30,4 +30,8 @@ abstract public class CourseService {
     public static ArrayList<Course> SelectByMajorId(int major_id) {
         return cs.SelectByMajorId(major_id);
     }
+
+    public static String getCourseNameById(int id) {
+        return cs.getCourseNameById(id);
+    }
 }

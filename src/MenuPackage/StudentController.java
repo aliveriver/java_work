@@ -224,7 +224,9 @@ abstract public class StudentController {
 
         System.out.println("学生课程信息: ");
         for (Course course : courses) {
-            System.out.println("课程ID: " + course.getCourse_id() + ", 课程名称: " + course.getCourse_name());
+            String courseName = CourseService.getCourseNameById(course.getCourse_id());
+            System.out.println(courseName + " ");
         }
     }
+
 }
