@@ -7,14 +7,14 @@ import java.util.*;
 abstract public class AdministratorController {
     public static void AdministratorControllerMenu() {
         // 1.分配志愿信息  2.分配班级信息 3.添加大学信息 4.添加专业信息（外码参考）
-        System.out.println("请输入密钥:");
+        System.out.println("请输入管理员密码:");
         Scanner scanner33 = new Scanner(System.in);
         String input = scanner33.nextLine();
         if(input.equals("123456")) {
-            System.out.println("密码正确，欢迎进入管理员系统");
+            System.out.println("密码正确，进入管理员系统");
         }
         else {
-            System.out.println("密码错误，已强制返回");
+            System.out.println("密码错误！");
             return;
         }
         boolean left = true;
