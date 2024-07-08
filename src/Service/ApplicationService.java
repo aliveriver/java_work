@@ -53,4 +53,12 @@ abstract public class ApplicationService {
     public static boolean IsDuplicate(Application application) {//查重
         return as.IsDuplicate(application);
     }
+
+    public static int GetUniversityCountByStudentId(int student_id) {//沟槽的大学数量有上限
+        return as.GetUniversityCountByStudentId(student_id);
+    }
+
+    public static int GetMajorCountByUniversity(int student_id, int university_id) {//沟槽的专业数量有上限
+        return as.GetMajorCountByUniversity(student_id, university_id);
+    }
 }

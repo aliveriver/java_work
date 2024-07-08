@@ -62,11 +62,21 @@ abstract public class ApplicationController {
     }
 
     private static void CreateApplication(int student_id) {
+        if (ApplicationService.GetUniversityCountByStudentId(student_id) >= 10) {
+            System.out.println("志愿大学数量已达上限(10所)！");
+            return;
+        }
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入志愿信息:");
 
         System.out.print("大学ID: ");
         int university_id = scanner.nextInt();
+
+        if (ApplicationService.GetMajorCountByUniversity(student_id, university_id) >= 3) {
+            System.out.println("该大学志愿专业数量已达上限(3个)！");
+            return;
+        }
 
         System.out.print("系ID: ");
         int department_id = scanner.nextInt();
@@ -117,10 +127,23 @@ abstract public class ApplicationController {
             return;
         }
 
-        System.out.println("请输入新的志愿信息 (不需要修改的部分请输入原信息):");
+        System.out.println("请输入新的志愿信息(不需要修改的部分请输入原信息):");
 
         System.out.print("大学ID (" + existingApplication.getUniversity_id() + "): ");
         int university_id = scanner.nextInt();
+
+        if (university_id != existingApplication.getUniversity_id()) {
+            if (ApplicationService.GetUniversityCountByStudentId(student_id) >= 10) {
+                System.out.println("志愿大学数量已达上限(10所)！");
+                return;
+            }
+        }
+
+        if (university_id != existingApplication.getUniversity_id() ||
+                ApplicationService.GetMajorCountByUniversity(student_id, university_id) >= 3) {
+            System.out.println("该大学志愿专业数量已达上限(3个)！");
+            return;
+        }
 
         System.out.print("系ID (" + existingApplication.getDepartment_id() + "): ");
         int department_id = scanner.nextInt();
@@ -134,7 +157,7 @@ abstract public class ApplicationController {
         Application updatedApplication = new Application(application_id, student_id, university_id, department_id, major_id, is_adjustment);
 
         if (ApplicationService.IsDuplicate(updatedApplication)) {
-            System.out.println("与原志愿相同，修改失败！");
+            System.out.println("与原志愿信息相同，修改失败！");
         } else {
             ApplicationService.Update(updatedApplication);
             System.out.println("志愿信息已成功修改！");

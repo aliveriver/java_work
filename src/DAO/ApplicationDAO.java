@@ -222,4 +222,48 @@ public class ApplicationDAO {
         }
         return isDuplicate;
     }
+
+    public int GetUniversityCountByStudentId(int student_id) {//已填报大学总数
+        int count = 0;
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String sql = "SELECT COUNT(DISTINCT university_id) AS university_count FROM applications WHERE student_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, student_id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("university_count");
+            }
+            rs.close();
+            ps.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int GetMajorCountByUniversity(int student_id, int university_id) {//已填报专业总数
+        int count = 0;
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String sql = "SELECT COUNT(*) AS major_count FROM applications WHERE student_id = ? AND university_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, student_id);
+            ps.setInt(2, university_id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("major_count");
+            }
+            rs.close();
+            ps.close();
+            Database.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
 }
