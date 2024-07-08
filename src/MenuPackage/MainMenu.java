@@ -14,7 +14,7 @@ import java.util.*;
 import static java.lang.Thread.sleep;
 
 abstract public class MainMenu {
-    public static void  MenuStart() {
+    public static void MenuStart() {
         boolean left = true;
         //菜单栏
         while (left) {
