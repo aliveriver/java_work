@@ -348,7 +348,6 @@ abstract public class AdministratorController {
     }
 
     private static int getUniversityIdByName(String name) {
-        // 模拟根据名称获取大学ID
         return UniversityService.getUniversityIdByName(name);
     }
 
