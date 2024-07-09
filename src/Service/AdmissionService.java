@@ -35,4 +35,7 @@ abstract public class AdmissionService {
     public static ArrayList<Student> SelectStudentByUniversityAndMajor(int universityId, int majorId) {
         return as.SelectStudentByUniversityAndMajor(universityId, majorId);
     }
+    public static model.Admission SelectByStudentId(int student_id){
+        return as.SelectByStudentId(student_id);
+    }
 }

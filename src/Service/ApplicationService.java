@@ -37,6 +37,7 @@ abstract public class ApplicationService {
         return as.GetMaxApplicationId();
     }
 
+
     // 批量获取学生的志愿信息ApplicationService.java
     public static Map<Integer, ArrayList<Application>> SelectByStudentIds(ArrayList<Integer> studentsIdList) {
         Map<Integer, ArrayList<Application>> applicationsMap = new HashMap<>();

@@ -129,7 +129,13 @@ abstract public class AdministratorController {
 
         System.out.println("调剂处理完成");
     }
-
+    private static int GetMajorIdFromPreadmission(ArrayList<Application> preAdmission,int stuid) {
+        for(Application a :preAdmission)
+        {
+            if(a.getStudent_id() == stuid) return a.getMajor_id();
+        }
+        return -1;
+    }
     /**
      * 处理学生的志愿申请
      *
@@ -154,7 +160,7 @@ abstract public class AdministratorController {
             enrollmentMark = EnRollmentMarkService.SelectByOther(universityId, departmentId, majorId);
             int requiredScore = enrollmentMark.getRequiredScore();
             int maxDepartmentCount = enrollmentMark.getDRequiredN();
-           // int maxMajorCount = enrollmentMark.getMRequiredN();//获得最大录取人数
+             int maxMajorCount = enrollmentMark.getMRequiredN();//获得最大录取人数
 
             if (studentScore >= requiredScore) { // 符合录取要求
                 boolean departmentFound = false;
@@ -163,15 +169,40 @@ abstract public class AdministratorController {
                 for (AdmS adm : adSituation) {
                     if (universityId == adm.getUniversity_id() && departmentId == adm.getDepartment_id()) {
                         departmentFound = true;
-
+                        /*判断是否调剂*/
                         if (adm.getDcount() < maxDepartmentCount) //院系人数小于最大院系人数
                         {
+
                             //查找一个ADMS中这个专业的数量有没有超
-                            adm.AddStudent(student); // 添加学生到院系注册表中
-                            adm.setDcount(adm.getDcount() + 1); // 院系人数加1
-                            preAdmission.add(application); // 加入预录取表
-                            admitted = true; // 成功录取
-                            break;
+                            /*判断是否调剂*/
+                            //计算我想报的专业的人数
+                            if(application.getIs_adjustment()==0)
+                            {
+                                int majorcount = 0;
+                                ArrayList<Student> studentstemp = adm.getSlist();
+                                for(Student test: studentstemp)
+                                {
+                                    int studentId = test.getStudent_id();
+                                    int majorOfOthers =0;//这个学生的专业id
+                                    majorOfOthers = GetMajorIdFromPreadmission(preAdmission, studentId);
+                                    if(majorOfOthers==majorId) majorcount++;//如果别人的专业和我想报的专业一样，那么数量++
+                                }
+                                if(majorcount>=maxMajorCount)
+                                {
+                                    //无法调剂，不能录取，滑档
+                                    System.out.println("学生id "+student.getStudent_id()+"的志愿");
+                                    System.out.println("志愿id "+application.getApplication_id()+"大学id"+application.getUniversity_id()+"院系id"+application.getDepartment_id()+"专业id"+application.getMajor_id()+"滑档");
+                                    return false;
+                                }
+                            }
+                            else{
+                                adm.AddStudent(student); // 添加学生到院系注册表中
+                                adm.setDcount(adm.getDcount() + 1); // 院系人数加1
+                                preAdmission.add(application); // 加入预录取表
+                                admitted = true; // 成功录取
+                                break;
+                            }
+
                         } else {
                             break; // 院系人数已满，不再继续处理该志愿
                         }

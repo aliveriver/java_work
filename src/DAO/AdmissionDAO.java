@@ -99,7 +99,34 @@ public class AdmissionDAO {
         //System.out.println("Success Select");
         return test;
     }
+    public model.Admission SelectByStudentId(int stu_id){
+        Admission test = new Admission();
+        try {
+            Database.setConnection();
+            Connection conn = Database.getConnection();
+            String select_sql = "SELECT * FROM admissions WHERE student_id = ?";
+            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat.setInt(1, stu_id);
+            ResultSet Srow = SPStat.executeQuery();
+            if (!Srow.isBeforeFirst()) {
+                System.out.println("Fail to Select");
+                throw new Exception("ID is not found");
+            }
+            Srow.next();
+            test.setAdmission_id(Srow.getInt("admission_id"));
+            test.setStudent_id(Srow.getInt("student_id"));
+            test.setUniversity_id(Srow.getInt("university_id"));
+            test.setDepartment_id(Srow.getInt("department_id"));
+            test.setMajor_id(Srow.getInt("major_id"));
 
+            SPStat.close();
+            Database.closeConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //System.out.println("Success Select");
+        return test;
+    }
     public ArrayList<Admission> SelectAll(){
         ArrayList<Admission> test = new ArrayList<Admission>();
         try {
