@@ -3,6 +3,7 @@ package MenuPackage;
 import Service.*;
 import model.*;
 import model.Class;
+
 import java.util.*;
 
 abstract public class AdministratorController {
@@ -11,16 +12,14 @@ abstract public class AdministratorController {
         System.out.println("请输入管理员密码:");
         Scanner scanner33 = new Scanner(System.in);
         String input = scanner33.nextLine();
-        if(input.equals("123456")) {
+        if (input.equals("123456")) {
             System.out.println("密码正确，进入管理员系统");
-        }
-        else {
+        } else {
             System.out.println("密码错误！");
             return;
         }
         boolean left = true;
-        while(left)
-        {
+        while (left) {
             System.out.println("请注意，临时添加的大学、专业不会即时反映在录取简章和学生可选项中");
             System.out.println("1. 分配志愿信息");//先录取
             System.out.println("2. 分配班级");//后分班
@@ -32,11 +31,11 @@ abstract public class AdministratorController {
             int Choice = 0;
             Scanner scanner = new Scanner(System.in);
             Choice = scanner.nextInt();
-            switch(Choice){
+            switch (Choice) {
                 case 1:
                     try {
                         HandInAllApplications();
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -59,6 +58,7 @@ abstract public class AdministratorController {
             }
         }
     }
+
     public static void ViewAllStudentAdmissions() {
         ArrayList<Admission> admissions = AdmissionService.SelectAll();
 
@@ -70,6 +70,7 @@ abstract public class AdministratorController {
             System.out.println("专业ID: " + admission.getMajor_id());
         }
     }
+
     public static void HandInAllApplications() throws Exception {
         // 获取所有学生的ID列表
         //ArrayList<Integer> studentsIdList = StudentService.SelectAllId();
@@ -84,8 +85,7 @@ abstract public class AdministratorController {
 
         Collections.sort(studentstemp);//从大到小排学生
 
-        for(Student student : studentstemp)
-        {
+        for (Student student : studentstemp) {
             studentsIdList.add(student.getStudent_id());
         }
 
@@ -154,6 +154,7 @@ abstract public class AdministratorController {
             enrollmentMark = EnRollmentMarkService.SelectByOther(universityId, departmentId, majorId);
             int requiredScore = enrollmentMark.getRequiredScore();
             int maxDepartmentCount = enrollmentMark.getDRequiredN();
+           // int maxMajorCount = enrollmentMark.getMRequiredN();//获得最大录取人数
 
             if (studentScore >= requiredScore) { // 符合录取要求
                 boolean departmentFound = false;
@@ -163,7 +164,9 @@ abstract public class AdministratorController {
                     if (universityId == adm.getUniversity_id() && departmentId == adm.getDepartment_id()) {
                         departmentFound = true;
 
-                        if (adm.getDcount() < maxDepartmentCount) {
+                        if (adm.getDcount() < maxDepartmentCount) //院系人数小于最大院系人数
+                        {
+                            //查找一个ADMS中这个专业的数量有没有超
                             adm.AddStudent(student); // 添加学生到院系注册表中
                             adm.setDcount(adm.getDcount() + 1); // 院系人数加1
                             preAdmission.add(application); // 加入预录取表
@@ -195,7 +198,6 @@ abstract public class AdministratorController {
 
         return admitted;
     }
-
     /**
      * 处理调剂专业
      *
@@ -205,7 +207,7 @@ abstract public class AdministratorController {
      */
     private static void handleMajorAdjustment(ArrayList<AdmS> adSituation, ArrayList<Application> preAdmission) throws Exception {
         for (AdmS adm : adSituation) {
-            adm.SortStudentDependsOnScore(); // 根据学生分数对注册表中的学生进行降序排序
+            //adm.SortStudentDependsOnScore(); // 根据学生分数对注册表中的学生进行降序排序
 
             // 获取该院系的所有专业列表
             int temp = adm.getDepartment_id();//获取院系id
@@ -230,8 +232,8 @@ abstract public class AdministratorController {
             }
             //初始化marjor_count 遍历
             for (Integer majorId : majorIdList) {
-                if(majorCount.containsKey(majorId)) continue;
-                else majorCount.put(majorId,0);
+                if (majorCount.containsKey(majorId)) continue;
+                else majorCount.put(majorId, 0);
             }
 
 
@@ -247,7 +249,7 @@ abstract public class AdministratorController {
 
                     // 寻找可以调剂到的专业
                     int toMajor = -1;
-                    for (int i = startIndex+1; i < majorIdList.size(); i++) {
+                    for (int i = startIndex + 1; i < majorIdList.size(); i++) {
 // int index = startIndex + i; // 确保从startIndex开始循环
                         int id = majorIdList.get(i);
                         if (id != majorId) {
@@ -258,30 +260,16 @@ abstract public class AdministratorController {
 
                     // 修改符合调剂条件的学生的专业信息
                     int changedCount = 0;
-                    while(changedCount != excessNumber)
-                    {
+                    while (changedCount != excessNumber) {
                         for (Application application : preAdmission) {
-                            if (application.getStudent_id() == Students.get(Students.size()-excessNumber).getStudent_id()){
-                                if(application.getIs_adjustment()==0)  //不服从调剂
-                                {
-                                    System.out.println("学生的id"+application.getStudent_id()+"的志愿:");
-                                    System.out.println("志愿id"+application.getApplication_id());
-                                    System.out.println("大学id"+application.getUniversity_id());
-                                    System.out.println("院系id"+application.getDepartment_id());
-                                    System.out.println("专业id"+application.getMajor_id());
-                                    System.out.println("因不服从调剂而滑档");
-                                    excessNumber--;//超的人数处理好了一个
-                                    break;
-                                }
-                                else {
-                                    application.setMajor_id(toMajor); // 调剂到新的专业 找到后记得及时退出
-                                    excessNumber--;//超的人数
-                                    //修改
-                                    majorCount.put(majorId,majorCount.get(majorId)-1);
-                                    majorCount.put(toMajor,majorCount.get(toMajor)+1);
-                                    break;
-                                }
-
+                            if (application.getStudent_id() == Students.get(Students.size() - excessNumber).getStudent_id()) {
+                                //均默认调剂
+                                application.setMajor_id(toMajor); // 调剂到新的专业 找到后记得及时退出
+                                excessNumber--;//超的人数
+                                //修改
+                                majorCount.put(majorId, majorCount.get(majorId) - 1);
+                                majorCount.put(toMajor, majorCount.get(toMajor) + 1);
+                                break;
                             }
                         }
                     }
@@ -290,6 +278,7 @@ abstract public class AdministratorController {
             }
         }
     }
+
     /**
      * 更新最终的录取表
      *
@@ -312,7 +301,7 @@ abstract public class AdministratorController {
         }
     }
 
-    public static void AssignStudentToClass(){//沟槽的分班
+    public static void AssignStudentToClass() {//沟槽的分班
 
         Scanner scanner = new Scanner(System.in);
 
