@@ -160,7 +160,7 @@ abstract public class AdministratorController {
             enrollmentMark = EnRollmentMarkService.SelectByOther(universityId, departmentId, majorId);
             int requiredScore = enrollmentMark.getRequiredScore();
             int maxDepartmentCount = enrollmentMark.getDRequiredN();
-             int maxMajorCount = enrollmentMark.getMRequiredN();//获得最大录取人数
+            int maxMajorCount = enrollmentMark.getMRequiredN();//获得最大录取人数
 
             if (studentScore >= requiredScore) { // 符合录取要求
                 boolean departmentFound = false;
