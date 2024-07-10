@@ -62,30 +62,41 @@ public class UniversityDAO {
         }
     }
 
-    public model.University SelectById(int id) {
-        University test = new University();
+    public University SelectById(int id) {
+        University test = null;
+        Connection conn = null;
+        PreparedStatement SPStat = null;
+        ResultSet Srow = null;
         try {
             Database.setConnection();
-            Connection conn = Database.getConnection();
+            conn = Database.getConnection();
             String select_sql = "SELECT * FROM universities WHERE university_id = ?";
-            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
-            ResultSet Srow = SPStat.executeQuery();
+            Srow = SPStat.executeQuery();
             if (!Srow.isBeforeFirst()) {
-                System.out.println("Fail to Select");
-                throw new Exception("ID is not found");
+                System.out.println("Fail to Select: ID is not found");
+                return null; // 返回null表示未找到
             }
             Srow.next();
+            test = new University();
             test.setLocation(Srow.getString("location"));
             test.setName(Srow.getString("name"));
             test.setUniversity_id(Srow.getInt("university_id"));
-            SPStat.close();
-            Database.closeConnection();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (Srow != null) Srow.close();
+                if (SPStat != null) SPStat.close();
+                if (conn != null) Database.closeConnection();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return test;
     }
+
 
     public ArrayList<University> SelectAll() {
         ArrayList<University> test = new ArrayList<University>();

@@ -62,31 +62,42 @@ public class MajorDAO {
             e.printStackTrace();
         }
     }
-    public model.Major SelectById(int id){
-        Major test = new Major();
+    public Major SelectById(int id) {
+        Major test = null; // 初始化为null
+        Connection conn = null;
+        PreparedStatement SPStat = null;
+        ResultSet Srow = null;
         try {
             Database.setConnection();
-            Connection conn = Database.getConnection();
+            conn = Database.getConnection();
             String select_sql = "SELECT * FROM majors WHERE major_id = ?";
-            PreparedStatement SPStat = conn.prepareStatement(select_sql);
+            SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
-            ResultSet Srow = SPStat.executeQuery();
+            Srow = SPStat.executeQuery();
             if (!Srow.isBeforeFirst()) {
-                System.out.println("Fail to Select");
-                throw new Exception("ID is not found");
+                System.out.println("Fail to Select: ID is not found");
+                return null; // 返回null表示未找到
             }
             Srow.next();
+            test = new Major();
             test.setMajor_id(Srow.getInt("major_id"));
             test.setName(Srow.getString("name"));
             test.setDepartment_id(Srow.getInt("department_id"));
-            SPStat.close();
-            Database.closeConnection();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (Srow != null) Srow.close();
+                if (SPStat != null) SPStat.close();
+                if (conn != null) Database.closeConnection();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        //System.out.println("Success Select");
         return test;
     }
+
+
     public ArrayList<Integer> SelectByDepartment_id(int id){
         ArrayList<Integer> ids = new ArrayList<>();
         try {
