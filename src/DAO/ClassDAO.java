@@ -6,32 +6,38 @@ import model.Class;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ClassDAO {
 
-    public void Create(model.Class c){
+    public int Create(model.Class c) {
+        int classId = -1;
         try {
-            String sql = "INSERT INTO classes (major_id,University_id,class_name) VALUES(?,?,?)";
+            String sql = "INSERT INTO classes (major_id, university_id, class_name) VALUES(?,?,?)";
             Database.setConnection();
             Connection conn = Database.getConnection();
-            PreparedStatement PStat = conn.prepareStatement(sql);
+            PreparedStatement PStat = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             PStat.setInt(1, c.getMajor_id());
             PStat.setInt(2, c.getUniversity_id());
             PStat.setString(3, c.getClass_name());
 
             int row = PStat.executeUpdate();
             if (row > 0) {
-                //System.out.println("success insert");
-            } else {
-                //System.out.println("fail to insert");
+                ResultSet rs = PStat.getGeneratedKeys();
+                if (rs.next()) {
+                    classId = rs.getInt(1);
+                }
+                rs.close();
             }
             PStat.close();
             Database.closeConnection();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return classId;
     }
+
 
     public void Update(model.Class c){
         try {

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 abstract public class ClassService {
     private static ClassDAO cs = new ClassDAO();
 
-    public static void Create(model.Class c){
-        cs.Create(c);
+    public static int Create(model.Class c){
+        return new ClassDAO().Create(c);
     }
 
     public static void Update(model.Class c){
