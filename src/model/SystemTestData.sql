@@ -217,8 +217,16 @@ INSERT INTO applications (application_id, student_id, university_id, department_
 (49, 10, 4, 1, 1, 1), -- 朱迪第四志愿
 (50, 10, 5, 1, 1, 1); -- 朱迪第五志愿
 
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(1, 1, 3, 3, 8, 0); -- 伊雷娜第一志愿
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(4, 1, 3, 4, 10, 1); -- 伊雷娜第一志愿
 
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(2, 2, 3, 3, 9, 0); -- 伊雷娜第一志愿
 
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(3, 3, 3, 3, 9, 1); -- 伊雷娜第一志愿
 
 INSERT INTO EnrollmentMark (Enrollment_id, university_id, department_id, major_id, RequiredScore,MRequiredN,DRequiredN) VALUES
 (1, 1, 1, 1, 720,1,3), -- Finance
