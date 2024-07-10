@@ -90,11 +90,6 @@ abstract public class AdministratorController {
         }
 
         // 检查学生ID列表是否为空，如果为空则抛出异常
-
-        // 批量获取学生信息和志愿信息
-        Map<Integer, Student> studentsMap = StudentService.SelectByIds(studentsIdList); //前面的Integer都是学生id
-        Map<Integer, ArrayList<Application>> applicationsMap = ApplicationService.SelectByStudentIds(studentsIdList);//前面的Integer都是学生id
-
         // 预录取表
         ArrayList<Application> preAdmission = new ArrayList<>();
         // 注册表
@@ -102,11 +97,11 @@ abstract public class AdministratorController {
 
         // 遍历每个学生ID
         for (int id : studentsIdList) {
-            Student student = studentsMap.get(id); // 获取学生信息
+            Student student = StudentService.SelectById(id); // 获取学生信息
             if (student == null) continue; // 如果学生信息为空，跳过
 
             int studentScore = student.getScore(); // 获取学生的高考成绩
-            ArrayList<Application> applications = applicationsMap.get(id); // 获取学生的所有志愿信息
+            ArrayList<Application> applications = ApplicationService.SelectBystudent_id(id); // 获取学生的所有志愿信息
 
             // 如果没有填报志愿信息则记录并跳过
             if (applications == null || applications.isEmpty()) {
@@ -194,6 +189,18 @@ abstract public class AdministratorController {
                                     System.out.println("志愿id "+application.getApplication_id()+"大学id"+application.getUniversity_id()+"院系id"+application.getDepartment_id()+"专业id"+application.getMajor_id()+"滑档");
                                     return false;
                                 }
+                                //不满足说明能录取呀
+
+
+                                else{
+                                    adm.AddStudent(student); // 添加学生到院系注册表中
+                                    adm.setDcount(adm.getDcount() + 1); // 院系人数加1
+                                    preAdmission.add(application); // 加入预录取表
+                                    admitted = true; // 成功录取
+                                    break;
+                                }
+
+
                             }
                             else{
                                 adm.AddStudent(student); // 添加学生到院系注册表中
@@ -244,12 +251,13 @@ abstract public class AdministratorController {
             int temp = adm.getDepartment_id();//获取院系id
             ArrayList<Integer> majorIdList = MajorService.SelectByDepartment_id(temp);//基于院系信息得到专业表
             ArrayList<Student> Students = adm.getSlist();
-
+            int RequiredDepartmentCount =0;
             // 统计每个专业的人数需求
             Map<Integer, Integer> majorRequirements = new HashMap<>();
             for (Integer majorId : majorIdList) {
                 EnRollmentMark enrollmentMark = EnRollmentMarkService.SelectByOther(adm.getUniversity_id(), adm.getDepartment_id(), majorId);
                 int requiredMajorNumber = enrollmentMark.getMRequiredN(); // 获取专业的最大录取人数
+                RequiredDepartmentCount = enrollmentMark.getDRequiredN();//获取院系最大人数
                 majorRequirements.put(majorId, requiredMajorNumber); // 记录专业需求人数
             }
 
@@ -280,7 +288,7 @@ abstract public class AdministratorController {
 
                     // 寻找可以调剂到的专业
                     int toMajor = -1;
-                    for (int i = startIndex + 1; i < majorIdList.size(); i++) {
+                    for (int i = (startIndex + 1)%RequiredDepartmentCount; i < majorIdList.size(); i++) {
 // int index = startIndex + i; // 确保从startIndex开始循环
                         int id = majorIdList.get(i);
                         if (id != majorId) {

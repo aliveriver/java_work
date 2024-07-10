@@ -106,3 +106,5 @@ SELECT * FROM  admissions;
 SELECT * FROM  Courses;
 SELECT * FROM EnrollmentMark;
 SELECT * FROM EnrollmentMark where department_id =1 and major_id = 1;
+select * from applications where student_id = 3;
+
