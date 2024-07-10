@@ -7,6 +7,7 @@ import model.Class;
 import java.util.*;
 
 abstract public class AdministratorController {
+    private static boolean Used = true;
     public static void AdministratorControllerMenu() {
         // 1.分配志愿信息  2.分配班级信息 3.添加大学信息 4.添加专业信息（外码参考）
         System.out.println("请输入管理员密码:");
@@ -34,7 +35,15 @@ abstract public class AdministratorController {
             switch (Choice) {
                 case 1:
                     try {
-                        HandInAllApplications();
+                        if (Used)
+                        {
+                            HandInAllApplications();
+                            Used = false;
+                        }
+                        else{
+                            System.out.println("您已经调剂过啦！");
+                        }
+
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
