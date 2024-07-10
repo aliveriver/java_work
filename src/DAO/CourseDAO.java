@@ -179,7 +179,7 @@ public class CourseDAO {
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT course_name FROM courses WHERE Courses_id = ?";
+            String select_sql = "SELECT course_name FROM courses WHERE course_id = ?";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
             ResultSet Srow = SPStat.executeQuery();
