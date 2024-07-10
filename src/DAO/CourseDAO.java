@@ -37,7 +37,7 @@ public class CourseDAO {
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM courses WHERE Courses_id = ?";
+            String select_sql = "SELECT * FROM courses WHERE Course_id = ?";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, c.getCourse_id());
             ResultSet Srow = SPStat.executeQuery();
@@ -47,7 +47,7 @@ public class CourseDAO {
             }
             SPStat.close();
 
-            String update_sql = "UPDATE courses set major_id=?,department_id=?,Course_name=? where Courses_id = ?";
+            String update_sql = "UPDATE courses set major_id=?,department_id=?,Course_name=? where Course_id = ?";
             PreparedStatement UPStat = conn.prepareStatement(update_sql);
             UPStat.setInt(4, c.getCourse_id());
             UPStat.setString(3, c.getCourse_name());
@@ -73,7 +73,7 @@ public class CourseDAO {
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM courses WHERE Courses_id = ?";
+            String select_sql = "SELECT * FROM courses WHERE Course_id = ?";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
             ResultSet Srow = SPStat.executeQuery();
@@ -82,7 +82,7 @@ public class CourseDAO {
                 throw new Exception("ID is not found");
             }
             Srow.next();
-            test.setCourse_id(Srow.getInt("Courses_id"));
+            test.setCourse_id(Srow.getInt("Course_id"));
             test.setMajor_id(Srow.getInt("major_id"));
             test.setDepartment_id(Srow.getInt("department_id"));
             test.setCourse_name(Srow.getString("course_name"));
@@ -108,7 +108,7 @@ public class CourseDAO {
                 throw new Exception("this table is empty");
             }
             while(Srow.next()){
-                Course a = new Course(Srow.getInt("Courses_id"),
+                Course a = new Course(Srow.getInt("Course_id"),
                         Srow.getInt("major_id"),
                         Srow.getInt("department_id"),
                         Srow.getString("course_name"));
@@ -127,7 +127,7 @@ public class CourseDAO {
         try {
             Database.setConnection();
             Connection conn = Database.getConnection();
-            String select_sql = "SELECT * FROM courses WHERE Courses_id = ?";
+            String select_sql = "SELECT * FROM courses WHERE Course_id = ?";
             PreparedStatement SPStat = conn.prepareStatement(select_sql);
             SPStat.setInt(1, id);
             ResultSet Srow = SPStat.executeQuery();
@@ -137,7 +137,7 @@ public class CourseDAO {
             }
             SPStat.close();
 
-            String Dsql = "DELETE FROM courses WHERE Courses_id = ?";
+            String Dsql = "DELETE FROM courses WHERE Course_id = ?";
             PreparedStatement DPStat = conn.prepareStatement(Dsql);
             DPStat.setInt(1, id);
             int row = DPStat.executeUpdate();
