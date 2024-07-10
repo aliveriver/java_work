@@ -344,13 +344,13 @@ abstract public class AdministratorController {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("请输入大学名称：");
+        System.out.print("请输入大学名称：");//先确定给哪个大学分班
         String universityName = scanner.nextLine();
 
-        System.out.print("请输入专业名称：");
+        System.out.print("请输入专业名称：");//再确定给哪个专业分班
         String majorName = scanner.nextLine();
 
-        System.out.print("请输入要分配的每个班级的人数：");
+        System.out.print("请输入要分配的每个班级的人数：");//余数自成一班
         int classSize = scanner.nextInt();
 
         //获取大学和专业的ID
@@ -368,7 +368,7 @@ abstract public class AdministratorController {
         int classCount = (totalStudents + classSize - 1) / classSize; // 计算需要的班级数
 
         for (int i = 0; i < classCount; i++) {
-            String className = String.format("%s专业%02d班", majorName, i + 1);
+            String className = String.format("%s专业%02d班", majorName, i + 1);//给每个班排班号，即classname
             Class newClass = new Class(majorId, className, universityId);
             ClassService.Create(newClass); // 创建新班级
 
