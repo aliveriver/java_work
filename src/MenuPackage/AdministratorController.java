@@ -420,15 +420,16 @@ abstract public class AdministratorController {
         Scanner scanner = new Scanner(System.in);
         int department_id = 0;
 
+        // 获取院系名称并查找对应的院系ID
         while (true) {
             System.out.print("请输入院系名称: ");
             String department_name = scanner.nextLine();
 
-            ArrayList<University> departments = UniversityService.SelectAll();
+            ArrayList<Department> departments = DepartmentService.SelectAll();
             boolean found = false;
-            for (University department : departments) {
+            for (Department department : departments) {
                 if (department.getName().equalsIgnoreCase(department_name)) {
-                    department_id = department.getUniversity_id();
+                    department_id = department.getDepartment_id();
                     found = true;
                     break;
                 }
@@ -441,11 +442,12 @@ abstract public class AdministratorController {
             }
         }
 
+        // 输入专业名称并查重
         while (true) {
             System.out.print("请输入要添加的专业名称: ");
             String name = scanner.nextLine();
 
-            ArrayList<Major> majors = MajorService.SelectAll();   //查重
+            ArrayList<Major> majors = MajorService.SelectAll();
             boolean exists = false;
             for (Major major : majors) {
                 if (major.getName().equalsIgnoreCase(name) && major.getDepartment_id() == department_id) {
@@ -457,7 +459,7 @@ abstract public class AdministratorController {
             if (exists) {
                 System.out.println("该专业已经存在，请重新输入！");
             } else {
-                Major major = new Major(0, department_id, name);
+                Major major = new Major(department_id, name);
                 MajorService.Create(major);
 
                 majors = MajorService.SelectAll();
@@ -485,6 +487,7 @@ abstract public class AdministratorController {
             }
         }
     }
+
 
 
 }

@@ -1,7 +1,7 @@
 package MenuPackage;
 
-import Service.StudentService;
-import Service.ApplicationService;
+import Service.*;
+
 import model.Application;
 import java.util.*;
 
@@ -26,7 +26,7 @@ abstract public class ApplicationController {
                 }
             }
             if (!Located) {
-                System.out.println("您输入的学生id" + Student_id + "未能够被查找到，请重新输入");
+                System.out.println("您输入的学生ID" + Student_id + "未能够被查找到，请重新输入");
             }
         }
         left = true;
@@ -72,20 +72,38 @@ abstract public class ApplicationController {
 
         System.out.print("大学ID: ");
         int university_id = scanner.nextInt();
+        if (UniversityService.SelectById(university_id) == null) {
+            System.out.println("无效的大学ID！");
+            return;
+        }
 
         if (ApplicationService.GetMajorCountByUniversity(student_id, university_id) >= 3) {
             System.out.println("该大学志愿专业数量已达上限(3个)！");
             return;
         }
 
-        System.out.print("系ID: ");
+        System.out.print("院系ID: ");
         int department_id = scanner.nextInt();
+        if (DepartmentService.SelectById(department_id) == null) {
+            System.out.println("无效的院系ID！");
+            return;
+        }
 
         System.out.print("专业ID: ");
         int major_id = scanner.nextInt();
+        if (MajorService.SelectById(major_id) == null) {
+            System.out.println("无效的专业ID！");
+            return;
+        }
 
-        System.out.print("是否调剂 (0-否, 1-是): ");
-        int is_adjustment = scanner.nextInt();
+        int is_adjustment = -1;
+        while (is_adjustment != 0 && is_adjustment != 1) {
+            System.out.print("是否调剂 (0-否, 1-是): ");
+            is_adjustment = scanner.nextInt();
+            if (is_adjustment != 0 && is_adjustment != 1) {
+                System.out.println("无效输入，请输入 0 或 1。");
+            }
+        }
 
         // 获取当前最大志愿ID并递增生成新志愿ID
         int maxApplicationId = ApplicationService.GetMaxApplicationId();
@@ -131,36 +149,55 @@ abstract public class ApplicationController {
 
         System.out.print("大学ID (" + existingApplication.getUniversity_id() + "): ");
         int university_id = scanner.nextInt();
-
         if (university_id != existingApplication.getUniversity_id()) {
-            if (ApplicationService.GetUniversityCountByStudentId(student_id) >= 10) {
-                System.out.println("志愿大学数量已达上限(10所)！");
+            if (UniversityService.SelectById(university_id) == null) {
+                System.out.println("无效的大学ID！");
                 return;
             }
-        }
+            if (university_id != existingApplication.getUniversity_id()) {
+                if (ApplicationService.GetUniversityCountByStudentId(student_id) >= 10) {
+                    System.out.println("志愿大学数量已达上限(10所)！");
+                    return;
+                }
+            }
 
-        if (university_id != existingApplication.getUniversity_id() ||
-                ApplicationService.GetMajorCountByUniversity(student_id, university_id) >= 3) {
-            System.out.println("该大学志愿专业数量已达上限(3个)！");
-            return;
-        }
+            if (university_id != existingApplication.getUniversity_id() ||
+                    ApplicationService.GetMajorCountByUniversity(student_id, university_id) >= 3) {
+                System.out.println("该大学志愿专业数量已达上限(3个)！");
+                return;
+            }
 
-        System.out.print("系ID (" + existingApplication.getDepartment_id() + "): ");
-        int department_id = scanner.nextInt();
+            System.out.print("院系ID (" + existingApplication.getDepartment_id() + "): ");
+            int department_id = scanner.nextInt();
+            if (DepartmentService.SelectById(department_id) == null) {
+                System.out.println("无效的院系ID！");
+                return;
+            }
 
-        System.out.print("专业ID (" + existingApplication.getMajor_id() + "): ");
-        int major_id = scanner.nextInt();
+            System.out.print("专业ID (" + existingApplication.getMajor_id() + "): ");
+            int major_id = scanner.nextInt();
+            if (MajorService.SelectById(major_id) == null) {
+                System.out.println("无效的专业ID！");
+                return;
+            }
 
-        System.out.print("是否调剂 (" + (existingApplication.getIs_adjustment() == 1 ? "是" : "否") + "): ");
-        int is_adjustment = scanner.nextInt();
+            int is_adjustment = -1;
+            while (is_adjustment != 0 && is_adjustment != 1) {
+                System.out.print("是否调剂 (0-否, 1-是): ");
+                is_adjustment = scanner.nextInt();
+                if (is_adjustment != 0 && is_adjustment != 1) {
+                    System.out.println("无效输入，请输入 0 或 1。");
+                }
+            }
 
-        Application updatedApplication = new Application(application_id, student_id, university_id, department_id, major_id, is_adjustment);
+            Application updatedApplication = new Application(application_id, student_id, university_id, department_id, major_id, is_adjustment);
 
-        if (ApplicationService.IsDuplicate(updatedApplication)) {
-            System.out.println("与原志愿信息相同，修改失败！");
-        } else {
-            ApplicationService.Update(updatedApplication);
-            System.out.println("志愿信息已成功修改！");
+            if (ApplicationService.IsDuplicate(updatedApplication)) {
+                System.out.println("与原志愿信息相同，修改失败！");
+            } else {
+                ApplicationService.Update(updatedApplication);
+                System.out.println("志愿信息已成功修改！");
+            }
         }
     }
 
