@@ -105,6 +105,6 @@ SELECT * FROM  applications;
 SELECT * FROM  admissions;
 SELECT * FROM  Courses;
 SELECT * FROM EnrollmentMark;
-SELECT * FROM EnrollmentMark where department_id =1 and major_id = 1;
+SELECT * FROM EnrollmentMark where university_id = 3 and  department_id =3 and major_id = 8;
 select * from applications where student_id = 3;
 
