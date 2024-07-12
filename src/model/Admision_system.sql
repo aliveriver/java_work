@@ -9,6 +9,13 @@ DROP TABLE IF EXISTS applications CASCADE;
 DROP TABLE IF EXISTS admissions CASCADE;
 DROP TABLE IF EXISTS Courses CASCADE;
 DROP TABLE IF EXISTS EnrollmentMark CASCADE;
+
+
+
+
+DROP TABLE IF EXISTS applications CASCADE;
+DROP TABLE IF EXISTS admissions CASCADE;
+DROP TABLE IF EXISTS students CASCADE;
 --创建表格
 CREATE TABLE universities (
     university_id serial PRIMARY KEY,
@@ -94,7 +101,7 @@ CREATE TABLE Courses (
 
 
 
-
+-- 1--10添加
 --查询表格
 SELECT * FROM universities;
 SELECT * FROM departments;
@@ -105,6 +112,61 @@ SELECT * FROM  applications;
 SELECT * FROM  admissions;
 SELECT * FROM  Courses;
 SELECT * FROM EnrollmentMark;
-SELECT * FROM EnrollmentMark where university_id = 3 and  department_id =3 and major_id = 8;
+SELECT * FROM EnrollmentMark where   department_id =4 and major_id = 10;
 select * from applications where student_id = 3;
 
+
+--一轮测试数据
+
+DROP TABLE IF EXISTS admissions CASCADE;
+DROP TABLE IF EXISTS applications CASCADE;
+DROP TABLE IF EXISTS students CASCADE;
+CREATE TABLE students(
+    student_id serial PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    age INT NOT NULL,
+    score INT NOT NULL,
+    class_id INT,
+	FOREIGN KEY (class_id) REFERENCES classes(class_id)
+);
+CREATE TABLE admissions (
+    --录取表
+    admission_id serial  PRIMARY KEY,
+    student_id INT NOT NULL,
+    university_id INT NOT NULL,
+    department_id INT NOT NULL,
+    major_id INT NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (university_id) REFERENCES universities(university_id),
+    FOREIGN KEY (department_id) REFERENCES departments(department_id),
+    FOREIGN KEY (major_id) REFERENCES majors(major_id)
+);
+CREATE TABLE applications (
+    --志愿表
+    application_id INT PRIMARY KEY,
+    student_id INT NOT NULL,
+    university_id INT NOT NULL,
+    department_id INT NOT NULL,
+    major_id INT NOT NULL,
+    is_adjustment INT NOT NULL,
+    --是否调剂
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (university_id) REFERENCES universities(university_id),
+    FOREIGN KEY (department_id) REFERENCES departments(department_id),
+    FOREIGN KEY (major_id) REFERENCES majors(major_id)
+);
+INSERT INTO students (name, gender, age, score, class_id) VALUES
+('伊雷娜', 'Female', 18, 720, null),
+( '李龙', 'Male', 18, 721, null),
+('周树', 'Male', 19, 723, null);
+INSERT INTO applications (application_id, student_id, university_id, department_id, major_id, is_adjustment) VALUES
+(1,1,5,6,18,1),
+(2,2,5,6,18,0),
+(3,3,5,6,18,0);
+
+--Peking University
+--Finance   Economics
+SELECT * FROM classes;
+SELECT * FROM admissions;
+SELECT * FROM majors;
