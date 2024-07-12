@@ -112,7 +112,7 @@ SELECT * FROM  applications;
 SELECT * FROM  admissions;
 SELECT * FROM  Courses;
 SELECT * FROM EnrollmentMark;
-SELECT * FROM EnrollmentMark where   department_id =4 and major_id = 10;
+SELECT * FROM EnrollmentMark where   university_id =5 and department_id =4 ;
 select * from applications where student_id = 3;
 
 
@@ -167,6 +167,7 @@ INSERT INTO applications (application_id, student_id, university_id, department_
 
 --Peking University
 --Finance   Economics
+SELECT * FROM applications;
 SELECT * FROM classes;
 SELECT * FROM admissions;
 SELECT * FROM majors;
