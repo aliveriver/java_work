@@ -259,6 +259,7 @@ abstract public class AdministratorController {
             // 获取该院系的所有专业列表
             int temp = adm.getDepartment_id();//获取院系id
             ArrayList<Integer> majorIdList = MajorService.SelectByDepartment_id(temp);//基于院系信息得到专业表
+            ArrayList<Integer> majorTempIdList = MajorService.SelectByDepartment_id(temp);//用来改变调剂志愿的
             ArrayList<Student> Students = adm.getSlist();
             int RequiredDepartmentCount =0;
             // 统计每个专业的人数需求
@@ -280,7 +281,14 @@ abstract public class AdministratorController {
             }
             //初始化marjor_count 遍历
             for (Integer majorId : majorIdList) {
-                if (majorCount.containsKey(majorId)) continue;
+                if (majorCount.containsKey(majorId))
+                {
+                    if(majorCount.get(majorId)>=majorRequirements.get(majorId))
+                    {
+                        majorTempIdList.remove(majorTempIdList.indexOf(majorId));//如果这个专业的人数已经大于等于所需人数了，那么它不能作为可调剂的id了。
+                    }
+                    continue;
+                }
                 else majorCount.put(majorId, 0);
             }
 
@@ -293,15 +301,24 @@ abstract public class AdministratorController {
                 int excessNumber = number - requiredMajorNumber; // 计算需要调剂的学生人数
 
                 if (excessNumber > 0) { // 需要进行调剂处理
-                    int startIndex = majorIdList.indexOf(majorId); // 获取当前专业在专业列表中的索引位置
-
-                    // 寻找可以调剂到的专业
                     int toMajor = -1;
-                    for (int i = (startIndex + 1)%RequiredDepartmentCount; i < majorIdList.size(); i++) {
-// int index = startIndex + i; // 确保从startIndex开始循环
-                        int id = majorIdList.get(i);
-                        if (id != majorId) {
-                            toMajor = id; // 找到可调剂到的专业
+                    //旧版算法
+                    //int startIndex = majorIdList.indexOf(majorId); // 获取当前专业在专业列表中的索引位置
+                    // 寻找可以调剂到的专业
+
+//                    for (int i = (startIndex + 1)%RequiredDepartmentCount; i < majorIdList.size(); i++) {
+//// int index = startIndex + i; // 确保从startIndex开始循环
+//                        int id = majorIdList.get(i);
+//                        if (id != majorId) {
+//                            toMajor = id; // 找到可调剂到的专业
+//                            break;
+//                        }
+//                    }
+                    for(Integer a :majorTempIdList)
+                    {
+                        if(a==majorId) continue;//似乎没有必要了
+                        else {
+                            toMajor = a;
                             break;
                         }
                     }
@@ -320,6 +337,10 @@ abstract public class AdministratorController {
                                 break;
                             }
                         }
+                    }
+                    if(majorCount.get(toMajor)>=majorRequirements.get(toMajor))
+                    {
+                        majorTempIdList.remove(majorTempIdList.indexOf(toMajor));//如果这个专业的人数已经大于等于所需人数了，那么它不能作为可调剂的id了。
                     }
 
                 }
