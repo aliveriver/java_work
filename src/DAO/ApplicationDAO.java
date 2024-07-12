@@ -244,26 +244,40 @@ public class ApplicationDAO {
         return count;
     }
 
-    public int GetMajorCountByUniversity(int student_id, int university_id) {//已填报专业总数
-        int count = 0;
+    public int GetMajorCountByUniversity(int student_id, int university_id) {
+        int count = 0;  // 用于存储查询结果
         try {
+            // 建立数据库连接
             Database.setConnection();
             Connection conn = Database.getConnection();
+
+            // SQL查询语句，统计在applications表中，指定student_id和university_id的记录数
             String sql = "SELECT COUNT(*) AS major_count FROM applications WHERE student_id = ? AND university_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
+
+            // 设置SQL语句中的参数
             ps.setInt(1, student_id);
             ps.setInt(2, university_id);
+
+            // 执行查询
             ResultSet rs = ps.executeQuery();
+
+            // 如果查询有结果，获取记录数
             if (rs.next()) {
                 count = rs.getInt("major_count");
             }
+
+            // 关闭结果集和语句
             rs.close();
             ps.close();
+
+            // 关闭数据库连接
             Database.closeConnection();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();  // 打印异常堆栈信息
         }
-        return count;
+        return count;  // 返回查询结果
     }
+
 
 }

@@ -145,7 +145,7 @@ abstract public class ApplicationController {
             return;
         }
 
-        System.out.println("请输入新的志愿信息(不需要修改的部分请输入原信息):");
+        System.out.println("请输入新的志愿信息(括号内为原志愿，不需要修改的部分请输入原信息):");
 
         System.out.print("大学ID (" + existingApplication.getUniversity_id() + "): ");
         int university_id = scanner.nextInt();
@@ -154,20 +154,17 @@ abstract public class ApplicationController {
                 System.out.println("无效的大学ID！");
                 return;
             }
-            if (university_id != existingApplication.getUniversity_id()) {
-                if (ApplicationService.GetUniversityCountByStudentId(student_id) >= 10) {
-                    System.out.println("志愿大学数量已达上限(10所)！");
-                    return;
-                }
+            if (ApplicationService.GetUniversityCountByStudentId(student_id) >= 10) {
+                System.out.println("志愿大学数量已达上限(10所)！");
+                return;
             }
-
-            if (university_id != existingApplication.getUniversity_id() ||
-                    ApplicationService.GetMajorCountByUniversity(student_id, university_id) >= 3) {
+            if (ApplicationService.GetMajorCountByUniversity(student_id, university_id) >= 3) {
                 System.out.println("该大学志愿专业数量已达上限(3个)！");
                 return;
             }
+        }
 
-            System.out.print("院系ID (" + existingApplication.getDepartment_id() + "): ");
+        System.out.print("院系ID (" + existingApplication.getDepartment_id() + "): ");
             int department_id = scanner.nextInt();
             if (DepartmentService.SelectById(department_id) == null) {
                 System.out.println("无效的院系ID！");
@@ -199,7 +196,6 @@ abstract public class ApplicationController {
                 System.out.println("志愿信息已成功修改！");
             }
         }
-    }
 
     private static void DeleteApplication(int student_id) {
         List<Application> applications = ApplicationService.SelectBystudent_id(student_id);
